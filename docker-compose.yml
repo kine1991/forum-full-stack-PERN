@@ -3,14 +3,19 @@ services:
   api_db:
     container_name: api-db
     image: 'postgres:latest'
+    ports:
+      - 5431:5432
     environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
       - POSTGRES_USER=nikolay
       - POSTGRES_HOST=api_db
-      - POSTGRES_DB=postgres
+      - POSTGRES_DB=mydb
       - POSTGRES_PASSWORD=root1234
       - POSTGRES_PORT=5432
     volumes: 
       - posgres_api_db
+    networks:
+      - forum-network
     # volumes: 
     #   - ./pgdata:/var/libs/postgresql/data c2d18f6a82ed
     # psql 
@@ -25,23 +30,21 @@ services:
     environment:
       - PORT=3001
       - POSTGRES_USER=nikolay
-      - POSTGRES_HOST=api_db
-      - POSTGRES_DB=postgres
+      - POSTGRES_HOST=posgres
+      - POSTGRES_DB=mydb
       - POSTGRES_PASSWORD=root1234
       - POSTGRES_PORT=5432
-
+    networks:
+      - forum-network
+      # psql postgres://nikolay:root1234@api_db:5432/mydb
     links:
       - api_db
-
     depends_on:
       - api_db
 
-      # - POSTGRES_USER=postgres
-      # - POSTGRES_HOST=postgres
-      # - POSTGRES_DATABASE=postgres
-      # - POSTGRES_PASSWORD=postgres_password
-      # - POSTGRES_PORT=5432
-
-
 volumes: 
   posgres_api_db:
+
+networks:
+  forum-network:
+    driver: bridge
