@@ -1,6 +1,7 @@
 version: '3'
 services:
   api_db:
+    container_name: api-db
     image: 'postgres:latest'
     environment:
       - POSTGRES_USER=nikolay
@@ -8,8 +9,13 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_PASSWORD=root1234
       - POSTGRES_PORT=5432
+    volumes: 
+      - posgres_api_db
+    # volumes: 
+    #   - ./pgdata:/var/libs/postgresql/data c2d18f6a82ed
   
   api:
+    container_name: api
     build: ./api
     environment:
       - POSTGRES_USER=nikolay
@@ -29,3 +35,7 @@ services:
       # - POSTGRES_DATABASE=postgres
       # - POSTGRES_PASSWORD=postgres_password
       # - POSTGRES_PORT=5432
+
+
+volumes: 
+  posgres_api_db:
