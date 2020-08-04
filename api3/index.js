@@ -1,4 +1,4 @@
-const keys = require('./keys');
+// const keys = require('./keys');
 
 // // Express App Setup
 // const express = require('express');
@@ -12,17 +12,19 @@ const keys = require('./keys');
 // Postgres Client Setup
 const { Pool } = require('pg');
 const pgClient = new Pool({
-  user: process.env.PGUSER,
-  host: process.env.PGHOST,
-  database: process.env.PGDATABASE,
-  password: process.env.PGPASSWORD,
-  port: process.env.PGPORT
+  user: process.env.POSTGRES_USER,
+  host: process.env.POSTGRES_HOST,
+  database: process.env.POSTGRES_DATABASE,
+  password: process.env.POSTGRES_PASSWORD,
+  port: process.env.POSTGRES_PORT
 });
 pgClient.on('error', () => console.log('Lost PG connection'));
 
 pgClient
   .query('CREATE TABLE IF NOT EXISTS values (number INT)')
   .catch(err => console.log(err));
+
+console.log('gggggg')
 
 // // Redis Client Setup
 // const redis = require('redis');

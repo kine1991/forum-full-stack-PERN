@@ -5,13 +5,25 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres_password
   api:
-    build: ./server
-    volumes:
-      - /app/node_modules
-      - ./server:/app
+    build: ./api
+    # volumes:
+    #   - /app/node_modules
+    #   - ./server:/app
     environment:
-      - PGUSER=postgres
-      - PGHOST=postgres
-      - PGDATABASE=postgres
-      - PGPASSWORD=postgres_password
-      - PGPORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DATABASE=postgres
+      - POSTGRES_PASSWORD=postgres_password
+      - POSTGRES_PORT=5432
+      # - PGUSER=postgres
+      # - PGHOST=postgres
+      # - PGDATABASE=postgres
+      # - PGPASSWORD=postgres_password
+      # - PGPORT=5432
+
+
+      #       - POSTGRES_PORT=5432
+      # - POSTGRES_USER=nikolay
+      # - POSTGRES_PASSWORD=secretpassword
+      # - POSTGRES_HOST='api_db'
+      # - POSTGRES_DATABASE=mydb
