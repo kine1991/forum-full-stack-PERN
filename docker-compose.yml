@@ -13,11 +13,17 @@ services:
       - posgres_api_db
     # volumes: 
     #   - ./pgdata:/var/libs/postgresql/data c2d18f6a82ed
+    # psql 
   
   api:
-    container_name: api
     build: ./api
+    container_name: api
+    restart: unless-stopped
+    command: npm run start
+    ports:
+      - 3001:3001
     environment:
+      - PORT=3001
       - POSTGRES_USER=nikolay
       - POSTGRES_HOST=api_db
       - POSTGRES_DB=postgres

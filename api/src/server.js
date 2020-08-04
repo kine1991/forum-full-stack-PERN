@@ -1,24 +1,27 @@
-// Postgres Client Setup
-const { Pool } = require('pg');
+const app = require('./app');
+const client = require('./client');
 
-console.log('user:', process.env.POSTGRES_USER)
-console.log('host:', process.env.POSTGRES_HOST)
-console.log('database:', process.env.POSTGRES_DB)
-console.log('password:', process.env.POSTGRES_PASSWORD)
-console.log('port:', process.env.POSTGRES_PORT)
-console.log()
+const connectDb = () => {
+  return client.connect();
+}
 
-const pgClient = new Pool({
-  user: process.env.POSTGRES_USER,
-  host: process.env.POSTGRES_HOST,
-  database: process.env.POSTGRES_DB,
-  password: process.env.POSTGRES_PASSWORD,
-  port: process.env.POSTGRES_PORT
-});
-pgClient.on('error', () => console.log('Lost PG connection'));
+const startServer = () => {
+  console.log('startServer (api)');
 
-pgClient
-  .query('CREATE TABLE IF NOT EXISTS values (number INT)')
-  .catch(err => console.log(err));
+  const port = process.env.PORT || 3001;
 
-console.log('gggggg')
+  app.listen(port, () => {
+    console.log(`App (api) running on port ${port}...`);
+  });
+}
+
+connectDb()
+  .then(res => {
+    startServer();
+  })
+  .catch(error => {
+    console.log('error222', error);
+  })
+  // .on('error', console.log)
+  // .on('disconnected', connectDb)
+  // .once('open', startServer)

@@ -1,0 +1,9 @@
+version: '3'
+services:
+  api:
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./api/src:/usr/src/app/src
+
+# docker-compose -f docker-compose.yml -f docker-compose.development.yml up --build
