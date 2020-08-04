@@ -3,14 +3,19 @@ services:
   api_db:
     image: 'postgres:latest'
     environment:
-      - POSTGRES_PASSWORD=postgres_password
+      - POSTGRES_USER=nikolay
+      - POSTGRES_HOST=api_db
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=root1234
+      - POSTGRES_PORT=5432
+  
   api:
     build: ./api
     environment:
-      - POSTGRES_USER=postgres
+      - POSTGRES_USER=nikolay
       - POSTGRES_HOST=api_db
-      - POSTGRES_DATABASE=postgres
-      - POSTGRES_PASSWORD=postgres_password
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=root1234
       - POSTGRES_PORT=5432
 
     links:
@@ -24,10 +29,3 @@ services:
       # - POSTGRES_DATABASE=postgres
       # - POSTGRES_PASSWORD=postgres_password
       # - POSTGRES_PORT=5432
-
-
-      #       - POSTGRES_PORT=5432
-      # - POSTGRES_USER=nikolay
-      # - POSTGRES_PASSWORD=secretpassword
-      # - POSTGRES_HOST='api_db'
-      # - POSTGRES_DATABASE=mydb
