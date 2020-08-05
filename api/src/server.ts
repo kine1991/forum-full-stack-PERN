@@ -1,5 +1,5 @@
-const app = require('./app');
-const client = require('./client');
+import client from './utils/client';
+import app from './app';
 
 const connectDb = () => {
   return client.connect();
@@ -16,12 +16,9 @@ const startServer = () => {
 }
 
 connectDb()
-  .then(res => {
+  .then((res: any) => {
     startServer();
   })
-  .catch(error => {
+  .catch((error: any) => {
     console.log('error222', error);
-  })
-  // .on('error', console.log)
-  // .on('disconnected', connectDb)
-  // .once('open', startServer)
+  });

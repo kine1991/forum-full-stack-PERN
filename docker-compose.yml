@@ -1,7 +1,17 @@
 version: '3'
 services:
+  # frontend:
+  #   build: ./frontend
+  #   container_name: forum-frontend
+  #   ports:
+  #     - 3000:3000
+  #   restart: unless-stopped
+  #   command: serve -s build -l 3000
+  #   networks:
+  #     - forum-network
+
   api_db:
-    container_name: api-db
+    container_name: forum-api-db
     image: 'postgres:latest'
     ports:
       - 5432:5432
@@ -16,13 +26,12 @@ services:
       - posgres_api_db
     networks:
       - forum-network
-    # volumes: 
-    #   - ./pgdata:/var/libs/postgresql/data c2d18f6a82ed
-    # psql 
+    volumes: 
+      - posgres_api_db:/var/libs/postgresql/data
   
   api:
     build: ./api
-    container_name: api
+    container_name: forum-api
     restart: unless-stopped
     command: npm run start
     ports:
@@ -37,10 +46,24 @@ services:
     networks:
       - forum-network
       # psql postgres://nikolay:root1234@api_db:5432/mydb
+      # psql postgres://nikolay:root1234@localhost:5432/mydb
     links:
       - api_db
     depends_on:
       - api_db
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: forum-nginx
+    ports:
+      - 81:80
+    depend_on:
+      - frontend
+      - api
+    volumes:
+      - ./nginx/nginx.conf.prod:/etc/nginx/conf.d/nginx.conf
+    networks:
+      - forum-network
 
 volumes: 
   posgres_api_db:

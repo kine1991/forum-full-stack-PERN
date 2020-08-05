@@ -8,4 +8,4 @@ const client = new Client({
   port: process.env.POSTGRES_PORT
 });
 
-module.exports = client;
+export default client;
