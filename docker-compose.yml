@@ -43,6 +43,9 @@ services:
       - POSTGRES_DB=mydb
       - POSTGRES_PASSWORD=root1234
       - POSTGRES_PORT=5432
+      - JWT_SECRET=supermegasecret
+      - JWT_EXPIRES_IN=90d
+      - JWT_COOKIE_EXPIRES_IN=90
     networks:
       - forum-network
       # psql postgres://nikolay:root1234@api_db:5432/mydb
@@ -52,18 +55,18 @@ services:
     depends_on:
       - api_db
 
-  nginx:
-    image: nginx:stable-alpine
-    container_name: forum-nginx
-    ports:
-      - 81:80
-    depend_on:
-      - frontend
-      - api
-    volumes:
-      - ./nginx/nginx.conf.prod:/etc/nginx/conf.d/nginx.conf
-    networks:
-      - forum-network
+  # nginx:
+  #   image: nginx:stable-alpine
+  #   container_name: forum-nginx
+  #   ports:
+  #     - 81:80
+  #   depends_on:
+  #     - frontend
+  #     - api
+  #   volumes:
+  #     - ./nginx/nginx.conf.prod:/etc/nginx/conf.d/nginx.conf
+  #   networks:
+  #     - forum-network
 
 volumes: 
   posgres_api_db:
