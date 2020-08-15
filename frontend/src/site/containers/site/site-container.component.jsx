@@ -5,14 +5,11 @@ import Header from '../../components/header/header.component';
 import Layout from 'shared/components/layout/layout.component';
 import Register from 'site/pages/register/register.component';
 import Login from 'site/pages/login/login.component';
+import CreateChannel from 'site/pages/create-channel/create-channel.component';
+import Home from 'site/pages/home/home.component';
+import Channels from 'site/pages/channels/channels.component';
+import Channel from 'site/pages/channel/channel.component';
 
-const Home = () => {
-  return (
-    <div>
-      Home
-    </div>
-  )
-}
 
 const About = () => {
   return (
@@ -29,9 +26,12 @@ const SiteContainer = () => {
       <Layout>
         <Switch>
           <Route exact path='/' component={Home} />
+          <Route exact path='/channels' component={Channels} />
+          <Route path='/channels/:slug' component={Channel} />
           <Route path='/about' component={About} />
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
+          <Route path='/create-channel' component={CreateChannel} />
         </Switch>
       </Layout>
     </React.Fragment>

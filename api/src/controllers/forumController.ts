@@ -19,15 +19,17 @@ export const getChannels = catchAsync(async (req: Request, res: Response) => {
 export const createChannel = catchAsync(async (req: Request, res: Response) => {
   const { name, description, image_url_channel = 'https://i.imgur.com/AdWqAoq.jpg' } = req.body;
 
+  
   const slug = slugify(name, { replacement: '-', remove: undefined, lower: true, strict: true, locale: 'ru' });
-
+  
   const user_id = req.user?.id;
-  console.log(name, description, image_url_channel, user_id);
+  console.log('@@body', name, description, image_url_channel, slug, user_id);
   const newChannel = await client.query({
     text: 'INSERT INTO channels (name, description, slug, image_url_channel, user_id) VALUES ($1, $2, $3, $4, $5) returning *',
     values: [name, description, `${slug}-${Date.now()}`, image_url_channel, user_id]
-  })
+  });
 
+  console.log('@@newChannel', newChannel)
   res.status(201).json({
     channel: newChannel.rows[0]
   })

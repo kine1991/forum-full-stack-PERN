@@ -129,10 +129,13 @@ export const protect = catchAsync(async (req: Request, res: Response, next: Next
   const token = req.cookies.jwt
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET!) as { id: string };
   
+  console.log('@@@, jwt', req.cookies.jwt)
+  console.log('@@@, decoded', decoded)
   const currentUserRes = await client.query({
-    text: 'SELECT nickname, email, created_at FROM users WHERE users.id = $1',
+    text: 'SELECT id, nickname, email, created_at FROM users WHERE users.id = $1',
     values: [decoded.id]
   });
+  console.log('@@@currentUserRes, currentUserRes', currentUserRes)
   const currentUser = currentUserRes.rows[0];
   if(!currentUser) next(new BadRequestError('The user belonging to this token does no longer exist.', 401));
 

@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 
-const Home = () => {
+import { fetchChannelsAsync } from 'redux/channel/channel.action';
+
+const Home = ({ channels, fetchChannels }) => { 
+  useEffect(() => {
+    fetchChannels();
+  }, []); 
+
   return (
     <div>
       Home
@@ -8,4 +15,12 @@ const Home = () => {
   )
 }
 
-export default Home;
+const mapStateToProps = state => ({
+  channels: state.channel.channels
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchChannels: () => dispatch(fetchChannelsAsync())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

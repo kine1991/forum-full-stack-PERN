@@ -12,13 +12,17 @@ const Header = ({ currentUser, isLoading, logout }) => {
   const [activeItem, setActiveItem] = useState('');
 
   const handleItemClick = (e, { name }) => setActiveItem(name);
-  console.log('currentUser', currentUser);
+  // console.log('currentUser', currentUser);
   return (
     <React.Fragment>
     <Menu stackable>
       <MaxWidth>
         <Menu.Item name='browse' active={activeItem === 'browse'} onClick={handleItemClick} as={Link} to='/'>Home</Menu.Item>
+        <Menu.Item name='channels' active={activeItem === 'channels'} onClick={handleItemClick} as={Link} to='/channels'>Channels</Menu.Item>
         <Menu.Item name='submit' active={activeItem === 'submit'} onClick={handleItemClick} as={Link} to='/about'>About</Menu.Item>
+        {currentUser && isLoading === false && (
+          <Menu.Item name='create-channel' active={activeItem === 'create-channel'} onClick={handleItemClick} as={Link} to='/create-channel'>Create Channel</Menu.Item>
+        )}
         <Space />
         {!currentUser && isLoading === false && (
           <React.Fragment>
