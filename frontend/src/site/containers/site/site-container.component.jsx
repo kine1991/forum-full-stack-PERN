@@ -1,8 +1,10 @@
 import React from 'react'
-import { Link, Route, Switch } from 'react-router-dom';
+import { /*Link,*/ Route, Switch } from 'react-router-dom';
 
 import Header from '../../components/header/header.component';
 import Layout from 'shared/components/layout/layout.component';
+import Register from 'site/pages/register/register.component';
+import Login from 'site/pages/login/login.component';
 
 const Home = () => {
   return (
@@ -28,6 +30,8 @@ const SiteContainer = () => {
         <Switch>
           <Route exact path='/' component={Home} />
           <Route path='/about' component={About} />
+          <Route path='/login' component={Login} />
+          <Route path='/register' component={Register} />
         </Switch>
       </Layout>
     </React.Fragment>

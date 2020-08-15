@@ -79,21 +79,22 @@ export const signUp = catchAsync(async (req: Request, res: Response) => {
   createSendToken(user.rows, 201, res);
 });
 
-export const checkAuth = catchAsync(async (req: Request, res: Response) => {
+export const checkAuth2 = catchAsync(async (req: Request, res: Response) => {
 
 });
 
-export const checkAuth2 = async (req: Request, res: Response) => {
+export const checkAuth = async (req: Request, res: Response) => {
   try {
     let user;
     if(!req.cookies?.jwt) {
       user = null;
     } else {
-      const token = req.cookies.jwt
+      const token = req.cookies.jwt;
       const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET!) as { id: string };
+      console.log('decoded2222', decoded);
 
       const userRes = await client.query({
-        text: 'SELECT * FROM users WHERE users.id = $1',
+        text: 'SELECT nickname, email, created_at FROM users WHERE users.id = $1',
         values: [decoded.id]
       });
       user = userRes.rows[0];
@@ -129,7 +130,7 @@ export const protect = catchAsync(async (req: Request, res: Response, next: Next
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET!) as { id: string };
   
   const currentUserRes = await client.query({
-    text: 'SELECT * FROM users WHERE users.id = $1',
+    text: 'SELECT nickname, email, created_at FROM users WHERE users.id = $1',
     values: [decoded.id]
   });
   const currentUser = currentUserRes.rows[0];

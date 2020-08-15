@@ -1,86 +1,58 @@
-import React, { Component } from 'react'
-import { Menu } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { connect } from 'react-redux';
+import { Menu, Image, List, Dropdown, Button } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
-export default class MenuExampleMenus extends Component {
-  state = {}
+import { MaxWidth } from './header.styles';
+import { logoutAsync } from 'redux/user/user.action';
+import { useState } from 'react';
+import { Space } from './header.styles';
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+const Header = ({ currentUser, isLoading, logout }) => {
+  const [activeItem, setActiveItem] = useState('');
 
-  render() {
-    const { activeItem } = this.state
+  const handleItemClick = (e, { name }) => setActiveItem(name);
+  console.log('currentUser', currentUser);
+  return (
+    <React.Fragment>
+    <Menu stackable>
+      <MaxWidth>
+        <Menu.Item name='browse' active={activeItem === 'browse'} onClick={handleItemClick} as={Link} to='/'>Home</Menu.Item>
+        <Menu.Item name='submit' active={activeItem === 'submit'} onClick={handleItemClick} as={Link} to='/about'>About</Menu.Item>
+        <Space />
+        {!currentUser && isLoading === false && (
+          <React.Fragment>
+            <Menu.Item name='login' active={activeItem === 'login'} onClick={handleItemClick} as={Link} to='/login'>Login</Menu.Item>
+            <Menu.Item name='register' active={activeItem === 'register'} onClick={handleItemClick} as={Link} to='/register'>Register</Menu.Item>
+          </React.Fragment>
+        )}
+        {currentUser && isLoading === false && (
+          <React.Fragment>
+            <Menu.Item name='admin' active={activeItem === 'admin'} onClick={handleItemClick} as={Link} to='/admin'>Admin</Menu.Item>
+            <Menu.Item>
+              <img src='https://react.semantic-ui.com/images/avatar/small/elliot.jpg' />
+            </Menu.Item>
+            <Dropdown item  text={currentUser.nickname}>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={() => logout()}>Logout</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </React.Fragment>
+        )}
+      </MaxWidth>
+    </Menu>
 
-    return (
-      <Menu>
-        <Menu.Item
-          name='browse'
-          active={activeItem === 'browse'}
-          onClick={this.handleItemClick}
-          as={Link} to='/'
-        >Home</Menu.Item>
-
-        <Menu.Item
-          name='submit'
-          active={activeItem === 'submit'}
-          onClick={this.handleItemClick}
-          as={Link} to='/about'
-        >About</Menu.Item>
-
-        <Menu.Item
-          name='admin'
-          active={activeItem === 'admin'}
-          onClick={this.handleItemClick}
-          as={Link} to='/admin'
-        >Admin</Menu.Item>
-
-        <Menu.Menu position='right'>
-          <Menu.Item
-            name='signup'
-            active={activeItem === 'signup'}
-            onClick={this.handleItemClick}
-          >
-            Sign Up
-          </Menu.Item>
-
-          <Menu.Item
-            name='help'
-            active={activeItem === 'help'}
-            onClick={this.handleItemClick}
-          >
-            Help
-          </Menu.Item>
-        </Menu.Menu>
-      </Menu>
-    )
-  }
+  </React.Fragment>
+  )
 }
 
-// import React from 'react';
-// import { Link, useRouteMatch } from 'react-router-dom';
-// import { Header, Segment, Button, Dropdown, Menu } from 'semantic-ui-react';
-// // import { Button, Dropdown, Menu } from 'semantic-ui-react'
+const mapStateToProps = state => ({
+  currentUser: state.user.user,
+  isLoading: state.user.isLoading
+});
 
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch(logoutAsync())
+});
 
-// const HeaderComponent = () => {
-//   let { path, url } = useRouteMatch();
-
-//   const handleClick = () => {
-//     console.log('url', url)
-//     console.log('path', path)
-//   }
-//   return (
-//     <Segment clearing>
-//       <Header as='h2' floated='right'>
-//         <Button as={Link} to='/' >Home</Button>
-//         <Button as={Link} to='/about' >About</Button>
-//         <Button onClick={handleClick} >Test</Button>
-//       </Header>
-//       <Header as='h2' floated='left'>
-//         Float Left
-//       </Header>
-//     </Segment>
-//   )
-// }
-
-// export default HeaderComponent;
-
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

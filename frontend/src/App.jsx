@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 // import './App.css';
 // import axios from 'axios';
+import { checkAuthAsync } from 'redux/user/user.action';
 
 import {
-  BrowserRouter,
+  // BrowserRouter,
   Switch,
   Route,
-  Link,
   // Link,
   // useParams,
   // useRouteMatch
@@ -15,12 +16,15 @@ import {
 import SiteContainer from './site/containers/site/site-container.component';
 import AdminContainer from './admin/containers/admin/admin-container.component';
 
-const App = () => {
-  // React.useEffect(() => {
-  //   axios.get('/api/books').then(response => {
-  //     console.log('response', response);
-  //   })
-  // }, []);
+const App = ({ checkAuth }) => {
+  useEffect(() => {
+    checkAuth();
+    // axios.get('/api/users/check-auth', {
+    //   withCredentials: true
+    // }).then(response => {
+    //   console.log('response22', response);
+    // })
+  }, []);
   return (
     <div>
       <Switch>
@@ -31,4 +35,12 @@ const App = () => {
   );
 }
 
-export default App;
+// const mapStateToProps = state => ({
+//   error: state.user.error
+// });
+
+const mapDispatchToProps = dispatch => ({
+  checkAuth: () => dispatch(checkAuthAsync())
+});
+
+export default connect(null, mapDispatchToProps)(App);
