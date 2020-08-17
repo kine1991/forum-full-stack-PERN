@@ -1,81 +1,78 @@
-import channelTypes from './channel.types';
+import topicTypes from './topic.types';
 
 const INITIAL_STATE = {
-  channels: null,
-  channel: null,
+  topics: null,
+  topic: null,
   isLoading: null,
   error: null
 }
 
-const channelReducer = (state = INITIAL_STATE, action) => {
+const topicReducer = (state = INITIAL_STATE, action) => {
   switch(action.type) {
-    // CREATE_CHANNEL
-    case channelTypes.CREATE_CHANNEL_START:
+    // FETCH_TOPICS
+    case topicTypes.FETCH_TOPICS_START:
       return {
         ...state,
         isLoading: true,
         error: null
       }
-    case channelTypes.CREATE_CHANNEL_SUCCESS:
+    case topicTypes.FETCH_TOPICS_SUCCESS:
+      return {
+        ...state,
+        topics: action.payload,
+        isLoading: false,
+        error: null
+      }
+    case topicTypes.FETCH_TOPICS_FAILURE:
       return {
         ...state,
         isLoading: false,
-        channel: action.payload
+        error: action.payload
       }
-    case channelTypes.CREATE_CHANNEL_FAILURE:
+    // FETCH_TOPIC
+    case topicTypes.FETCH_TOPIC_START:
+      return {
+        ...state,
+        isLoading: true,
+        error: null
+      }
+    case topicTypes.FETCH_TOPIC_SUCCESS:
+      return {
+        ...state,
+        topic: action.payload,
+        isLoading: false,
+        error: null
+      }
+    case topicTypes.FETCH_TOPIC_FAILURE:
       return {
         ...state,
         isLoading: false,
         error: action.payload
       }
 
-    // FETCH_CHANNELS
-    case channelTypes.FETCH_CHANNELS_START:
+    // CREATE_TOPIC
+    case topicTypes.CREATE_TOPIC_START:
       return {
         ...state,
         isLoading: true,
         error: null
       }
-    case channelTypes.FETCH_CHANNELS_SUCCESS:
+    case topicTypes.CREATE_TOPIC_SUCCESS:
       return {
         ...state,
-        channels: action.payload,
+        topic: action.payload,
         isLoading: false,
         error: null
       }
-    case channelTypes.FETCH_CHANNELS_FAILURE:
+    case topicTypes.CREATE_TOPIC_FAILURE:
       return {
         ...state,
-        channels: null,
         isLoading: false,
         error: action.payload
       }
-
-    // FETCH_CHANNEL
-    case channelTypes.FETCH_CHANNEL_START:
-      return {
-        ...state,
-        isLoading: true,
-        error: null
-      }
-    case channelTypes.FETCH_CHANNEL_SUCCESS:
-      return {
-        ...state,
-        channel: action.payload,
-        isLoading: false,
-        error: null
-      }
-    case channelTypes.FETCH_CHANNEL_FAILURE:
-      return {
-        ...state,
-        channel: null,
-        isLoading: false,
-        error: action.payload
-      }
-    
-    default:
+    default: 
       return state;
   }
 }
 
-export default channelReducer;
+export default topicReducer;

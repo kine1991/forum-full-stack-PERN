@@ -8,14 +8,13 @@ import AuthFormError from 'site/components/auth-form-error/auth-form-error.compo
 const Register = ({ error, register }) => {
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = event => {
     event.preventDefault()
 
-    console.log('values', nickname, email, password)
-
-    register({nickname, email, password});
+    register({nickname, email, imageUrl, password});
   }
   
   return (
@@ -38,6 +37,14 @@ const Register = ({ error, register }) => {
             placeholder='Email'
             value={email}
             onChange={e => setEmail(e.target.value)}
+          />
+        </Form.Field>
+        <Form.Field>
+          <label>Image Url</label>
+          <input 
+            placeholder='Image Url'
+            value={imageUrl}
+            onChange={e => setImageUrl(e.target.value)}
           />
         </Form.Field>
         <Form.Field>

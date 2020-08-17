@@ -9,15 +9,8 @@ import CreateChannel from 'site/pages/create-channel/create-channel.component';
 import Home from 'site/pages/home/home.component';
 import Channels from 'site/pages/channels/channels.component';
 import Channel from 'site/pages/channel/channel.component';
-
-
-const About = () => {
-  return (
-    <div>
-      About
-    </div>
-  )
-}
+import CreateTopic from 'site/pages/create-topic/create-topic.componen';
+import Topic from 'site/pages/topic/topic.component';
 
 const SiteContainer = () => {
   return (
@@ -27,8 +20,9 @@ const SiteContainer = () => {
         <Switch>
           <Route exact path='/' component={Home} />
           <Route exact path='/channels' component={Channels} />
-          <Route path='/channels/:slug' component={Channel} />
-          <Route path='/about' component={About} />
+          <Route exact path='/channels/:slug' component={Channel} />
+          <Route path='/channels/:slug/create' component={CreateTopic} />
+          <Route path='/topics/:slug' component={Topic} />
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
           <Route path='/create-channel' component={CreateChannel} />

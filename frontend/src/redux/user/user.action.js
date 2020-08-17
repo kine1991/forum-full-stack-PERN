@@ -44,11 +44,11 @@ const registerFailure = error => ({
   payload: error
 });
 
-export const registerAsync = ({ nickname, email, password }) => async dispatch => {
+export const registerAsync = ({ nickname, email, password, imageUrl }) => async dispatch => {
   dispatch(registerStart());
-
+// console.log('555', nickname, email, password, imageUrl)
   try {
-    const user = await axios.post('/api/users/sign-up', { nickname, email, password });
+    const user = await axios.post('/api/users/sign-up', { nickname, email, password, image_url: imageUrl });
     console.log('user', user.data.user);
     dispatch(registerSuccess(user.data.user));
   } catch (error) {
@@ -77,7 +77,6 @@ export const loginAsync = ({ email, password }) => async dispatch => {
 
   try {
     const user = await axios.post('/api/users/sign-in', { email, password });
-    console.log('user', user.data.user);
     dispatch(loginSuccess(user.data.user));
   } catch (error) {
     console.log('error', error.response.data);

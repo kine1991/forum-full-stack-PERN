@@ -10,11 +10,7 @@ const Login = ({ error, login }) => {
   const [password, setPassword] = useState('123456');
 
   const handleSubmit = event => {
-    event.preventDefault()
-
-    console.log('error2', error)
-    console.log('values', email, password)
-
+    event.preventDefault();
     login({ email, password });
   }
 

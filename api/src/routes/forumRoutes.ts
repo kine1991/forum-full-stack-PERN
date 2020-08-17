@@ -8,9 +8,14 @@ router.route('/channels')
   .get(forumController.getChannels)
   .post(authController.protect, forumController.createChannel);
 
-router.route('/topics/:channel_slug')
+router.route('/channels/:channel_slug')
+  .get(forumController.getChannel);
+
+router.route('/topics/by_channel_slug/:channel_slug')
   .get(forumController.getTopicsByChannelSlug)
-  .post(authController.protect, forumController.createTopicIntoChannel)
+  .post(authController.protect, forumController.createTopicIntoChannel);
+
+router.route('/topics/:topic_slug').get(forumController.getTopicBySlug);
 
 // router.route('/channels/:channel_id')
 //   .get(forumController.getChannel)

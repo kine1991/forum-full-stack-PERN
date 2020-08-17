@@ -53,7 +53,9 @@ export const signIn = catchAsync(async (req: Request, res: Response) => {
 });
 
 export const signUp = catchAsync(async (req: Request, res: Response) => {
-  const { nickname, email, password } = req.body;
+  const { nickname, email, password, image_url } = req.body;
+
+  const imageUrl = image_url ? image_url : 'https://react.semantic-ui.com/images/avatar/small/elliot.jpg';
 
   if(validator.isEmpty(nickname)) throw new BadRequestError('Please provide nickname!', 400);
   if(!validator.isLength(nickname, { min: 2, max: 30 })) throw new BadRequestError('Nickname should be min: 2, max: 30!', 400);
@@ -72,8 +74,8 @@ export const signUp = catchAsync(async (req: Request, res: Response) => {
   const hashedPassword = await bcrypt.hash(password, 12);
   console.log('hashedPassword', hashedPassword);
   const user = await client.query({
-    text: 'INSERT INTO users (nickname, email, password) VALUES ($1, $2, $3) returning *',
-    values: [nickname, email, hashedPassword]
+    text: 'INSERT INTO users (nickname, email, password, image_url) VALUES ($1, $2, $3, $4) returning *',
+    values: [nickname, email, hashedPassword, imageUrl]
   });
   
   createSendToken(user.rows, 201, res);
@@ -94,7 +96,7 @@ export const checkAuth = async (req: Request, res: Response) => {
       console.log('decoded2222', decoded);
 
       const userRes = await client.query({
-        text: 'SELECT nickname, email, created_at FROM users WHERE users.id = $1',
+        text: 'SELECT nickname, email, image_url, created_at FROM users WHERE users.id = $1',
         values: [decoded.id]
       });
       user = userRes.rows[0];
@@ -129,13 +131,10 @@ export const protect = catchAsync(async (req: Request, res: Response, next: Next
   const token = req.cookies.jwt
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET!) as { id: string };
   
-  console.log('@@@, jwt', req.cookies.jwt)
-  console.log('@@@, decoded', decoded)
   const currentUserRes = await client.query({
     text: 'SELECT id, nickname, email, created_at FROM users WHERE users.id = $1',
     values: [decoded.id]
   });
-  console.log('@@@currentUserRes, currentUserRes', currentUserRes)
   const currentUser = currentUserRes.rows[0];
   if(!currentUser) next(new BadRequestError('The user belonging to this token does no longer exist.', 401));
 

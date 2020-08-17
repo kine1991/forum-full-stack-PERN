@@ -4,15 +4,23 @@ import catchAsync from "../utils/catchAsync";
 import { BadRequestError } from '../utils/errors';
 import client from '../utils/client';
 
-
-//   await client.query('CREATE TABLE IF NOT EXISTS channels (id serial PRIMARY KEY, name varchar(255) NOT NULL, description varchar(2000), image_url_channel varchar(255), created_at TIMESTAMP DEFAULT NOW(), user_id INTEGER NOT NULL, FOREIGN KEY(user_id) REFERENCES users(id))');
-
 export const getChannels = catchAsync(async (req: Request, res: Response) => {
   const channels = await client.query('SELECT * FROM channels');
 
   res.status(200).json({
     length: channels.rows.length,
     channels: channels.rows
+  })
+});
+
+export const getChannel = catchAsync(async (req: Request, res: Response) => {
+  const channel = await client.query({
+    text: 'SELECT * FROM channels WHERE slug = $1',
+    values: [req.params.channel_slug]
+  });
+
+  res.status(200).json({
+    channel: channel.rows[0]
   })
 });
 
@@ -50,10 +58,10 @@ export const getTopicsByChannelSlug = catchAsync(async (req: Request, res: Respo
   });
 
   res.json({
-    topic: getTopicsByChannelId.rows
+    topics: getTopicsByChannelId.rows
   });
 });
-// await client.query('CREATE TABLE IF NOT EXISTS topics (id serial PRIMARY KEY, name varchar(255) NOT NULL, created_at TIMESTAMP DEFAULT NOW(), user_id INTEGER NOT NULL, channel_id INTEGER NOT NULL, FOREIGN KEY(user_id) REFERENCES users(id), FOREIGN KEY(channel_id) REFERENCES channels(id)');
+
 export const createTopicIntoChannel = catchAsync(async (req: Request, res: Response) => {
   const { name } = req.body;
 
@@ -76,6 +84,21 @@ export const createTopicIntoChannel = catchAsync(async (req: Request, res: Respo
   // console.log('req.params.channel_slug@', req.params.channel_slug);
   res.json({
     topic: newTopic.rows[0]
+  });
+});
+
+export const getTopicBySlug = catchAsync(async (req: Request, res: Response) => {
+  const topic = await client.query({
+    text: 'SELECT channels.name as channel_name, topics.name AS topic_name, topics.slug AS topic_slug, channels.slug AS channel_slug, topics.created_at AS topic_created_at, channels.created_at AS channel_created_at, nickname, email, image_url AS user_image_url  FROM topics JOIN channels ON topics.channel_id = channels.id JOIN users ON topics.user_id = users.id WHERE topics.slug = $1',
+    values: [req.params.topic_slug]
+  });
+  // const topic = await client.query({
+  //   text: 'SELECT * FROM topics WHERE topics.slug = $1',
+  //   values: [req.params.topic_slug]
+  // });
+
+  res.json({
+    topic: topic.rows[0]
   });
 });
 

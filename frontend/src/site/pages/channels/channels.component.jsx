@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Item, Loader, Dimmer } from 'semantic-ui-react';
 // import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react'
 // 
+import { ChannelsContainer } from './channels.styles';
 
 import { fetchChannelsAsync } from 'redux/channel/channel.action';
 import { Link } from 'react-router-dom';
@@ -17,7 +18,7 @@ const Channels = ({ channels, isLoading, fetchChannels }) => {
   )
 
   return (
-    <div>
+    <ChannelsContainer>
       {channels && isLoading === false && (
         <Item.Group divided>
           {channels.map(channel => (
@@ -35,7 +36,7 @@ const Channels = ({ channels, isLoading, fetchChannels }) => {
         </Item.Group>
       )}
       Channels
-    </div>
+    </ChannelsContainer>
   )
 }
 

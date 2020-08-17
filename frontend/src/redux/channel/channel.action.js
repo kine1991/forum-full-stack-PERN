@@ -58,16 +58,29 @@ export const fetchChannelsAsync = () => async dispatch => {
   }
 }
 
+// FETCH_CHANNEL
+const fetchChannelStart = () => ({
+  type: channelTypes.FETCH_CHANNEL_START
+});
 
-// export const registerAsync = ({ nickname, email, password }) => async dispatch => {
-//   dispatch(registerStart());
+const fetchChannelSuccess = channel => ({
+  type: channelTypes.FETCH_CHANNEL_SUCCESS,
+  payload: channel
+});
 
-//   try {
-//     const user = await axios.post('/api/users/sign-up', { nickname, email, password });
-//     console.log('user', user.data.user);
-//     dispatch(registerSuccess(user.data.user));
-//   } catch (error) {
-//     console.log('error', error.response.data);
-//     dispatch(registerFailure(error.response.data));
-//   }
-// }
+const fetchChannelFailure = error => ({
+  type: channelTypes.FETCH_CHANNEL_FAILURE,
+  payload: error
+});
+
+export const fetchChannelAsync = slug => async dispatch => {
+  dispatch(fetchChannelStart());
+
+  try {
+    const channel = await axios.get(`/api/forums/channels/${slug}`);
+    dispatch(fetchChannelSuccess(channel.data.channel));
+  } catch (error) {
+    console.log('error', error.response.data);
+    dispatch(fetchChannelFailure(error.response.data));
+  }
+}
