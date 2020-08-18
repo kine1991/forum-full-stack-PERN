@@ -1,12 +1,9 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Item, Loader, Dimmer } from 'semantic-ui-react';
-// import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react'
-// 
-import { ChannelsContainer } from './channels.styles';
-
-import { fetchChannelsAsync } from 'redux/channel/channel.action';
 import { Link } from 'react-router-dom';
+import { Item, Loader } from 'semantic-ui-react';
+import { ChannelsContainer } from './channels.styles';
+import { fetchChannelsAsync } from 'redux/channel/channel.action';
 
 const Channels = ({ channels, isLoading, fetchChannels }) => { 
   useEffect(() => {

@@ -6,7 +6,7 @@ import { fetchChannelsAsync } from 'redux/channel/channel.action';
 const Home = ({ channels, fetchChannels }) => { 
   useEffect(() => {
     fetchChannels();
-  }, []); 
+  }, [fetchChannels]); 
 
   return (
     <div>

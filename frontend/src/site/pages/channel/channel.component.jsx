@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Card, Image, Header, Divider } from 'semantic-ui-react';
+import { Image, Header, Divider } from 'semantic-ui-react';
 
 import { ChannelContainer, Description } from './channel.styles';
 import { fetchChannelAsync } from 'redux/channel/channel.action';
@@ -9,12 +9,10 @@ import Topics from 'site/components/topics/topics.component';
 
 const Channel = ({ channel, fetchChannel }) => {
   let { slug } = useParams();
-  // console.log('slug', slug);
-  // console.log('ddd');
 
   useEffect(() => {
     fetchChannel(slug);
-  }, [fetchChannel]);
+  }, [fetchChannel, slug]);
 
   if(!channel) return (<div>Loading...</div>)
 

@@ -8,7 +8,7 @@ import { fetchTopicsAsync } from 'redux/topic/topic.action';
 const Topics = ({ slug, forumName, topics, isLoading, fetchTopics }) => {
   useEffect(() => {
     fetchTopics(slug)
-  }, [fetchTopics]);
+  }, [fetchTopics, slug]);
 
   if(isLoading === true) return <Loader active inline='centered' />
   if(topics === null) return <div>No Data..</div>

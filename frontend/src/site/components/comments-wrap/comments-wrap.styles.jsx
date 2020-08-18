@@ -5,7 +5,7 @@ export const CommentsContainer = styled.div`
 `;
 
 export const CommentsSection = styled.div`
-  margin: 2rem 0.5rem;
+  margin: 2rem 0;
 `;
 
 export const ButtonContainer = styled.div`

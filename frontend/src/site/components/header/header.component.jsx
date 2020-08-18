@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Menu, Image, List, Dropdown, Button } from 'semantic-ui-react';
+import { Menu, Dropdown } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 import { MaxWidth } from './header.styles';
@@ -33,9 +33,9 @@ const Header = ({ currentUser, isLoading, logout }) => {
             <Menu.Item name='admin' active={activeItem === 'admin'} onClick={handleItemClick} as={Link} to='/admin'>Admin</Menu.Item>
             <Menu.Item>
               {currentUser.image_url !== null ? (
-                <img src={currentUser.image_url} />
+                <img src={currentUser.image_url} alt="img" />
               ) : (
-                <img src='https://react.semantic-ui.com/images/avatar/small/elliot.jpg' />
+                <img src='https://react.semantic-ui.com/images/avatar/small/elliot.jpg' alt="img" />
               )}
             </Menu.Item>
             <Dropdown item  text={currentUser.nickname}>
