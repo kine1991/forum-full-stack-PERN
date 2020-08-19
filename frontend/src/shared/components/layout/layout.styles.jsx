@@ -6,8 +6,9 @@ export const Container = styled.div`
   margin: 3rem auto;
   /* background-color: #A9A9A9; */
   box-shadow: #696969;
-
   min-height: 400px;
+  /* min-width: calc(100vh); */
+  min-height: calc(100vh - 260px - 6rem);
 
   @media (max-width: 1200px) {
     margin: 3rem;

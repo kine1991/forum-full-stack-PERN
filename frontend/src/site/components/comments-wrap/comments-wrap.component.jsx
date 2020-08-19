@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Form, TextArea, Button, Divider } from 'semantic-ui-react';
 
 import Comments from 'site/components/comments/comments.component';
-import { ButtonContainer } from './comments-wrap.styles';
+import { CommentsWrapContainer, ButtonContainer } from './comments-wrap.styles';
 import { createCommentAsync } from 'redux/comment/comment.action';
 
 const CommentsWrap = ({ slug, /*comments, isLoading, fetchCommentsByTopic,*/ createCommentIntoTopic }) => {
@@ -17,10 +17,10 @@ const CommentsWrap = ({ slug, /*comments, isLoading, fetchCommentsByTopic,*/ cre
   }
 
   return (
-    <React.Fragment>
+    <CommentsWrapContainer>
       <Comments />
       <Divider />
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} style={{marginTop: '3rem'}}>
         <TextArea 
           rows={6} 
           value={content}
@@ -31,7 +31,7 @@ const CommentsWrap = ({ slug, /*comments, isLoading, fetchCommentsByTopic,*/ cre
           <Button primary>Отправить</Button>
         </ButtonContainer>
       </Form>
-    </React.Fragment>
+    </CommentsWrapContainer>
   )
 }
 

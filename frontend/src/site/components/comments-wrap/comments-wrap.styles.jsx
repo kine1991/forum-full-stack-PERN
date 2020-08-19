@@ -4,8 +4,8 @@ export const CommentsContainer = styled.div`
   margin: 2rem 0.5rem;
 `;
 
-export const CommentsSection = styled.div`
-  margin: 2rem 0;
+export const CommentsWrapContainer = styled.div`
+  margin: 3rem 0;
 `;
 
 export const ButtonContainer = styled.div`

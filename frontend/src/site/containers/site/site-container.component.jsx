@@ -1,7 +1,8 @@
 import React from 'react'
 import { /*Link,*/ Route, Switch } from 'react-router-dom';
 
-import Header from '../../components/header/header.component';
+import Header from 'site/components/header/header.component';
+import Footer from 'site/components/footer/footer.component';
 import Layout from 'shared/components/layout/layout.component';
 import Register from 'site/pages/register/register.component';
 import Login from 'site/pages/login/login.component';
@@ -28,6 +29,7 @@ const SiteContainer = () => {
           <Route path='/create-channel' component={CreateChannel} />
         </Switch>
       </Layout>
+      <Footer />
     </React.Fragment>
   )
 }

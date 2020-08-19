@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
-import { Loader, Header, Image, Divider } from 'semantic-ui-react';
+import { Loader, Header, Image, Divider, Message } from 'semantic-ui-react';
 
 import { fetchTopicAsync } from 'redux/topic/topic.action';
 import { TopicContainer, ChannelName, UserTitle } from './topic.styles';
@@ -15,7 +15,7 @@ const Topic = ({ topic, isLoading, fetchTopic }) => {
     fetchTopic(slug);
   }, [fetchTopic, slug]);
 
-  if(isLoading !== false) return (
+  if(isLoading !== false && topic === null) return (
     <TopicContainer>
       <Loader active inline='centered' />
     </TopicContainer>
@@ -23,11 +23,13 @@ const Topic = ({ topic, isLoading, fetchTopic }) => {
 
   return (
     <TopicContainer>
-      <Header as='h3'>
-          <Image circular src={topic.user_image_url} />
-          <UserTitle>{topic.nickname}</UserTitle>
-          <UserTitle>{moment(topic.topic_created_at).format('DD.MM.YYYY, HH:mm')}</UserTitle>
-      </Header>
+      <Message>
+        <Header as='h3'>
+            <Image circular src={topic.user_image_url} />
+            <UserTitle>{topic.nickname}</UserTitle>
+            <UserTitle>{moment(topic.topic_created_at).format('DD.MM.YYYY, HH:mm')}</UserTitle>
+        </Header>
+      </Message>
       <Header as='h1'>{topic.topic_name}</Header>
       <ChannelName as={Link} to={`/channels/${topic.channel_slug}`}>{topic.channel_name}</ChannelName>
       <Divider />

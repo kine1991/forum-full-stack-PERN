@@ -14,7 +14,7 @@ const Header = ({ currentUser, isLoading, logout }) => {
   const handleItemClick = (e, { name }) => setActiveItem(name);
   return (
     <React.Fragment>
-    <Menu stackable>
+    <Menu stackable style = {{height: '64px'}}>
       <MaxWidth>
         <Menu.Item name='browse' active={activeItem === 'browse'} onClick={handleItemClick} as={Link} to='/'>Home</Menu.Item>
         <Menu.Item name='channels' active={activeItem === 'channels'} onClick={handleItemClick} as={Link} to='/channels'>Channels</Menu.Item>
