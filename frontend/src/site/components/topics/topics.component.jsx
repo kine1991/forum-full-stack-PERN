@@ -10,8 +10,8 @@ const Topics = ({ slug, forumName, topics, isLoading, fetchTopics }) => {
     fetchTopics(slug)
   }, [fetchTopics, slug]);
 
-  if(isLoading === true) return <Loader active inline='centered' />
-  if(topics === null) return <div>No Data..</div>
+  if(isLoading !== false || topics === null) return <Loader active inline='centered' />
+  if(topics.length === 0) return <div>No Data..</div>
 
   return (
     <React.Fragment>

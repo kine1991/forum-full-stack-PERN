@@ -4,7 +4,6 @@ const INITIAL_STATE = {
   comments: null,
   allComments: null,
   commentsOnPage: null,
-  limit: null,
   isLoading: null,
   error: null
 }
@@ -52,6 +51,17 @@ const commentReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         error: action.payload
+      }
+
+    // CLEAR
+    case commentTypes.CLEAR:
+      return {
+        ...state,
+        comments: null,
+        allComments: null,
+        commentsOnPage: null,
+        isLoading: null,
+        error: null
       }
 
     default:

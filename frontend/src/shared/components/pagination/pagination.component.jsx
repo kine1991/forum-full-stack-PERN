@@ -6,12 +6,12 @@ const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 }
 
-const PaginationComponent = ({ allComments, limit }) => {
+const PaginationComponent = ({ allItems, limit }) => {
   let query = useQuery();
   let history = useHistory();
   let location = useLocation();
   let page = query.get('page') ? query.get('page') : 1;
-  const countPages = Math.ceil(allComments/limit);
+  const countPages = Math.ceil(allItems/limit);
 
   if(countPages === 1) return <React.Fragment></React.Fragment>
 

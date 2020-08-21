@@ -46,12 +46,19 @@ const fetchChannelsFailure = error => ({
   payload: error
 });
 
-export const fetchChannelsAsync = () => async dispatch => {
+export const fetchChannelsAsync = ({ page, limit }) => async dispatch => {
   dispatch(fetchChannelsStart());
   try {
-    const channels = await axios.get('/api/forums/channels');
+    const channels = await axios.get('/api/forums/channels', {
+      params: {
+        page,
+        limit
+      }
+    });
+    // console.log(`page - ${page}, limit - ${limit} `);
     // console.log(channels.data.channels);
-    dispatch(fetchChannelsSuccess(channels.data.channels));
+    // http://posts.com:81/channels/zhk-forteciya-1597661727231 - err
+    dispatch(fetchChannelsSuccess(channels.data));
   } catch (error) {
     console.log('error', error.response.data);
     dispatch(fetchChannelsFailure(error.response.data));
@@ -80,7 +87,17 @@ export const fetchChannelAsync = slug => async dispatch => {
     const channel = await axios.get(`/api/forums/channels/${slug}`);
     dispatch(fetchChannelSuccess(channel.data.channel));
   } catch (error) {
-    console.log('error', error.response.data);
-    dispatch(fetchChannelFailure(error.response.data));
+    // console.log('error', error.response);
+    // console.log('error', error.response.data);
+    dispatch(fetchChannelFailure(error.response));
+    // dispatch(fetchChannelFailure(error.response.data));
   }
 }
+
+const clear = () => ({
+  type: channelTypes.CLEAR
+});
+
+export const clearAsync = () => async dispatch => {
+  dispatch(clear());
+};

@@ -3,6 +3,8 @@ import channelTypes from './channel.types';
 const INITIAL_STATE = {
   channels: null,
   channel: null,
+  allChannels: null,
+  channelsOnPage: null,
   isLoading: null,
   error: null
 }
@@ -39,7 +41,9 @@ const channelReducer = (state = INITIAL_STATE, action) => {
     case channelTypes.FETCH_CHANNELS_SUCCESS:
       return {
         ...state,
-        channels: action.payload,
+        channels: action.payload.channels,
+        allChannels: action.payload.all_channels,
+        channelsOnPage: action.payload.channels_on_page,
         isLoading: false,
         error: null
       }
@@ -71,6 +75,17 @@ const channelReducer = (state = INITIAL_STATE, action) => {
         channel: null,
         isLoading: false,
         error: action.payload
+      }
+
+    case channelTypes.CLEAR:
+      return {
+        ...state,
+        channels: null,
+        channel: null,
+        allChannels: null,
+        channelsOnPage: null,
+        isLoading: null,
+        error: null
       }
     
     default:

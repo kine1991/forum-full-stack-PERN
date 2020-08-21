@@ -20,12 +20,13 @@ const Comments = ({ comments, isLoading, allComments, fetchCommentsByTopic }) =>
   useEffect(() => {
     fetchCommentsByTopic({ slug, page, limit });
   }, [page, fetchCommentsByTopic, slug, limit]);
-
-  if(isLoading !== false) return <Loader active inline='centered' />
+console.log(`isLoading - ${isLoading}, comments ${comments}`)
+  if(isLoading !== true && comments === null) return <div>No Data</div>
+  if(isLoading !== false || comments === null) return <Loader active inline='centered' />
 
   return (
     <React.Fragment>
-      <Pagination allComments={allComments} limit={limit} />
+      <Pagination allItems={allComments} limit={limit} />
       <Comment.Group>
         {comments.map(comment => {
           const commentDate = moment(comment.comment_created_at).fromNow();
@@ -49,7 +50,7 @@ const Comments = ({ comments, isLoading, allComments, fetchCommentsByTopic }) =>
           )
         })}
       </Comment.Group>
-      <Pagination allComments={allComments} limit={limit} />
+      <Pagination allItems={allComments} limit={limit} />
     </React.Fragment>
   )
 }

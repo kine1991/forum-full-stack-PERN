@@ -20,7 +20,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchChannels: () => dispatch(fetchChannelsAsync())
+  fetchChannels: () => dispatch(fetchChannelsAsync({}))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

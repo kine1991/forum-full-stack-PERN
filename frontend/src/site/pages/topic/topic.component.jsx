@@ -14,8 +14,9 @@ const Topic = ({ topic, isLoading, fetchTopic }) => {
   useEffect(() => {
     fetchTopic(slug);
   }, [fetchTopic, slug]);
+  // console.log('isLoading - ', isLoading, '|', topic, ' - topic');
 
-  if(isLoading !== false && topic === null) return (
+  if(isLoading !== false || topic === null) return (
     <TopicContainer>
       <Loader active inline='centered' />
     </TopicContainer>

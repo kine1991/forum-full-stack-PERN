@@ -22,7 +22,7 @@ export const fetchCommentsAsync = ({ slug, page, limit }) => async dispatch => {
     const comments = await axios.get(`/api/comments/by_topic/${slug}`, {
       params: {
         page,
-        limit: limit
+        limit
       }
     });
     dispatch(fetchCommentsSuccess(comments.data));
@@ -60,3 +60,11 @@ export const createCommentAsync = ({ content, slug }) => async dispatch => {
     dispatch(createCommentFailure(error.response.data));
   }
 }
+
+const clear = () => ({
+  type: commentTypes.CLEAR
+});
+
+export const clearAsync = () => async dispatch => {
+  dispatch(clear());
+};

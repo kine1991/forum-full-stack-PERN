@@ -12,6 +12,7 @@ import Channels from 'site/pages/channels/channels.component';
 import Channel from 'site/pages/channel/channel.component';
 import CreateTopic from 'site/pages/create-topic/create-topic.componen';
 import Topic from 'site/pages/topic/topic.component';
+import PageNotFound from 'shared/components/page-not-found/page-not-found.component';
 
 const SiteContainer = () => {
   return (
@@ -27,6 +28,7 @@ const SiteContainer = () => {
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
           <Route path='/create-channel' component={CreateChannel} />
+          <Route component={PageNotFound} />
         </Switch>
       </Layout>
       <Footer />

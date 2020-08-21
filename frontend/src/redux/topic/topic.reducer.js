@@ -70,6 +70,16 @@ const topicReducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         error: action.payload
       }
+
+    // CLEAR
+    case topicTypes.CLEAR:
+      return {
+        ...state,
+        topics: null,
+        topic: null,
+        isLoading: null,
+        error: null
+      }
     default: 
       return state;
   }

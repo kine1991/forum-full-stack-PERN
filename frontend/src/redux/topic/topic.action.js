@@ -86,3 +86,11 @@ export const createTopicAsync = ({ name, channel_slug }) => async dispatch => {
     dispatch(createTopicFailure(error.response.data));
   }
 }
+
+const clear = () => ({
+  type: topicTypes.CLEAR
+});
+
+export const clearAsync = () => async dispatch => {
+  dispatch(clear());
+};

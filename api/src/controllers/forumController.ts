@@ -5,12 +5,26 @@ import { BadRequestError } from '../utils/errors';
 import client from '../utils/client';
 
 export const getChannels = catchAsync(async (req: Request, res: Response) => {
-  const channels = await client.query('SELECT * FROM channels');
+  const amountChannelsRes = await client.query('SELECT COUNT(id) FROM channels');
+  const ammount_channels = +amountChannelsRes.rows[0].count;
+
+  const limit = req.query.limit ? +req.query.limit : 2;
+  const all_pages = Math.ceil(ammount_channels/limit);
+  const page = req.query.page ? +req.query.page : 1;
+  const offset = limit * (page - 1);
+
+  if(all_pages < page) throw new BadRequestError(`This page (${page}) do not exists`, 404);
+
+  const channels = await client.query({
+    text: 'SELECT * FROM channels LIMIT $1 OFFSET $2',
+    values: [limit, offset]
+  });
 
   res.status(200).json({
-    length: channels.rows.length,
+    all_channels: ammount_channels,
+    channels_on_page: channels.rows.length,
     channels: channels.rows
-  })
+  });
 });
 
 export const getChannel = catchAsync(async (req: Request, res: Response) => {
@@ -18,6 +32,8 @@ export const getChannel = catchAsync(async (req: Request, res: Response) => {
     text: 'SELECT * FROM channels WHERE slug = $1',
     values: [req.params.channel_slug]
   });
+
+  if(channel.rows.length === 0)  throw new BadRequestError(`Page with this slug: ${req.params.channel_slug} not found`, 404);
 
   res.status(200).json({
     channel: channel.rows[0]

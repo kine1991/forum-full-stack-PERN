@@ -23,9 +23,9 @@ export const getCommentsByTopic = catchAsync(async (req: Request, res: Response)
   const limit = req.query.limit ? +req.query.limit : 20;
   const all_pages = Math.ceil(amount_comments/limit);
   const page = req.query.page ? +req.query.page : 1;
+  const offset = limit * (page - 1);
 
   if(all_pages < page) throw new BadRequestError(`This page (${page}) do not exists`, 404);
-  const offset = limit * (page - 1);
 
 
   const comments = await client.query({

@@ -1,15 +1,25 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Item, Loader } from 'semantic-ui-react';
 import { ChannelsContainer } from './channels.styles';
 import { fetchChannelsAsync } from 'redux/channel/channel.action';
+import Pagination from 'shared/components/pagination/pagination.component';
 
-const Channels = ({ channels, isLoading, fetchChannels }) => { 
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search);
+}
+
+const Channels = ({ channels, isLoading, fetchChannels, allChannels, channelsOnPage }) => { 
+  let query = useQuery();
+  let page = query.get('page') ? query.get('page') : 1;
+  let limit = query.get('limit') ? query.get('limit') : 2;
+
   useEffect(() => {
-    fetchChannels();
-  }, [fetchChannels]); 
+    fetchChannels({ page, limit });
+  }, [fetchChannels, page, limit]); 
 
+// console.log(allChannels, channelsOnPage)
   if(isLoading !== false) return (
     <Loader active inline='centered' />
   )
@@ -32,18 +42,22 @@ const Channels = ({ channels, isLoading, fetchChannels }) => {
           ))}
         </Item.Group>
       )}
-      Channels
+      {allChannels !== null && channelsOnPage !== null ? (
+        <Pagination allItems={allChannels} limit={channelsOnPage} />
+      ) : null }
     </ChannelsContainer>
   )
 }
 
 const mapStateToProps = state => ({
   channels: state.channel.channels,
+  allChannels: state.channel.allChannels,
+  channelsOnPage: state.channel.channelsOnPage,
   isLoading: state.channel.isLoading
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchChannels: () => dispatch(fetchChannelsAsync())
+  fetchChannels: (data) => dispatch(fetchChannelsAsync(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Channels);
