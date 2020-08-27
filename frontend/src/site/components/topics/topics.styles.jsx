@@ -64,7 +64,6 @@ export const AmmountComments = styled.div`
   /* background: blue; */
   flex: 1;
   display: flex;
-  /* flex-direction: column; */
   justify-content: flex-start;
   align-items: center;
   margin-right: 2rem;

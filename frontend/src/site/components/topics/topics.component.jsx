@@ -8,7 +8,7 @@ import moment from 'utils/moment';
 import { useState } from 'react';
 
 const TopicsComponent = ({ slug, forumName, topics, isLoading, fetchTopics }) => {
-  const [limit] = useState(5);
+  const [limit] = useState(20);
 
   useEffect(() => {
     fetchTopics(slug)
@@ -28,30 +28,33 @@ const TopicsComponent = ({ slug, forumName, topics, isLoading, fetchTopics }) =>
       <Divider />
       <Topics>
         {topics.map(topic => {
-          const allPages = Math.ceil(topic.total_comments/limit);
+          const allPages = topic.total_comments !== 0 ? Math.ceil(topic.total_comments/limit) : 0;
           const arrayPaginate = Array(allPages).fill().map((x,i)=>i+1)
-          // console.log('allPages', allPages);
-          // console.log('arrayPaginate', arrayPaginate);
           return (
             <React.Fragment key={topic.topic_id}>
             <Topic>
               <NameAndPagination>
                 <Name as={Link} to={`/topics/${topic.topic_slug}`}>{topic.topic_name}</Name>
-                <PaginationContainer>
-                  {arrayPaginate.slice(0, 3).map(item => (
-                    <NumberOfPage key={item}>{item}</NumberOfPage>
-                  ))}
-                  {arrayPaginate.length > 3 ? (<NumberOfPage key={arrayPaginate.slice(-1)[0]}>{arrayPaginate.slice(-1)[0]}</NumberOfPage>) : null}
-                </PaginationContainer>
+                {allPages !== 0 ? (
+                  <PaginationContainer>
+                    {arrayPaginate.slice(0, 3).map(item => (
+                      <NumberOfPage key={item}>{item}</NumberOfPage>
+                    ))}
+                    {arrayPaginate.length > 3 ? (<NumberOfPage key={arrayPaginate.slice(-1)[0]}>{arrayPaginate.slice(-1)[0]}</NumberOfPage>) : null}
+                  </PaginationContainer>
+                  ) : (<PaginationContainer>Здесь нет записей</PaginationContainer>)
+                }
               </NameAndPagination>
               <AmmountComments>
                 <Icon name='comment'/>
                 <div>{topic.total_comments}</div>
               </AmmountComments>
-              <LastCommentatorAndDate>
-                <LastCommentator>{topic.user_nickname}</LastCommentator>
-                <Date>{moment(topic.last_comment_created_at).format('DD.MM.YYYY, HH:mm')}</Date>
-              </LastCommentatorAndDate>
+              {+topic.total_comments === 0 ? <LastCommentatorAndDate>no</LastCommentatorAndDate> : (
+                <LastCommentatorAndDate>
+                  <LastCommentator>{topic.user_nickname}</LastCommentator>
+                  <Date>{moment(topic.last_comment_created_at).format('DD.MM.YYYY, HH:mm')}</Date>
+                </LastCommentatorAndDate>
+              )}
             </Topic>
             <Divider />
           </React.Fragment>

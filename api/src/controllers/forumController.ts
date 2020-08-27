@@ -51,13 +51,11 @@ export const createChannel = catchAsync(async (req: Request, res: Response) => {
   const slug = slugify(name, { replacement: '-', remove: undefined, lower: true, strict: true, locale: 'ru' });
   
   const user_id = req.user?.id;
-  console.log('@@body', name, description, image_url_channel, slug, user_id);
   const newChannel = await client.query({
     text: 'INSERT INTO channels (name, description, slug, image_url_channel, user_id) VALUES ($1, $2, $3, $4, $5) returning *',
     values: [name, description, `${slug}-${Date.now()}`, image_url_channel, user_id]
   });
 
-  console.log('@@newChannel', newChannel)
   res.status(201).json({
     channel: newChannel.rows[0]
   })
@@ -91,8 +89,8 @@ export const getTopicsByChannelSlug = catchAsync(async (req: Request, res: Respo
         MIN(users.email) AS user_email,
         MIN(users.image_url) AS user_image_url
       FROM topics 
-      JOIN comments ON topics.id = comments.topic_id 
-      JOIN users ON comments.user_id = users.id
+      LEFT JOIN comments ON topics.id = comments.topic_id 
+      LEFT JOIN users ON comments.user_id = users.id
       WHERE topics.channel_id = $1
       GROUP BY topics.id;    
     `,
@@ -100,8 +98,6 @@ export const getTopicsByChannelSlug = catchAsync(async (req: Request, res: Respo
   });
 
   const topics = getTopicsByChannelId.rows;
-
-  console.log('%% - topics: ', topics)
 
   res.json({
     topics
@@ -120,14 +116,11 @@ export const createTopicIntoChannel = catchAsync(async (req: Request, res: Respo
   const channel_id = channel.id;
   const user_id = req.user?.id;
   const slug = slugify(name, { replacement: '-', remove: undefined, lower: true, strict: true, locale: 'ru' });
-
   const newTopic = await client.query({
     text: 'INSERT INTO topics (name, slug, user_id, channel_id) VALUES ($1, $2, $3, $4) returning *',
     values: [name, `${channel_id}-${slug}`, user_id, +channel_id]
   });
 
-  // console.log('slug', slug);
-  // console.log('req.params.channel_slug@', req.params.channel_slug);
   res.json({
     topic: newTopic.rows[0]
   });
