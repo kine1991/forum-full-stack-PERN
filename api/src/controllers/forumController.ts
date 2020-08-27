@@ -9,7 +9,7 @@ export const getChannels = catchAsync(async (req: Request, res: Response) => {
   const ammount_channels = +amountChannelsRes.rows[0].count;
   
   const limit = req.query.limit ? +req.query.limit : 2;
-  const all_pages = Math.ceil(ammount_channels/limit);
+  const all_pages = +ammount_channels !== 0 ? Math.ceil(ammount_channels/limit) : 1;
   const page: any = req.query.page ? +req.query.page : 1;
 
   const pageIsNumber = /^\d+$/.test(<any>page);
