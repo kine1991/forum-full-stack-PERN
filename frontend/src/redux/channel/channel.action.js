@@ -26,8 +26,8 @@ export const createChannelAsync = ({ name, description, image_url_channel }) => 
     // console.log('channel', channel.data.channel);
     dispatch(createChannelSuccess(channel.data.channel));
   } catch (error) {
-    console.log('error', error.response.data);
-    dispatch(createChannelFailure(error.response.data));
+    console.log('error', error.response);
+    dispatch(createChannelFailure(error.response));
   }
 } 
 
@@ -55,13 +55,9 @@ export const fetchChannelsAsync = ({ page, limit }) => async dispatch => {
         limit
       }
     });
-    // console.log(`page - ${page}, limit - ${limit} `);
-    // console.log(channels.data.channels);
-    // http://posts.com:81/channels/zhk-forteciya-1597661727231 - err
     dispatch(fetchChannelsSuccess(channels.data));
   } catch (error) {
-    console.log('error', error.response.data);
-    dispatch(fetchChannelsFailure(error.response.data));
+    dispatch(fetchChannelsFailure(error.response));
   }
 }
 
@@ -87,10 +83,7 @@ export const fetchChannelAsync = slug => async dispatch => {
     const channel = await axios.get(`/api/forums/channels/${slug}`);
     dispatch(fetchChannelSuccess(channel.data.channel));
   } catch (error) {
-    // console.log('error', error.response);
-    // console.log('error', error.response.data);
     dispatch(fetchChannelFailure(error.response));
-    // dispatch(fetchChannelFailure(error.response.data));
   }
 }
 

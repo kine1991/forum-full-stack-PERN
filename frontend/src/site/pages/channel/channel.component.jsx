@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Image, Header, Divider } from 'semantic-ui-react';
+import { Image, Header, Divider, Loader } from 'semantic-ui-react';
 
 import { ChannelContainer, Description } from './channel.styles';
 import { fetchChannelAsync } from 'redux/channel/channel.action';
@@ -27,12 +27,11 @@ const Channel = ({ channel, isLoading, error, fetchChannel, clearTopic }) => {
     const message = error.data.errors[0].message;
     console.log(message);
     if(status === 404) return <PageNotFound message={message} />
-    
   }
 
   // const status = 
 console.log('err', error)
-  if(isLoading !== false || channel === null) return (<div>Loading...</div>)
+  if(isLoading !== false || channel === null) return <Loader active inline='centered' />
 
 
   return (

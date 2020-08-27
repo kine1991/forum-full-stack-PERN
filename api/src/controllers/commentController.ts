@@ -19,14 +19,12 @@ export const getCommentsByTopic = catchAsync(async (req: Request, res: Response)
 
   const amount_comments = +amountCommentsRes.rows[0].count;
 
-
   const limit = req.query.limit ? +req.query.limit : 20;
   const all_pages = Math.ceil(amount_comments/limit);
   const page = req.query.page ? +req.query.page : 1;
   const offset = limit * (page - 1);
 
   if(all_pages < page) throw new BadRequestError(`This page (${page}) do not exists`, 404);
-
 
   const comments = await client.query({
     text: 'SELECT comments.id AS comment_id, comments.content AS comment_content, comments.created_at AS comment_created_at, users.nickname AS user_nickname, users.email AS user_email, users.image_url AS user_image_url FROM comments INNER JOIN users ON comments.user_id = users.id WHERE comments.topic_id = $1 LIMIT $2 OFFSET $3',

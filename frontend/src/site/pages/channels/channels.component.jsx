@@ -5,12 +5,13 @@ import { Item, Loader } from 'semantic-ui-react';
 import { ChannelsContainer } from './channels.styles';
 import { fetchChannelsAsync } from 'redux/channel/channel.action';
 import Pagination from 'shared/components/pagination/pagination.component';
+import PageNotFound from 'shared/components/page-not-found/page-not-found.component';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 }
 
-const Channels = ({ channels, isLoading, fetchChannels, allChannels, channelsOnPage }) => { 
+const Channels = ({ channels, isLoading, error, fetchChannels, allChannels, channelsOnPage }) => { 
   let query = useQuery();
   let page = query.get('page') ? query.get('page') : 1;
   let limit = query.get('limit') ? query.get('limit') : 2;
@@ -19,8 +20,9 @@ const Channels = ({ channels, isLoading, fetchChannels, allChannels, channelsOnP
     fetchChannels({ page, limit });
   }, [fetchChannels, page, limit]); 
 
-// console.log(allChannels, channelsOnPage)
-  if(isLoading !== false) return (
+  if(error && error.status === 404) return <PageNotFound message={error.data.errors[0].message} />
+
+  if(isLoading !== false /*|| channels !== null*/) return (
     <Loader active inline='centered' />
   )
 
@@ -53,7 +55,8 @@ const mapStateToProps = state => ({
   channels: state.channel.channels,
   allChannels: state.channel.allChannels,
   channelsOnPage: state.channel.channelsOnPage,
-  isLoading: state.channel.isLoading
+  isLoading: state.channel.isLoading,
+  error: state.channel.error
 });
 
 const mapDispatchToProps = dispatch => ({
