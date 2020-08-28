@@ -29,10 +29,7 @@ const Channel = ({ channel, isLoading, error, fetchChannel, clearTopic }) => {
     if(status === 404) return <PageNotFound message={message} />
   }
 
-  // const status = 
-console.log('err', error)
   if(isLoading !== false || channel === null) return <Loader active inline='centered' />
-
 
   return (
     <ChannelContainer>

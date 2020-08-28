@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Header, Button, Icon, Loader, Divider } from 'semantic-ui-react';
-import { CreateBtnContainer, Topics, Topic, NameAndPagination, Name, PaginationContainer, NumberOfPage, AmmountComments, LastCommentatorAndDate, LastCommentator, Date } from './topics.styles';
+import { CreateBtnContainer, Topics, Topic, NameAndPagination, Name, PaginationContainer, NumberOfPage, AmmountComments, LastCommentatorAndDate, LastCommentator, Date, NoDataTitle, NoDataContainer } from './topics.styles';
 import { fetchTopicsAsync } from 'redux/topic/topic.action';
 import moment from 'utils/moment';
 import { useState } from 'react';
@@ -15,7 +15,17 @@ const TopicsComponent = ({ slug, forumName, topics, isLoading, fetchTopics }) =>
   }, [fetchTopics, slug]);
 
   if(isLoading !== false || topics === null) return <Loader active inline='centered' />
-  if(topics.length === 0) return <div>No Data..</div>
+
+  if(topics.length === 0) return (
+    <NoDataContainer>
+      <CreateBtnContainer>
+        <Button as={Link} to={`/channels/${slug}/create`} color='black'>
+          <Icon name='edit' /> Создать
+        </Button>
+      </CreateBtnContainer>
+      <NoDataTitle>Не создано ни одной темы!</NoDataTitle>
+    </NoDataContainer>
+  )
 
   return (
     <React.Fragment>

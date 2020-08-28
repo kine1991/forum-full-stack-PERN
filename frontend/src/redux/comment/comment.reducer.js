@@ -44,7 +44,9 @@ const commentReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         error: null,
-        comments: action.payload
+        comments: action.payload.comments,
+        allComments: action.payload.all_comments,
+        commentsOnPage: action.payload.comments_on_page
       }
     case commentTypes.CREATE_COMMENT_FAILURE:
       return {

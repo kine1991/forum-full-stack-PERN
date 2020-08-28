@@ -20,7 +20,7 @@ export const getCommentsByTopic = catchAsync(async (req: Request, res: Response)
   const amount_comments = +amountCommentsRes.rows[0].count;
 
   const limit = req.query.limit ? +req.query.limit : 20;
-  const all_pages = Math.ceil(amount_comments/limit);
+  const all_pages = +amount_comments !== 0 ? Math.ceil(amount_comments/limit) : 1;
   const page = req.query.page ? +req.query.page : 1;
   const offset = limit * (page - 1);
 

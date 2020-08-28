@@ -44,9 +44,10 @@ const Channels = ({ channels, isLoading, error, fetchChannels, allChannels, chan
           ))}
         </Item.Group>
       )}
-      {allChannels !== null && channelsOnPage !== null ? (
+      {allChannels === null || +allChannels === 0 ? null : <Pagination allItems={allChannels} limit={channelsOnPage} /> }
+      {/* {allChannels !== null && channelsOnPage !== null && +allChannels !== 0 ? (
         <Pagination allItems={allChannels} limit={channelsOnPage} />
-      ) : null }
+      ) : null } */}
     </ChannelsContainer>
   )
 }

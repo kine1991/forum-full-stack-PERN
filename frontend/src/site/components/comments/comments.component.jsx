@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { useParams, useLocation } from 'react-router-dom';
 import { Icon, Comment, Divider, Loader } from 'semantic-ui-react';
 
+import { NoDataTitle } from './comments.styles';
 import moment from 'utils/moment';
 import Pagination from 'shared/components/pagination/pagination.component';
 import { fetchCommentsAsync } from 'redux/comment/comment.action';
@@ -20,9 +21,9 @@ const Comments = ({ comments, isLoading, allComments, fetchCommentsByTopic }) =>
   useEffect(() => {
     fetchCommentsByTopic({ slug, page, limit });
   }, [page, fetchCommentsByTopic, slug, limit]);
-console.log(`isLoading - ${isLoading}, comments ${comments}`)
-  if(isLoading !== true && comments === null) return <div>No Data</div>
+
   if(isLoading !== false || comments === null) return <Loader active inline='centered' />
+  if(isLoading !== true && allComments === 0) return <NoDataTitle>Нет ни одного коментария!</NoDataTitle>
 
   return (
     <React.Fragment>
