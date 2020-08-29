@@ -6,6 +6,7 @@ import { Switch, Route } from "react-router-dom";
 
 import SiteContainer from './site/containers/site/site-container.component';
 import AdminContainer from './admin/containers/admin/admin-container.component';
+import ProtectedIsAuthenticatedRoute from 'shared/components/protected-is-authenticated-route/protected-is-authenticated-route.components';
 
 const App = ({ checkAuth }) => {
   useEffect(() => {
@@ -14,7 +15,8 @@ const App = ({ checkAuth }) => {
   return (
     <div>
       <Switch>
-        <Route path='/admin' component={AdminContainer} />
+        <ProtectedIsAuthenticatedRoute path='/admin' component={AdminContainer} />
+        {/* <Route path='/admin' component={AdminContainer} /> */}
         <Route path='' exact component={SiteContainer} />
       </Switch>
     </div>

@@ -13,6 +13,8 @@ import Channel from 'site/pages/channel/channel.component';
 import CreateTopic from 'site/pages/create-topic/create-topic.componen';
 import Topic from 'site/pages/topic/topic.component';
 import PageNotFound from 'shared/components/page-not-found/page-not-found.component';
+import ProtectedIsAuthenticatedRoute from 'shared/components/protected-is-authenticated-route/protected-is-authenticated-route.components';
+import ProtectedIsNotAuthenticatedRoute from 'shared/components/protected-is-not-authenticated-route/protected-is-not-authenticated-route.component';
 
 const SiteContainer = () => {
   return (
@@ -21,13 +23,17 @@ const SiteContainer = () => {
       <Layout>
         <Switch>
           <Route exact path='/' component={Home} />
+          <Route exact path='/log' component={Home} />
           <Route exact path='/channels' component={Channels} />
           <Route exact path='/channels/:slug' component={Channel} />
-          <Route path='/channels/:slug/create' component={CreateTopic} />
+          <ProtectedIsAuthenticatedRoute path='/create-channel' component={CreateChannel} />
+          <ProtectedIsAuthenticatedRoute path='/channels/:slug/create' component={CreateTopic} />
           <Route path='/topics/:slug' component={Topic} />
-          <Route path='/login' component={Login} />
-          <Route path='/register' component={Register} />
-          <Route path='/create-channel' component={CreateChannel} />
+          <ProtectedIsNotAuthenticatedRoute path='/login' component={Login}/>
+          <ProtectedIsNotAuthenticatedRoute path='/register' component={Register}/>
+          {/* <Route path='/login' component={Login} />
+          <Route path='/register' component={Register} /> */}
+          {/* <Route path='/create-channel' component={CreateChannel} /> */}
           <Route component={PageNotFound} />
         </Switch>
       </Layout>

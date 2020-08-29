@@ -1,11 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { logoutAsync } from 'redux/user/user.action';
 import { HeaderContainer, Header, Hamburger, HamburgerButton, HamburgerButtonBar, Sidebar, Backdrop, Close, SidebarContent, SidebarItems, SidebarItem, SidebarText, HeaderItemsRight, HeaderItemsLeft, HeaderItem, HeaderLogout, UserContainer, UserName, UserPhotoContainer, UserPhotoImage } from './header.styles';
 
+const links = [
+  {
+    to: '/',
+    exact: true,
+    name: 'Home',
+    forIsAuthenticatedUser: null
+  },
+  {
+    to: '/channels',
+    exact: false,
+    name: 'Channels',
+    forIsAuthenticatedUser: null
+  },
+  {
+    to: '/create-channel',
+    exact: false,
+    name: 'Create Channel',
+    forIsAuthenticatedUser: true
+  },
+  {
+    to: '/admin',
+    exact: true,
+    name: 'Admin Panel',
+    forIsAuthenticatedUser: true
+  },
+  {
+    to: '/log',
+    exact: false,
+    name: 'Log',
+    forIsAuthenticatedUser: false
+  }
+]
+
 const HeaderComponent = ({ currentUser, isLoading, logout }) => {
-  const [openSidebar, setOpenSidebar] = useState(true);
+  const [isAuthenticatedUser, setIsAuthenticatedUser] = useState(null);
+  const [openSidebar, setOpenSidebar] = useState(false);
+
+  useEffect(() => {
+    if(isLoading === false) setIsAuthenticatedUser(currentUser ? true : false);
+  }, [currentUser, isLoading]);
+
   return (
     <HeaderContainer>
       <Header>
@@ -17,9 +56,13 @@ const HeaderComponent = ({ currentUser, isLoading, logout }) => {
           </HamburgerButton>
         </Hamburger>
         <HeaderItemsLeft>
-          <HeaderItem exact to='/'>Home</HeaderItem>
+          {links.map(link => {
+            if(link.forIsAuthenticatedUser === null) return <HeaderItem key={link.to} exact={link.exact} to={link.to}>{link.name}</HeaderItem>
+            if(link.forIsAuthenticatedUser !== null && isAuthenticatedUser === link.forIsAuthenticatedUser) return <HeaderItem key={link.to} exact={link.exact} to={link.to}>{link.name}</HeaderItem>
+          })}
+          {/* <HeaderItem exact to='/'>Home</HeaderItem>
           <HeaderItem to='/channels'>Channels</HeaderItem>
-          <HeaderItem to='/create-channel'>Create Channel</HeaderItem>
+          <HeaderItem to='/create-channel'>Create Channel</HeaderItem> */}
         </HeaderItemsLeft>
         <HeaderItemsRight>
           {!currentUser && isLoading === false && (
@@ -46,7 +89,11 @@ const HeaderComponent = ({ currentUser, isLoading, logout }) => {
           <SidebarContent>
             <Close onClick={() => setOpenSidebar(false)}>&times;</Close>
             <SidebarItems>
-              <SidebarItem>
+              {links.map(link => {
+                if(link.forIsAuthenticatedUser === null) return <SidebarItem key={link.to}><SidebarText exact={link.exact} to={link.to}>{link.name}</SidebarText></SidebarItem>
+                if(link.forIsAuthenticatedUser !== null && isAuthenticatedUser === link.forIsAuthenticatedUser) return <SidebarItem key={link.to}><SidebarText exact={link.exact} to={link.to}>{link.name}</SidebarText></SidebarItem>
+              })}
+              {/* <SidebarItem>
                 <SidebarText exact to={`/`} >Home</SidebarText>
               </SidebarItem>
               <SidebarItem>
@@ -54,7 +101,7 @@ const HeaderComponent = ({ currentUser, isLoading, logout }) => {
               </SidebarItem>
               <SidebarItem>
                 <SidebarText to={`/create-channel`}>Create Channel</SidebarText>
-              </SidebarItem>
+              </SidebarItem> */}
             </SidebarItems> 
           </SidebarContent>
         </Sidebar>

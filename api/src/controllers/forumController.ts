@@ -3,6 +3,7 @@ import slugify from 'slugify';
 import catchAsync from "../utils/catchAsync";
 import { BadRequestError } from '../utils/errors';
 import client from '../utils/client';
+import validator from 'validator';
 
 export const getChannels = catchAsync(async (req: Request, res: Response) => {
   const amountChannelsRes = await client.query('SELECT COUNT(id) FROM channels');
@@ -107,10 +108,13 @@ export const getTopicsByChannelSlug = catchAsync(async (req: Request, res: Respo
 export const createTopicIntoChannel = catchAsync(async (req: Request, res: Response) => {
   const { name } = req.body;
 
+  if(validator.isEmpty(name)) throw new BadRequestError('Please provide name!', 400);
+
   const channelIdRef = await client.query({
     text: 'SELECT * FROM channels WHERE channels.slug = $1',
     values: [req.params.channel_slug]
-  })
+  });
+
   const channel = channelIdRef.rows[0];
   if(!channel) throw new BadRequestError('This channel does not exists', 404);
   const channel_id = channel.id;

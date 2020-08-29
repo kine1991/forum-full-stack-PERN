@@ -27,7 +27,19 @@ export const getCommentsByTopic = catchAsync(async (req: Request, res: Response)
   if(all_pages < page) throw new BadRequestError(`This page (${page}) do not exists`, 404);
 
   const comments = await client.query({
-    text: 'SELECT comments.id AS comment_id, comments.content AS comment_content, comments.created_at AS comment_created_at, users.nickname AS user_nickname, users.email AS user_email, users.image_url AS user_image_url FROM comments INNER JOIN users ON comments.user_id = users.id WHERE comments.topic_id = $1 LIMIT $2 OFFSET $3',
+    text: `
+      SELECT 
+        comments.id AS comment_id, 
+        comments.content AS comment_content, 
+        comments.created_at AS comment_created_at, 
+        users.nickname AS user_nickname, 
+        users.email AS user_email, 
+        users.image_url AS user_image_url 
+      FROM comments INNER JOIN users ON comments.user_id = users.id 
+      WHERE comments.topic_id = $1 
+      ORDER BY comments.created_at 
+      LIMIT $2 OFFSET $3
+    `,
     values: [topic_id, limit, offset]
   });
 

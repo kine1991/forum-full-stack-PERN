@@ -17,7 +17,7 @@ const checkAuthFailure = () => ({
 });
 
 export const checkAuthAsync = () => async dispatch => {
-  dispatch(checkAuthStart);
+  dispatch(checkAuthStart());
 
   try {
     const user = await axios.get('/api/users/check-auth')
