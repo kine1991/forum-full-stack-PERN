@@ -78,7 +78,7 @@ export const signUp = catchAsync(async (req: Request, res: Response) => {
     values: [nickname, email, hashedPassword, imageUrl]
   });
   
-  createSendToken(user.rows, 201, res);
+  createSendToken(user.rows[0], 201, res);
 });
 
 export const checkAuth2 = catchAsync(async (req: Request, res: Response) => {

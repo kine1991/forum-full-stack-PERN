@@ -1,7 +1,7 @@
 import React from 'react'
 import { /*Link,*/ Route, Switch } from 'react-router-dom';
 
-import Header from 'site/components/header/header.component';
+import Header from 'shared/components/header/header.component';
 import Footer from 'site/components/footer/footer.component';
 import Layout from 'shared/components/layout/layout.component';
 import Register from 'site/pages/register/register.component';

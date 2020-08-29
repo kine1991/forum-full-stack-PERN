@@ -77,6 +77,7 @@ export const loginAsync = ({ email, password }) => async dispatch => {
 
   try {
     const user = await axios.post('/api/users/sign-in', { email, password });
+    console.log('user', user.data.user);
     dispatch(loginSuccess(user.data.user));
   } catch (error) {
     console.log('error', error.response.data);
