@@ -1,7 +1,7 @@
 server {
   listen 80;
 
-  server_name posts.com;
+  server_name kronworld.xyz;
 
   location / {
     proxy_pass http://frontend:3000;

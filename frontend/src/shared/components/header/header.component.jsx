@@ -40,6 +40,8 @@ const HeaderComponent = ({ currentUser, isLoading, logout }) => {
             </React.Fragment>
           )}
         </HeaderItemsRight>
+
+      </Header>
         <Sidebar openSidebar={openSidebar}>
           <SidebarContent>
             <Close onClick={() => setOpenSidebar(false)}>&times;</Close>
@@ -57,8 +59,6 @@ const HeaderComponent = ({ currentUser, isLoading, logout }) => {
           </SidebarContent>
         </Sidebar>
         <Backdrop openSidebar={openSidebar} onClick={() => setOpenSidebar(false)} />
-
-      </Header>
     </HeaderContainer>
   )
 }

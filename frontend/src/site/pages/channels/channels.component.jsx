@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { Item, Loader } from 'semantic-ui-react';
-import { ChannelsContainer } from './channels.styles';
+import { ChannelsContainer, ChannelsDoNotExists } from './channels.styles';
 import { fetchChannelsAsync } from 'redux/channel/channel.action';
 import Pagination from 'shared/components/pagination/pagination.component';
 import PageNotFound from 'shared/components/page-not-found/page-not-found.component';
@@ -25,6 +25,8 @@ const Channels = ({ channels, isLoading, error, fetchChannels, allChannels, chan
   if(isLoading !== false /*|| channels !== null*/) return (
     <Loader active inline='centered' />
   )
+
+  if(isLoading === false && channels.length === 0) return <ChannelsDoNotExists>Ни одного канала не создано!</ChannelsDoNotExists>
 
   return (
     <ChannelsContainer>

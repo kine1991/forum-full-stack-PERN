@@ -2,6 +2,8 @@ import React from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { Pagination } from 'semantic-ui-react';
 
+import { PaginationLessContainer, PaginationMoreContainer } from './pagination.styles';
+
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 }
@@ -17,16 +19,34 @@ const PaginationComponent = ({ allItems, limit }) => {
 
   return (
     <div>
-      <Pagination
-        defaultActivePage={page} 
-        totalPages={countPages}
-        onPageChange={(event, data) => {
-          history.push({
-            pathname: location.pathname,
-            search: `?page=${data.activePage}`
-          });
-        }}
-      />
+      <PaginationLessContainer>
+        <Pagination
+          defaultActivePage={page} 
+          totalPages={countPages}
+          firstItem={null}
+          lastItem={null}
+          ellipsisItem={null}
+          boundaryRange={0}
+          onPageChange={(event, data) => {
+            history.push({
+              pathname: location.pathname,
+              search: `?page=${data.activePage}`
+            });
+          }}
+        />
+      </PaginationLessContainer>
+      <PaginationMoreContainer>
+        <Pagination
+            defaultActivePage={page} 
+            totalPages={countPages}
+            onPageChange={(event, data) => {
+              history.push({
+                pathname: location.pathname,
+                search: `?page=${data.activePage}`
+              });
+            }}
+          />
+      </PaginationMoreContainer>
     </div>
   )
 }

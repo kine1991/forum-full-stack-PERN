@@ -26,7 +26,7 @@ export const getChannels = catchAsync(async (req: Request, res: Response) => {
 
   res.status(200).json({
     all_channels: ammount_channels,
-    channels_on_page: channels.rows.length,
+    channels_on_page: limit,
     channels: channels.rows
   });
 });
