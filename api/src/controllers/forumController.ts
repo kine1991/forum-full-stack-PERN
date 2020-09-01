@@ -9,7 +9,7 @@ export const getChannels = catchAsync(async (req: Request, res: Response) => {
   const amountChannelsRes = await client.query('SELECT COUNT(id) FROM channels');
   const ammount_channels = +amountChannelsRes.rows[0].count;
   
-  const limit = req.query.limit ? +req.query.limit : 2;
+  const limit = req.query.limit ? +req.query.limit : 20;
   const all_pages = +ammount_channels !== 0 ? Math.ceil(ammount_channels/limit) : 1;
   const page: any = req.query.page ? +req.query.page : 1;
 
@@ -27,7 +27,7 @@ export const getChannels = catchAsync(async (req: Request, res: Response) => {
 
   res.status(200).json({
     all_channels: ammount_channels,
-    channels_on_page: limit,
+    channels_on_page: channels.rows.length,
     channels: channels.rows
   });
 });

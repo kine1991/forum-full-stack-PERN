@@ -53,8 +53,9 @@ export const createCommentAsync = ({ content, slug }) => async dispatch => {
     await axios.post(`/api/comments/by_topic/${slug}`, { content }, {
       withCredentials: true
     });
+    // console.log()
     const comments = await axios.get(`/api/comments/by_topic/${slug}`);
-    dispatch(createCommentSuccess(comments.data));
+    dispatch(createCommentSuccess());
     return comments;
   } catch (error) {
     console.log('error', error);

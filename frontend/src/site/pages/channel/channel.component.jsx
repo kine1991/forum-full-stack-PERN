@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { Image, Header, Divider, Loader } from 'semantic-ui-react';
+import { useParams, useHistory } from 'react-router-dom';
+import { Image, Header, Divider, Loader, Button, Icon } from 'semantic-ui-react';
 
 import { ChannelContainer, Description } from './channel.styles';
 import { fetchChannelAsync } from 'redux/channel/channel.action';
@@ -10,17 +10,19 @@ import Topics from 'site/components/topics/topics.component';
 import PageNotFound from 'shared/components/page-not-found/page-not-found.component';
 
 const Channel = ({ channel, isLoading, error, fetchChannel, clearTopic }) => {
+  const history = useHistory();
   let { slug } = useParams();
 
   useEffect(() => {
     fetchChannel(slug);
   }, [fetchChannel, slug]);
 
-  useEffect(() =>{
-    return () => {
-      clearTopic();
-    };
-  }, [clearTopic]);
+  // useEffect(() =>{
+  //   return () => {
+  //     // clearTopic();
+  //     console.log('After unsubscribe!!!')
+  //   };
+  // }, []);
 
   if(error) {
     const status = error.status;
@@ -31,8 +33,14 @@ const Channel = ({ channel, isLoading, error, fetchChannel, clearTopic }) => {
 
   if(isLoading !== false || channel === null) return <Loader active inline='centered' />
 
+  const handleBack = () => {
+    clearTopic();
+    history.push('/channels')
+  }
+
   return (
     <ChannelContainer>
+      <Button size='tiny' onClick={() => handleBack()}><Icon name='left arrow'/>Назад</Button>
       <Header as='h1'>{channel.name}</Header>
       <Image src={channel.image_url_channel} fluid />
       <Description>{channel.description}</Description>

@@ -12,7 +12,7 @@ const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 }
 
-const Comments = ({ comments, isLoading, allComments, fetchCommentsByTopic }) => {
+const Comments = ({ comments, isLoading, allComments, fetchCommentsByTopic, triggerAfterCreated }) => {
   let query = useQuery();
   let page = query.get('page') ? query.get('page') : 1;
   let limit = query.get('limit') ? query.get('limit') : 20;
@@ -20,7 +20,7 @@ const Comments = ({ comments, isLoading, allComments, fetchCommentsByTopic }) =>
 
   useEffect(() => {
     fetchCommentsByTopic({ slug, page, limit });
-  }, [page, fetchCommentsByTopic, slug, limit]);
+  }, [page, fetchCommentsByTopic, slug, limit, triggerAfterCreated]);
 
   if(isLoading !== false || comments === null) return <Loader active inline='centered' />
   if(isLoading !== true && allComments === 0) return <NoDataTitle>Нет ни одного коментария!</NoDataTitle>

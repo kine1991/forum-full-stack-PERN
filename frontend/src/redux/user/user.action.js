@@ -102,10 +102,7 @@ const logoutFailure = error => ({
 export const logoutAsync = () => async dispatch => {
   dispatch(logoutStart());
   try {
-
-
-
-    const user = await axios.get('api/users/logout');
+    const user = await axios.get('/api/users/logout');
     console.log('user8888', user);
     dispatch(logoutSuccess());
   } catch (error) {

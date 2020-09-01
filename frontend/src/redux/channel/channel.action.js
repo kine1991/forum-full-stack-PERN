@@ -87,10 +87,14 @@ export const fetchChannelAsync = slug => async dispatch => {
   }
 }
 
-const clear = () => ({
+export const clearAsync = () => ({
   type: channelTypes.CLEAR
 });
 
-export const clearAsync = () => async dispatch => {
-  dispatch(clear());
-};
+// export const clearAsync = () => async dispatch => {
+//   dispatch(clear());
+// };
+
+// export const clearAsync = () => dispatch => {
+//   dispatch(clear());
+// };

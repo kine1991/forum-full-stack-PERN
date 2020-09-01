@@ -68,3 +68,4 @@ export const createComment = catchAsync(async (req: Request, res: Response) => {
     comment: comment.rows[0]
   })
 });
+

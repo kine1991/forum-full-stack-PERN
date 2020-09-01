@@ -24,7 +24,7 @@ const commentReducer = (state = INITIAL_STATE, action) => {
         error: null,
         comments: action.payload.comments,
         allComments: action.payload.all_comments,
-        commentsOnPage: action.payload.comments_on_page
+        commentsOnPage: action.payload.comments_on_page,
       }
     case commentTypes.FETCH_COMMENTS_FAILURE:
       return {
@@ -36,22 +36,22 @@ const commentReducer = (state = INITIAL_STATE, action) => {
     case commentTypes.CREATE_COMMENT_START:
       return {
         ...state,
-        isLoading: true,
+        // isLoading: true,
         error: null
       }
     case commentTypes.CREATE_COMMENT_SUCCESS:
       return {
         ...state,
-        isLoading: false,
+        // isLoading: false,
         error: null,
-        comments: action.payload.comments,
-        allComments: action.payload.all_comments,
-        commentsOnPage: action.payload.comments_on_page
+        // comments: action.payload.comments,
+        // allComments: action.payload.all_comments,
+        // commentsOnPage: action.payload.comments_on_page
       }
     case commentTypes.CREATE_COMMENT_FAILURE:
       return {
         ...state,
-        isLoading: false,
+        // isLoading: false,
         error: action.payload
       }
 

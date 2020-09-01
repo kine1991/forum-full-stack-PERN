@@ -18,15 +18,14 @@ const CommentsWrap = ({ slug, /*comments, isLoading, fetchCommentsByTopic,*/ cre
   let location = useLocation();
   let currentPage = query.get('page') ? query.get('page') : 1;
   const [content, setContent] = useState('');
+  const [triggerAfterCreated, setTriggerAfterCreated] = useState(false);
 
   const handleSubmit = event => {
     event.preventDefault();
 
     createCommentIntoTopic({ slug, content }).then(response => {
-      console.log('@response', response.data);
       const allComments = response.data.all_comments;
-      const commentsOnPage = response.data.comments_on_page;
-      const lastPage = Math.ceil(allComments/commentsOnPage);
+      const lastPage = Math.ceil(allComments/limit);
       if(lastPage > currentPage) {
         history.push({
           path: location.pathname,
@@ -35,11 +34,12 @@ const CommentsWrap = ({ slug, /*comments, isLoading, fetchCommentsByTopic,*/ cre
       };
     });
     setContent('');
+    setTriggerAfterCreated(!triggerAfterCreated);
   }
 
   return (
     <CommentsWrapContainer>
-      <Comments />
+      <Comments triggerAfterCreated={triggerAfterCreated}/>
       <Divider />
       <Form onSubmit={handleSubmit} style={{marginTop: '3rem'}}>
         <TextArea 
