@@ -6,21 +6,28 @@ import { Icon, Comment, Divider, Loader } from 'semantic-ui-react';
 import { NoDataTitle } from './comments.styles';
 import moment from 'utils/moment';
 import Pagination from 'shared/components/pagination/pagination.component';
-import { fetchCommentsAsync } from 'redux/comment/comment.action';
+import { fetchCommentsAsync, deleteCommentAsync } from 'redux/comment/comment.action';
+import SimpleModal from 'shared/components/simple-modal/simple-modal';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 }
 
-const Comments = ({ comments, isLoading, allComments, fetchCommentsByTopic, triggerAfterCreated }) => {
+const Comments = ({ comments, isLoading, allComments, fetchCommentsByTopic, triggerAfterCreated, deleteComment }) => {
   let query = useQuery();
   let page = query.get('page') ? query.get('page') : 1;
   let limit = query.get('limit') ? query.get('limit') : 20;
   let { slug } = useParams();
+  const [triggerAfterDeleted, setTriggerAfterDeleted] = React.useState(false);
 
   useEffect(() => {
     fetchCommentsByTopic({ slug, page, limit });
-  }, [page, fetchCommentsByTopic, slug, limit, triggerAfterCreated]);
+  }, [page, fetchCommentsByTopic, slug, limit, triggerAfterCreated, triggerAfterDeleted]);
+
+  const onDeleteCommentById = id => {
+    deleteComment(id);
+    setTriggerAfterDeleted(!triggerAfterDeleted);
+  }
 
   if(isLoading !== false || comments === null) return <Loader active inline='centered' />
   if(isLoading !== true && allComments === 0) return <NoDataTitle>Нет ни одного коментария!</NoDataTitle>
@@ -40,8 +47,11 @@ const Comments = ({ comments, isLoading, allComments, fetchCommentsByTopic, trig
                   <Comment.Metadata>
                     <div>{commentDate}</div>
                     <div>
-                      <Icon name='star' />5 Faves
+                      <Icon name='star' />4 Faves
                     </div>
+                    <SimpleModal  headerText='Удалить комментарий?' onConfirmClick={() => onDeleteCommentById(comment.comment_id)} /*isDeletedTrigger={isDeletedTrigger} setIsDeletedTrigger={setIsDeletedTrigger}*/>
+                      <Icon name='trash'/>
+                    </SimpleModal>
                   </Comment.Metadata>
                   <Comment.Text>{comment.comment_content}</Comment.Text>
                 </Comment.Content>
@@ -65,7 +75,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchCommentsByTopic: (data) => dispatch(fetchCommentsAsync(data))
+  fetchCommentsByTopic: (data) => dispatch(fetchCommentsAsync(data)),
+  deleteComment: (id) => dispatch(deleteCommentAsync(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Comments);

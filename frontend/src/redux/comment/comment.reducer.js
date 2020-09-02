@@ -55,6 +55,13 @@ const commentReducer = (state = INITIAL_STATE, action) => {
         error: action.payload
       }
 
+    // DELETE_COMMENT
+    case commentTypes.DELETE_COMMENT_FAILURE:
+      return {
+        ...state,
+        error: action.payload
+      }
+
     // CLEAR
     case commentTypes.CLEAR:
       return {

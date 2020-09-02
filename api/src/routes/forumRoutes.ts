@@ -5,11 +5,17 @@ import * as forumController from '../controllers/forumController';
 const router = express.Router();
 
 router.route('/channels')
-  .get(forumController.getChannels)
-  .post(authController.protect, forumController.createChannel);
+.get(forumController.getChannels)
+.post(authController.protect, forumController.createChannel);
+
+router.route('/own-channels')
+  .get(authController.protect, forumController.getOwnChannels);
 
 router.route('/channels/:channel_slug')
-  .get(forumController.getChannel);
+  .get(forumController.getChannel)
+
+router.route('/channels/:channel_id')
+  .delete(authController.protect, forumController.deleteChannel);
 
 router.route('/topics/by_channel_slug/:channel_slug')
   .get(forumController.getTopicsByChannelSlug)

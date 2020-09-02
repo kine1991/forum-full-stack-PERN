@@ -93,20 +93,18 @@ export const checkAuth = async (req: Request, res: Response) => {
     } else {
       const token = req.cookies.jwt;
       const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET!) as { id: string };
-      console.log('decoded2222', decoded);
-
+      console.log('decoded', decoded);
       const userRes = await client.query({
         text: 'SELECT nickname, email, image_url, created_at FROM users WHERE users.id = $1',
         values: [decoded.id]
       });
-      user = userRes.rows[0];
+      user = userRes.rows.length === 0 ? null : userRes.rows[0]; 
     }
-
-    res.json({
-      user
+    res.status(200).json({
+      user: user
     });
   } catch (error) {
-    res.json({
+    res.status(200).json({
       user: null
     });
   }
@@ -132,7 +130,7 @@ export const protect = catchAsync(async (req: Request, res: Response, next: Next
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET!) as { id: string };
   
   const currentUserRes = await client.query({
-    text: 'SELECT id, nickname, email, created_at FROM users WHERE users.id = $1',
+    text: 'SELECT id, nickname, email, role, created_at FROM users WHERE users.id = $1',
     values: [decoded.id]
   });
   const currentUser = currentUserRes.rows[0];

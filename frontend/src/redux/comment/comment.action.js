@@ -63,6 +63,20 @@ export const createCommentAsync = ({ content, slug }) => async dispatch => {
   }
 }
 
+// DELETE_COMMENT
+const deleteCommentFailure = error => ({
+  type: commentTypes.DELETE_COMMENT_FAILURE,
+  payload: error
+});
+
+export const deleteCommentAsync = id => async dispatch => {
+  try {
+    await axios.delete(`/api/comments/${id}`);
+  } catch (error) {
+    dispatch(deleteCommentFailure(error));
+  }
+}
+
 const clear = () => ({
   type: commentTypes.CLEAR
 });

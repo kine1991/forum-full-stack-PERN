@@ -14,7 +14,7 @@ const CommentComponent = ({ comment }) => {
           <Comment.Metadata>
             <div>{commentDate}</div>
             <div>
-              <Icon name='star' />5 Faves
+              <Icon name='star' />3 Faves
             </div>
           </Comment.Metadata>
           <Comment.Text>{comment.comment_content}</Comment.Text>

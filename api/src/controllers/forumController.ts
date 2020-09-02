@@ -32,6 +32,17 @@ export const getChannels = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+export const getOwnChannels = catchAsync(async (req: Request, res: Response) => {
+  const channels = await client.query({
+    text: 'SELECT * FROM channels',
+    values: []
+  });
+
+  res.status(200).json({
+    channels: channels.rows
+  });
+});
+
 export const getChannel = catchAsync(async (req: Request, res: Response) => {
   const channel = await client.query({
     text: 'SELECT * FROM channels WHERE slug = $1',
@@ -43,6 +54,16 @@ export const getChannel = catchAsync(async (req: Request, res: Response) => {
   res.status(200).json({
     channel: channel.rows[0]
   })
+});
+
+export const deleteChannel = catchAsync(async (req: Request, res: Response) => {
+  // channel_id
+  await client.query({
+    text: 'DELETE FROM channels WHERE channels.id = $1',
+    values: [req.params.channel_id]
+  })
+
+  res.status(204).json({});
 });
 
 export const createChannel = catchAsync(async (req: Request, res: Response) => {

@@ -6,10 +6,10 @@ import { registerAsync } from 'redux/user/user.action';
 import AuthFormError from 'site/components/auth-form-error/auth-form-error.component';
 
 const Register = ({ error, register }) => {
-  const [nickname, setNickname] = useState('');
-  const [email, setEmail] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  const [password, setPassword] = useState('');
+  const [nickname, setNickname] = useState('test1');
+  const [email, setEmail] = useState('test1@mail.ru');
+  const [imageUrl, setImageUrl] = useState('https://habrastorage.org/getpro/habr/avatars/e18/935/57e/e1893557eeaacf388b0e596d910014c8.jpg');
+  const [password, setPassword] = useState('123456');
 
   const handleSubmit = event => {
     event.preventDefault()

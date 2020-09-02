@@ -6,6 +6,7 @@ const ProtectedIsAuthenticatedRoute = ({ currentUser, component: Component, ...r
   return (
     <Route {...rest} render={
       (props) => {
+        console.log('currentUser', currentUser);
         if(currentUser === null) {
           return <Component {...props} />
         } else {

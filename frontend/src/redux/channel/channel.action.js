@@ -61,6 +61,22 @@ export const fetchChannelsAsync = ({ page, limit }) => async dispatch => {
   }
 }
 
+export const fetchOwnChannelsAsync = (/*{ page, limit }*/) => async dispatch => {
+  dispatch(fetchChannelsStart());
+  try {
+    const channels = await axios.get('/api/forums/own-channels');
+    // const channels = await axios.get('/api/forums/channels', {
+    //   params: {
+    //     page,
+    //     limit
+    //   }
+    // });
+    dispatch(fetchChannelsSuccess(channels.data));
+  } catch (error) {
+    dispatch(fetchChannelsFailure(error.response));
+  }
+}
+
 // FETCH_CHANNEL
 const fetchChannelStart = () => ({
   type: channelTypes.FETCH_CHANNEL_START
@@ -84,6 +100,20 @@ export const fetchChannelAsync = slug => async dispatch => {
     dispatch(fetchChannelSuccess(channel.data.channel));
   } catch (error) {
     dispatch(fetchChannelFailure(error.response));
+  }
+}
+
+// DELETE CHANNEL
+const deleteChannelFailure = error => ({
+  type: channelTypes.DELETE_CHANNEL_FAILURE,
+  payload: error
+});
+
+export const deleteChannelByIdAsync = channelId => async dispatch => {
+  try {
+    await axios.delete(`/api/forums/channels/${channelId}`);
+  } catch (error) {
+    dispatch(deleteChannelFailure());
   }
 }
 

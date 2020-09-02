@@ -47,6 +47,17 @@ export const getCommentsByTopic = catchAsync(async (req: Request, res: Response)
     comments_on_page: comments.rows.length,
     all_comments :amount_comments,
     comments: comments.rows,
+  });
+});
+
+export const getAllComments = catchAsync(async (req: Request, res: Response) => {
+  const comments = await client.query({
+    text: 'SELECT * FROM comments',
+    values: []
+  });
+
+  res.status(200).json({
+    comments: comments.rows
   })
 });
 
@@ -63,9 +74,26 @@ export const createComment = catchAsync(async (req: Request, res: Response) => {
   const comment = await client.query({
     text: 'INSERT INTO comments (content, topic_id, user_id) VALUES ($1, $2, $3) returning *',
     values: [content, topic_id, user_id]
-  })
+  });
   res.status(201).json({
     comment: comment.rows[0]
-  })
+  });
 });
 
+export const deleteComment = catchAsync(async (req: Request, res: Response) => {
+  const current_user_id = req.user?.id;
+  const user_role = req.user?.role;
+  const user_response = await client.query({
+    text: 'SELECT users.id AS user_id FROM comments JOIN users ON comments.user_id = users.id WHERE comments.id = $1',
+    values: [req.params.comment_id]
+  });
+  const user_id = user_response.rows[0].user_id;
+  if(!(user_id === current_user_id || (user_role === 'admin' || user_role === 'superadmin'))) throw new BadRequestError('Permission denied', 403);
+
+  await client.query({
+    text: 'DELETE FROM comments WHERE comments.id = $1',
+    values: [req.params.comment_id]
+  });
+
+  res.status(204).json({});
+});
