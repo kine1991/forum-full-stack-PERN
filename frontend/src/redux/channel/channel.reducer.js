@@ -84,6 +84,13 @@ const channelReducer = (state = INITIAL_STATE, action) => {
         error: action.payload
       }
 
+    // TRASH_CHANNEL
+    case channelTypes.TRASH_CHANNEL_FAILURE:
+      return {
+        ...state,
+        error: action.payload
+      }
+
     case channelTypes.CLEAR:
       return {
         ...state,

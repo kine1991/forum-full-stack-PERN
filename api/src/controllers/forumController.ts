@@ -33,9 +33,20 @@ export const getChannels = catchAsync(async (req: Request, res: Response) => {
 });
 
 export const getOwnChannels = catchAsync(async (req: Request, res: Response) => {
+  const current_user_id = req.user?.id;
   const channels = await client.query({
-    text: 'SELECT * FROM channels',
-    values: []
+    text: `
+      SELECT 
+        id,
+        slug,
+        name,
+        active,
+        image_url_channel,
+        created_at
+      FROM channels 
+      WHERE channels.user_id = $1 AND active = true
+    `,
+    values: [current_user_id]
   });
 
   res.status(200).json({
@@ -56,12 +67,20 @@ export const getChannel = catchAsync(async (req: Request, res: Response) => {
   })
 });
 
+export const trashChannel = catchAsync(async (req: Request, res: Response) => {
+  await client.query({
+    text: `UPDATE channels SET active = false WHERE id = $1 returning *`,
+    values: [req.params.channel_id]
+  });
+
+  res.status(204).json({});
+});
+
 export const deleteChannel = catchAsync(async (req: Request, res: Response) => {
-  // channel_id
   await client.query({
     text: 'DELETE FROM channels WHERE channels.id = $1',
     values: [req.params.channel_id]
-  })
+  });
 
   res.status(204).json({});
 });

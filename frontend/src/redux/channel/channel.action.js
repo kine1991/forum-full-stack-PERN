@@ -103,6 +103,20 @@ export const fetchChannelAsync = slug => async dispatch => {
   }
 }
 
+// TRASH CHANNEL
+const trashChannelFailure = error => ({
+  type: channelTypes.TRASH_CHANNEL_FAILURE,
+  payload: error
+});
+
+export const trashChannelByIdAsync = channelId => async dispatch => {
+  try {
+    await axios.patch(`/api/forums/channels/${channelId}`);
+  } catch (error) {
+    dispatch(trashChannelFailure());
+  }
+}
+
 // DELETE CHANNEL
 const deleteChannelFailure = error => ({
   type: channelTypes.DELETE_CHANNEL_FAILURE,

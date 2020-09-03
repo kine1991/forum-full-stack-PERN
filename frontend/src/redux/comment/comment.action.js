@@ -70,11 +70,11 @@ const deleteCommentFailure = error => ({
 });
 
 export const deleteCommentAsync = id => async dispatch => {
-  try {
-    await axios.delete(`/api/comments/${id}`);
-  } catch (error) {
-    dispatch(deleteCommentFailure(error));
-  }
+  // try {
+  //   await axios.delete(`/api/comments/${id}`);
+  // } catch (error) {
+  //   dispatch(deleteCommentFailure(error));
+  // }
 }
 
 const clear = () => ({

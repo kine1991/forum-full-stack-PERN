@@ -12,6 +12,9 @@ const app = express();
 
 const createTabe = async () => {
   // await client.query('DROP TABLE users CASCADE');
+  // await client.query('DROP TABLE channels CASCADE');
+  // await client.query('DROP TABLE topics CASCADE');
+  // await client.query('DROP TABLE comments CASCADE');
   await client.query(`CREATE TABLE IF NOT EXISTS users (
     id serial PRIMARY KEY, 
     nickname varchar(255) UNIQUE NOT NULL, 
@@ -24,24 +27,25 @@ const createTabe = async () => {
   )`);
   
   await client.query(`CREATE TABLE IF NOT EXISTS channels (
-    id serial PRIMARY KEY, 
-    name varchar(255) NOT NULL, 
-    slug varchar(300) UNIQUE NOT NULL, 
-    description varchar(2000), 
-    image_url_channel varchar(255), 
-    created_at TIMESTAMP DEFAULT NOW(), 
-    user_id INTEGER NOT NULL, 
+    id serial PRIMARY KEY,
+    name varchar(255) NOT NULL,
+    slug varchar(300) UNIQUE NOT NULL,
+    description varchar(2000),
+    image_url_channel varchar(255),
+    active boolean DEFAULT true,
+    created_at TIMESTAMP DEFAULT NOW(),
+    user_id INTEGER NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id)
   )`);
 
   await client.query(`CREATE TABLE IF NOT EXISTS topics (
-    id serial PRIMARY KEY, 
-    name varchar(255) NOT NULL, 
-    slug varchar(300) UNIQUE NOT NULL, 
-    created_at TIMESTAMP DEFAULT NOW(), 
-    user_id INTEGER NOT NULL, 
-    channel_id INTEGER NOT NULL, 
-    FOREIGN KEY(user_id) REFERENCES users(id), 
+    id serial PRIMARY KEY,
+    name varchar(255) NOT NULL,
+    slug varchar(300) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    user_id INTEGER NOT NULL,
+    channel_id INTEGER NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES users(id),
     FOREIGN KEY(channel_id) REFERENCES channels(id)
   )`);
 

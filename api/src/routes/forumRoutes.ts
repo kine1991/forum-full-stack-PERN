@@ -15,6 +15,7 @@ router.route('/channels/:channel_slug')
   .get(forumController.getChannel)
 
 router.route('/channels/:channel_id')
+  .patch(authController.protect, forumController.trashChannel)
   .delete(authController.protect, forumController.deleteChannel);
 
 router.route('/topics/by_channel_slug/:channel_slug')
