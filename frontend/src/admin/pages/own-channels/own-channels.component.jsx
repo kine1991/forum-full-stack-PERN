@@ -16,7 +16,7 @@ const OwnChannels = ({ channels, isLoading, error, fetchOwnChannels, trashChanne
 
   useEffect(() => {
     fetchOwnChannels();
-  }, []);
+  }, [fetchOwnChannels]);
 
   const handleDelete = id => {
 
@@ -36,7 +36,7 @@ const OwnChannels = ({ channels, isLoading, error, fetchOwnChannels, trashChanne
   return (
     <React.Fragment>
       <ButtonContainer>
-        <Button content='Create Channels' to='/admin/own-channels/create'/>
+        <Button content='Create Channel' to='/admin/own-channels/create'/>
       </ButtonContainer>
       <h1>OwnChannels</h1>
       <Table>

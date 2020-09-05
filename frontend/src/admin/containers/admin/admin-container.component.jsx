@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import {Route, Switch } from 'react-router-dom';
 import Header from 'admin/components/header/header.component';
 import Layout from 'admin/components/layout/layout.component';
 import Channels from 'admin/pages/channels/channels.component';

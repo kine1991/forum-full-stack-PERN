@@ -1,5 +1,5 @@
 import React from 'react'
-import { /*Link,*/ Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import Header from 'shared/components/header/header.component';
 import Footer from 'site/components/footer/footer.component';
@@ -31,9 +31,6 @@ const SiteContainer = () => {
           <Route path='/topics/:slug' component={Topic} />
           <ProtectedIsNotAuthenticatedRoute path='/login' component={Login}/>
           <ProtectedIsNotAuthenticatedRoute path='/register' component={Register}/>
-          {/* <Route path='/login' component={Login} />
-          <Route path='/register' component={Register} /> */}
-          {/* <Route path='/create-channel' component={CreateChannel} /> */}
           <Route component={PageNotFound} />
         </Switch>
       </Layout>

@@ -60,7 +60,7 @@ const Channels = ({ channels, isLoading, error, fetchChannels, deleteChannelById
               </Table.Cell>
               <Table.Cell>{moment(channel.created_at).format('DD.MM.YYY | HH:mm')}</Table.Cell>
               <Table.Cell>
-                <a onClick={() => handleDelete(channel.id)}>delete</a>
+                <p onClick={() => handleDelete(channel.id)}>delete</p>
               </Table.Cell>
             </Table.Row>
           ))}

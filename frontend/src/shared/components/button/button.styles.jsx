@@ -9,6 +9,9 @@ export const Button = styled.button`
 
   transition: 0.3s all;
 
+  /* width: 100%; */
+  width: ${props => (props.fullWidth ? '100%' : 'inherit')};
+
   &:hover {
     background-color: black;
     color: whitesmoke;
