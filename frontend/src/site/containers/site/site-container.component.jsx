@@ -15,6 +15,7 @@ import Topic from 'site/pages/topic/topic.component';
 import PageNotFound from 'shared/components/page-not-found/page-not-found.component';
 import ProtectedIsAuthenticatedRoute from 'shared/components/protected-is-authenticated-route/protected-is-authenticated-route.components';
 import ProtectedIsNotAuthenticatedRoute from 'shared/components/protected-is-not-authenticated-route/protected-is-not-authenticated-route.component';
+import About from 'site/pages/about/about.component';
 
 const SiteContainer = () => {
   return (
@@ -24,6 +25,7 @@ const SiteContainer = () => {
         <Switch>
           <Route exact path='/' component={Home} />
           <Route exact path='/log' component={Home} />
+          <Route exact path='/about' component={About} />
           <Route exact path='/channels' component={Channels} />
           <Route exact path='/channels/:slug' component={Channel} />
           <ProtectedIsAuthenticatedRoute path='/create-channel' component={CreateChannel} />

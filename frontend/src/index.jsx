@@ -14,7 +14,6 @@ ReactDOM.render(
     <BrowserRouter>
     <Background>
       <App />
-
     </Background>
     </BrowserRouter>
   </Provider>,

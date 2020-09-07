@@ -34,6 +34,12 @@ const links = [
     exact: false,
     name: 'Log',
     forIsAuthenticatedUser: false
+  },
+  {
+    to: '/about',
+    exact: false,
+    name: 'About',
+    forIsAuthenticatedUser: null
   }
 ]
 

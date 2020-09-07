@@ -3,7 +3,7 @@ import React from 'react';
 import { InputContainer, Input, Label, ErrorMessage } from './input.styles';
 
 const InputComponent = ({ fullWidth, label, error, ...props }) => {
-  // console.log('props', props)
+  console.log('ddd')
   return (
     <InputContainer>
       {label ? <Label error={error}>{label}</Label> : null}
@@ -17,4 +17,4 @@ const InputComponent = ({ fullWidth, label, error, ...props }) => {
   );
 }
 
-export default InputComponent;
+export default React.memo(InputComponent);
