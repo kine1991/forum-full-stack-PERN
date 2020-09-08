@@ -6,15 +6,15 @@ import { HeaderContainer, Header, Hamburger, HamburgerButton, HamburgerButtonBar
 
 const links = [
   {
-    to: '/admin',
+    to: '/',
     exact: true,
-    name: 'Admin Panel',
+    name: 'Site',
     forIsAuthenticatedUser: true
   },
   {
-    to: '/admin/about',
+    to: '/admin',
     exact: true,
-    name: 'About',
+    name: 'Admin Panel',
     forIsAuthenticatedUser: true
   },
   {

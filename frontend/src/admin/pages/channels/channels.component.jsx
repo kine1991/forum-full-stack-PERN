@@ -12,8 +12,6 @@ const useQuery = () => {
 }
 
 const Channels = ({ channels, isLoading, error, fetchChannels, deleteChannelById }) => {
-  console.log('channels', channels);
-
   let query = useQuery();
   let page = query.get('page') ? query.get('page') : 1;
   let limit = query.get('limit') ? query.get('limit') : 20;

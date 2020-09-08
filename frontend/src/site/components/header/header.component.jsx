@@ -18,9 +18,6 @@ const Header = ({ currentUser, isLoading, logout }) => {
       <MaxWidth>
         <Menu.Item name='browse' active={activeItem === 'browse'} onClick={handleItemClick} as={Link} to='/'>Home</Menu.Item>
         <Menu.Item name='channels' active={activeItem === 'channels'} onClick={handleItemClick} as={Link} to='/channels'>Channels</Menu.Item>
-        {currentUser && isLoading === false && (
-          <Menu.Item name='create-channel' active={activeItem === 'create-channel'} onClick={handleItemClick} as={Link} to='/create-channel'>Create Channel</Menu.Item>
-        )}
         <Space />
         {!currentUser && isLoading === false && (
           <React.Fragment>

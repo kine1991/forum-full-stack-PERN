@@ -4,7 +4,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { Image, Header, Divider, Loader, Button, Icon } from 'semantic-ui-react';
 
 import { ChannelContainer, Description } from './channel.styles';
-import { fetchChannelAsync } from 'redux/channel/channel.action';
+import { fetchChannelBySlugAsync } from 'redux/channel/channel.action';
 import { clearAsync } from 'redux/topic/topic.action';
 import Topics from 'site/components/topics/topics.component';
 import PageNotFound from 'shared/components/page-not-found/page-not-found.component';
@@ -16,13 +16,6 @@ const Channel = ({ channel, isLoading, error, fetchChannel, clearTopic }) => {
   useEffect(() => {
     fetchChannel(slug);
   }, [fetchChannel, slug]);
-
-  // useEffect(() =>{
-  //   return () => {
-  //     // clearTopic();
-  //     console.log('After unsubscribe!!!')
-  //   };
-  // }, []);
 
   if(error) {
     const status = error.status;
@@ -57,7 +50,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchChannel: (slug) => dispatch(fetchChannelAsync(slug)),
+  fetchChannel: (slug) => dispatch(fetchChannelBySlugAsync(slug)),
   clearTopic: () => dispatch(clearAsync())
 });
 

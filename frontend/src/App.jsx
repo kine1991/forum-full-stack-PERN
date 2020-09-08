@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Switch, Route } from "react-router-dom";
 
 import ProtectedIsAuthenticatedRoute from 'shared/components/protected-is-authenticated-route/protected-is-authenticated-route.components';
-import { FullHeight } from './App.styles';
 import FullHeightContainer from 'shared/components/full-height/full-height.component';
 import { checkAuthAsync } from 'redux/user/user.action';
 
@@ -18,7 +17,7 @@ const App = ({ checkAuth }) => {
     <div>
       <Suspense fallback={<FullHeightContainer/>}>
         <Switch>
-          <ProtectedIsAuthenticatedRoute exact path='/admin' component={AdminContainer} />
+          <ProtectedIsAuthenticatedRoute path='/admin' component={AdminContainer} />
           <Route path='' exact component={SiteContainer} />
         </Switch>
       </Suspense>

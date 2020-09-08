@@ -18,12 +18,6 @@ const links = [
     forIsAuthenticatedUser: null
   },
   {
-    to: '/create-channel',
-    exact: false,
-    name: 'Create Channel',
-    forIsAuthenticatedUser: true
-  },
-  {
     to: '/admin',
     exact: true,
     name: 'Admin Panel',

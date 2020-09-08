@@ -5,6 +5,7 @@ import Layout from 'admin/components/layout/layout.component';
 import Channels from 'admin/pages/channels/channels.component';
 import OwnChannels from 'admin/pages/own-channels/own-channels.component';
 import CreateChannel from 'admin/pages/create-channel/create-channel.component';
+import EditChannel from 'admin/pages/edit-channel/edit-channel.component';
 
 const Home = () => {
   return (
@@ -21,9 +22,10 @@ const AdminContainer = () => {
       <Layout>
         <Switch>
           <Route exact path='/admin' component={Home} />
-          <Route path='/admin/channels' component={Channels} />
+          <Route exact path='/admin/channels' component={Channels} />
+          <Route exact path='/admin/channels/:id/edit' component={EditChannel} />
           <Route exact path='/admin/own-channels' component={OwnChannels} />
-          <Route path='/admin/own-channels/create' component={CreateChannel} />
+          <Route exact path='/admin/own-channels/create' component={CreateChannel} />
         </Switch>
       </Layout>
     </React.Fragment>

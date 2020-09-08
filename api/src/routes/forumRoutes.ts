@@ -8,13 +8,15 @@ router.route('/channels')
 .get(forumController.getChannels)
 .post(authController.protect, forumController.createChannel);
 
+router.route('/channels/:channel_slug/by-slug')
+  .get(forumController.getChannelBySlug)
+
 router.route('/own-channels')
   .get(authController.protect, forumController.getOwnChannels);
 
-router.route('/channels/:channel_slug')
-  .get(forumController.getChannel)
-
 router.route('/channels/:channel_id')
+  .get(forumController.getChannelById)
+  .put(/*authController.protect, */forumController.updateChannel)
   .patch(authController.protect, forumController.trashChannel)
   .delete(authController.protect, forumController.deleteChannel);
 

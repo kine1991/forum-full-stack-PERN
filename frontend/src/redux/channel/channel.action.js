@@ -6,11 +6,6 @@ const createChannelStart = () => ({
   type: channelTypes.CREATE_CHANNEL_START
 });
 
-const createChannelSuccess = channel => ({
-  type: channelTypes.CREATE_CHANNEL_SUCCESS,
-  payload: channel
-});
-
 const createChannelFailure = error => ({
   type: channelTypes.CREATE_CHANNEL_FAILURE,
   payload: error
@@ -18,18 +13,32 @@ const createChannelFailure = error => ({
 
 export const createChannelAsync = ({ name, description, image_url_channel }) => async dispatch => {
   dispatch(createChannelStart());
-
   try {
     const channel = await axios.post('/api/forums/channels', { name, description, image_url_channel }, {
       withCredentials: true
     });
-    // console.log('channel', channel.data.channel);
-    dispatch(createChannelSuccess(channel.data.channel));
+    return channel;
   } catch (error) {
     console.log('error', error.response);
     dispatch(createChannelFailure(error.response));
   }
 } 
+
+// EDIT_CHANNEL
+const editChannelFailure = error => ({
+  type: channelTypes.EDIT_CHANNEL_FAILURE
+});
+
+export const editChannelAsync = ({ id, ...body }) => async dispatch => {
+  try {
+    const editedChannel = await axios.put(`/api/forums/channels/${id}`, body, {
+      withCredentials: true
+    });
+    return editedChannel;
+  } catch (error) {
+    dispatch(editChannelFailure(error.response));
+  }
+}
 
 // FETCH_CHANNELS
 const fetchChannelsStart = () => ({
@@ -92,11 +101,22 @@ const fetchChannelFailure = error => ({
   payload: error
 });
 
-export const fetchChannelAsync = slug => async dispatch => {
+export const fetchChannelBySlugAsync = slug => async dispatch => {
   dispatch(fetchChannelStart());
 
   try {
-    const channel = await axios.get(`/api/forums/channels/${slug}`);
+    const channel = await axios.get(`/api/forums/channels/${slug}/by-slug`);
+    dispatch(fetchChannelSuccess(channel.data.channel));
+  } catch (error) {
+    dispatch(fetchChannelFailure(error.response));
+  }
+}
+
+export const fetchChannelByIdAsync = id => async dispatch => {
+  dispatch(fetchChannelStart());
+
+  try {
+    const channel = await axios.get(`/api/forums/channels/${id}`);
     dispatch(fetchChannelSuccess(channel.data.channel));
   } catch (error) {
     dispatch(fetchChannelFailure(error.response));

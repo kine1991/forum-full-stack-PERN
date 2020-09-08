@@ -6,7 +6,6 @@ import Footer from 'site/components/footer/footer.component';
 import Layout from 'shared/components/layout/layout.component';
 import Register from 'site/pages/register/register.component';
 import Login from 'site/pages/login/login.component';
-import CreateChannel from 'site/pages/create-channel/create-channel.component';
 import Home from 'site/pages/home/home.component';
 import Channels from 'site/pages/channels/channels.component';
 import Channel from 'site/pages/channel/channel.component';
@@ -28,7 +27,6 @@ const SiteContainer = () => {
           <Route exact path='/about' component={About} />
           <Route exact path='/channels' component={Channels} />
           <Route exact path='/channels/:slug' component={Channel} />
-          <ProtectedIsAuthenticatedRoute path='/create-channel' component={CreateChannel} />
           <ProtectedIsAuthenticatedRoute path='/channels/:slug/create' component={CreateTopic} />
           <Route path='/topics/:slug' component={Topic} />
           <ProtectedIsNotAuthenticatedRoute path='/login' component={Login}/>

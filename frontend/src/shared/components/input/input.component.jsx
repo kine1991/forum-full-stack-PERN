@@ -3,7 +3,7 @@ import React from 'react';
 import { InputContainer, Input, Label, ErrorMessage } from './input.styles';
 
 const InputComponent = ({ fullWidth, label, error, ...props }) => {
-  console.log('ddd')
+  // console.log('input', label)
   return (
     <InputContainer>
       {label ? <Label error={error}>{label}</Label> : null}
@@ -17,4 +17,8 @@ const InputComponent = ({ fullWidth, label, error, ...props }) => {
   );
 }
 
-export default React.memo(InputComponent);
+export default InputComponent;
+
+// export default React.memo(InputComponent, function areEqual(prevProps, nextProps) {
+//   return prevProps.value === nextProps.value;
+// });

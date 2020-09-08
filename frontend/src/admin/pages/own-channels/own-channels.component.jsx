@@ -3,24 +3,27 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 import { fetchOwnChannelsAsync } from 'redux/channel/channel.action';
-import { Table, Thead, Tbody, Tr, Th, Td, TdImage, Image, ButtonContainer } from './own-channels.styles';
+import { Table, Thead, Tbody, Tr, Th, Td, TdImage, Image, TitleAndButtonContainer, Title, OwnChannelsContainer } from './own-channels.styles';
 import Button from 'shared/components/button/button.component';
 import { Loader } from 'semantic-ui-react';
 import PageNotFound from 'shared/components/page-not-found/page-not-found.component';
-import { trashChannelByIdAsync } from 'redux/channel/channel.action';
+import { trashChannelByIdAsync, clearAsync } from 'redux/channel/channel.action';
+import { Link } from 'react-router-dom';
 
 
-const OwnChannels = ({ channels, isLoading, error, fetchOwnChannels, trashChannelById }) => {
-
-  console.log('*', channels);
-
+const OwnChannels = ({ channels, isLoading, error, fetchOwnChannels, trashChannelById, clearChannel }) => {
   useEffect(() => {
     fetchOwnChannels();
   }, [fetchOwnChannels]);
 
-  const handleDelete = id => {
+  useEffect(() => {
+    return () => {
+      clearChannel();
+    }
+  }, [clearChannel]);
 
-    console.log('id', id);
+  const handleDelete = id => {
+    // console.log('id', id);
     trashChannelById(id);
   }
 
@@ -34,11 +37,11 @@ const OwnChannels = ({ channels, isLoading, error, fetchOwnChannels, trashChanne
 
 
   return (
-    <React.Fragment>
-      <ButtonContainer>
+    <OwnChannelsContainer>
+      <TitleAndButtonContainer>
+        <Title>Ваши каналы</Title>
         <Button content='Create Channel' to='/admin/own-channels/create'/>
-      </ButtonContainer>
-      <h1>OwnChannels</h1>
+      </TitleAndButtonContainer>
       <Table>
         <Thead>
           <Tr>
@@ -48,6 +51,7 @@ const OwnChannels = ({ channels, isLoading, error, fetchOwnChannels, trashChanne
             <Th>Slug</Th>
             <Th>Date</Th>
             <Th>Delete</Th>
+            <Th>Edit</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -59,11 +63,14 @@ const OwnChannels = ({ channels, isLoading, error, fetchOwnChannels, trashChanne
               <Td>{channel.slug}</Td>
               <Td>{moment(channel.created_at).format('DD.MM.YYY | HH:mm')}</Td>
               <Td onClick={() => handleDelete(channel.id)}>delete</Td>
+              <Td>
+                <Link to={`/admin/channels/${channel.id}/edit`}>edit</Link>
+              </Td>
             </Tr>
           ))}
         </Tbody>
       </Table>
-    </React.Fragment>
+    </OwnChannelsContainer>
   )
 }
 
@@ -75,7 +82,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchOwnChannels: (data) => dispatch(fetchOwnChannelsAsync(data)),
-  trashChannelById: (id) => dispatch(trashChannelByIdAsync(id))
+  trashChannelById: (id) => dispatch(trashChannelByIdAsync(id)),
+  clearChannel: () => dispatch(clearAsync())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OwnChannels);

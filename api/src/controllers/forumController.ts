@@ -54,7 +54,7 @@ export const getOwnChannels = catchAsync(async (req: Request, res: Response) => 
   });
 });
 
-export const getChannel = catchAsync(async (req: Request, res: Response) => {
+export const getChannelBySlug = catchAsync(async (req: Request, res: Response) => {
   const channel = await client.query({
     text: 'SELECT * FROM channels WHERE slug = $1',
     values: [req.params.channel_slug]
@@ -66,6 +66,44 @@ export const getChannel = catchAsync(async (req: Request, res: Response) => {
     channel: channel.rows[0]
   })
 });
+
+export const getChannelById = catchAsync(async (req: Request, res: Response) => {
+  const channel = await client.query({
+    text: 'SELECT * FROM channels WHERE id = $1',
+    values: [req.params.channel_id]
+  });
+
+  if(channel.rows.length === 0)  throw new BadRequestError(`Channel with this id: ${req.params.channel_id} not found`, 404);
+
+  res.status(200).json({
+    channel: channel.rows[0]
+  });
+});
+
+export const updateChannel = catchAsync(async (req: Request, res: Response) => {
+  const channel_res = await client.query({
+    text: 'SELECT * FROM channels WHERE id = $1',
+    values: [req.params.channel_id]
+  });
+
+  if(channel_res.rows.length === 0)  throw new BadRequestError(`Channel with this id: ${req.params.channel_id} not found`, 404);
+
+  const channel = channel_res.rows[0];
+
+  const { name, description, image_url_channel } = req.body;
+  console.log('&&&', name, description, image_url_channel)
+
+  const updated_channel_res = await client.query({
+    text: 'UPDATE channels SET name = $1, description = $2, image_url_channel = $3 WHERE id = $4 returning *',
+    values: [name, description, image_url_channel, req.params.channel_id]
+  });
+
+  res.status(200).json({
+    // channel: channel
+    channel: updated_channel_res.rows[0]
+  });
+});
+
 
 export const trashChannel = catchAsync(async (req: Request, res: Response) => {
   await client.query({

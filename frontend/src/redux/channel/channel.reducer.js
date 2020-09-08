@@ -15,19 +15,20 @@ const channelReducer = (state = INITIAL_STATE, action) => {
     case channelTypes.CREATE_CHANNEL_START:
       return {
         ...state,
-        isLoading: true,
-        error: null
-      }
-    case channelTypes.CREATE_CHANNEL_SUCCESS:
-      return {
-        ...state,
-        isLoading: false,
-        channel: action.payload
+        error: null,
+        // isLoading: null,
+        // channel: null
       }
     case channelTypes.CREATE_CHANNEL_FAILURE:
       return {
         ...state,
-        isLoading: false,
+        error: action.payload
+      }
+
+    // EDIT_CHANNEL
+    case channelTypes.EDIT_CHANNEL_FAILURE:
+      return {
+        ...state,
         error: action.payload
       }
 
