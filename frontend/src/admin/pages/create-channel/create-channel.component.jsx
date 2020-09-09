@@ -8,6 +8,7 @@ import useForm from 'shared/utils/form/useForm';
 import validate from 'shared/utils/form/validate';
 import { createChannelAsync } from 'redux/channel/channel.action';
 import { CreateChannelContainer } from './create-channel.styles';
+import { useToast } from 'context/toast/toast.provider';
 
 const initialState = {
   name: '1111',
@@ -15,12 +16,14 @@ const initialState = {
   imageUrl: 'https://sun9-31.userapi.com/impg/c857732/v857732252/1b118f/pkjYNWa1vKw.jpg?size=100x0&quality=88&crop=7,7,1557,1557&sign=f8955dedd61d4be24c587e3b2695cbd9&ava=1'
 }
 
-const CreateChannel = ({ createCannel }) => {
+const CreateChannel = ({ createChannel }) => {
+  const { addToast } = useToast();
   const history = useHistory();
 
   const submit = () => {
     console.log('submit', values);
-    createCannel(values).then(response => {
+    createChannel(values).then(response => {
+      addToast('Каннал Успешно Создан!', 6000, 'success', 'bottom' );
       console.log('response', response);
       history.push('/admin/own-channels');
     });
@@ -60,7 +63,7 @@ const CreateChannel = ({ createCannel }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  createCannel: (data) => dispatch(createChannelAsync(data))
+  createChannel: (data) => dispatch(createChannelAsync(data))
 });
 
 export default connect(null, mapDispatchToProps)(CreateChannel);

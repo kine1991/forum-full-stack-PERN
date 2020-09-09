@@ -16,7 +16,7 @@ router.route('/own-channels')
 
 router.route('/channels/:channel_id')
   .get(forumController.getChannelById)
-  .put(/*authController.protect, */forumController.updateChannel)
+  .put(authController.protect, forumController.updateChannel)
   .patch(authController.protect, forumController.trashChannel)
   .delete(authController.protect, forumController.deleteChannel);
 

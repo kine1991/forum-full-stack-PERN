@@ -6,12 +6,14 @@ import Comments from 'site/components/comments/comments.component';
 import { CommentsWrapContainer, ButtonContainer } from './comments-wrap.styles';
 import { createCommentAsync } from 'redux/comment/comment.action';
 import { useHistory, useLocation } from 'react-router-dom';
+import { useToast } from 'context/toast/toast.provider';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 }
 
 const CommentsWrap = ({ slug, /*comments, isLoading, fetchCommentsByTopic,*/ createCommentIntoTopic }) => {
+  const { addToast } = useToast();
   let query = useQuery();
   const limit = 20;
   let history = useHistory();
@@ -24,6 +26,7 @@ const CommentsWrap = ({ slug, /*comments, isLoading, fetchCommentsByTopic,*/ cre
     event.preventDefault();
 
     createCommentIntoTopic({ slug, content }).then(response => {
+      addToast('Комментарий отправлен!');
       const allComments = response.data.all_comments;
       const lastPage = Math.ceil(allComments/limit);
       if(lastPage > currentPage) {

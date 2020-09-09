@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -8,9 +8,10 @@ import useForm from 'shared/utils/form/useForm';
 import validate from 'shared/utils/form/validate';
 import { editChannelAsync, fetchChannelByIdAsync, clearAsync } from 'redux/channel/channel.action';
 import { EditChannelContainer } from './edit-channel.styles';
-import { useState } from 'react';
+import { useToast } from 'context/toast/toast.provider';
 
 const EditChannel = ({ channel, fetchChannelById, editChannelById, clear }) => {
+  const { addToast } = useToast();
   const history = useHistory();
   let { id } = useParams();
   const [initialState, setInitialState] = useState({
@@ -18,6 +19,9 @@ const EditChannel = ({ channel, fetchChannelById, editChannelById, clear }) => {
     description: '',
     imageUrl: ''
   });
+
+  // const { addSnackbar } = useSnackbar();
+  // console.log('snackbar', snackbar)
 
   useEffect(() => {
     fetchChannelById(id);
@@ -40,6 +44,7 @@ const EditChannel = ({ channel, fetchChannelById, editChannelById, clear }) => {
     clear();
     editChannelById({ id, name: values.name, description: values.description, image_url_channel: values.imageUrl })
     .then(response => {
+      addToast('Успешно Обновленно!', 6000, 'warning', 'bottom' );
       history.push('/admin/own-channels');
     });
   }

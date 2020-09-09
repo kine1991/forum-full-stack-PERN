@@ -8,14 +8,17 @@ import { Background } from './index.styles';
 import './index.css';
 import 'semantic-ui-css/semantic.min.css'
 import App from './App';
+import ToastProvider from 'context/toast/toast.provider';
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
-    <Background>
-      <App />
-    </Background>
-    </BrowserRouter>
+    <ToastProvider>
+      <BrowserRouter>
+      <Background>
+        <App />
+      </Background>
+      </BrowserRouter>
+    </ToastProvider>
   </Provider>,
   document.getElementById('root')
 );

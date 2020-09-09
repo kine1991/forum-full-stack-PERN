@@ -81,6 +81,8 @@ export const getChannelById = catchAsync(async (req: Request, res: Response) => 
 });
 
 export const updateChannel = catchAsync(async (req: Request, res: Response) => {
+  const current_user_id = req.user?.id;
+
   const channel_res = await client.query({
     text: 'SELECT * FROM channels WHERE id = $1',
     values: [req.params.channel_id]
@@ -88,10 +90,10 @@ export const updateChannel = catchAsync(async (req: Request, res: Response) => {
 
   if(channel_res.rows.length === 0)  throw new BadRequestError(`Channel with this id: ${req.params.channel_id} not found`, 404);
 
-  const channel = channel_res.rows[0];
+  const user_id = channel_res.rows[0].user_id;
+  if(current_user_id !== user_id) throw new BadRequestError('Permission denied', 403);
 
   const { name, description, image_url_channel } = req.body;
-  console.log('&&&', name, description, image_url_channel)
 
   const updated_channel_res = await client.query({
     text: 'UPDATE channels SET name = $1, description = $2, image_url_channel = $3 WHERE id = $4 returning *',

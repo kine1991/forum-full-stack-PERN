@@ -78,7 +78,8 @@ export const createTopicAsync = ({ name, channel_slug }) => async dispatch => {
     const topic = await axios.post(`/api/forums/topics/by_channel_slug/${channel_slug}`, { name }, {
       withCredentials: true
     });
-    dispatch(createTopicSuccess(topic.data.topic))
+    dispatch(createTopicSuccess(topic.data.topic));
+    return topic;
   } catch (error) {
     dispatch(createTopicFailure(error.response));
   }
