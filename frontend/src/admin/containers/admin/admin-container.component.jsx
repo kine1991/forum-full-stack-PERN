@@ -7,6 +7,7 @@ import Channel from 'admin/pages/channel/channel.component';
 import OwnChannels from 'admin/pages/own-channels/own-channels.component';
 import CreateChannel from 'admin/pages/create-channel/create-channel.component';
 import EditChannel from 'admin/pages/edit-channel/edit-channel.component';
+import ProtectedIsAdmin from 'shared/utils/protected-route/protected-is-admin/protected-is-admin.component';
 
 const Home = () => {
   return (
@@ -23,7 +24,7 @@ const AdminContainer = () => {
       <Layout>
         <Switch>
           <Route exact path='/admin' component={Home} />
-          <Route exact path='/admin/channels' component={Channels} />
+          <ProtectedIsAdmin exact path='/admin/channels' component={Channels} />
           <Route exact path='/admin/channels/:id' component={Channel} />
           <Route exact path='/admin/channels/:id/edit' component={EditChannel} />
           <Route exact path='/admin/own-channels' component={OwnChannels} />

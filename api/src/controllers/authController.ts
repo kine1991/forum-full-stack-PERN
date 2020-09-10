@@ -27,7 +27,6 @@ const createSendToken = (user: any, statusCode: number, res: Response) => {
   if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
   res.cookie('jwt', token, cookieOptions);
   user.password = undefined;
-
   res.status(statusCode).json({
     token,
     user
@@ -72,7 +71,6 @@ export const signUp = catchAsync(async (req: Request, res: Response) => {
   if(emailIsExists) throw new BadRequestError(`Email: '${email}' already been taken`, 400);
 
   const hashedPassword = await bcrypt.hash(password, 12);
-  console.log('hashedPassword', hashedPassword);
   const user = await client.query({
     text: 'INSERT INTO users (nickname, email, password, image_url) VALUES ($1, $2, $3, $4) returning *',
     values: [nickname, email, hashedPassword, imageUrl]
@@ -89,13 +87,13 @@ export const checkAuth = async (req: Request, res: Response) => {
     } else {
       const token = req.cookies.jwt;
       const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET!) as { id: string };
-      console.log('decoded', decoded);
       const userRes = await client.query({
-        text: 'SELECT nickname, email, image_url, created_at FROM users WHERE users.id = $1',
+        text: 'SELECT nickname, email, image_url, role, created_at FROM users WHERE users.id = $1',
         values: [decoded.id]
       });
       user = userRes.rows.length === 0 ? null : userRes.rows[0]; 
     }
+
     res.status(200).json({
       user: user
     });

@@ -12,8 +12,8 @@ import Channel from 'site/pages/channel/channel.component';
 import CreateTopic from 'site/pages/create-topic/create-topic.componen';
 import Topic from 'site/pages/topic/topic.component';
 import PageNotFound from 'shared/components/page-not-found/page-not-found.component';
-import ProtectedIsAuthenticatedRoute from 'shared/components/protected-is-authenticated-route/protected-is-authenticated-route.components';
-import ProtectedIsNotAuthenticatedRoute from 'shared/components/protected-is-not-authenticated-route/protected-is-not-authenticated-route.component';
+import ProtectedIsAuthenticatedRoute from 'shared/utils/protected-route/protected-is-not-authenticated-route/protected-is-not-authenticated-route.component';
+import ProtectedIsNotAuthenticatedRoute from 'shared/utils/protected-route/protected-is-not-authenticated-route/protected-is-not-authenticated-route.component';
 import About from 'site/pages/about/about.component';
 
 const SiteContainer = () => {

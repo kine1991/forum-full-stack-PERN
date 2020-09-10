@@ -2,7 +2,7 @@ import React, { useEffect, lazy, Suspense } from 'react';
 import { connect } from 'react-redux';
 import { Switch, Route } from "react-router-dom";
 
-import ProtectedIsAuthenticatedRoute from 'shared/components/protected-is-authenticated-route/protected-is-authenticated-route.components';
+import ProtectedIsAuthenticatedRoute from 'shared/utils/protected-route/protected-is-authenticated-route/protected-is-authenticated-route.components';
 import FullHeightContainer from 'shared/components/full-height/full-height.component';
 import { checkAuthAsync } from 'redux/user/user.action';
 

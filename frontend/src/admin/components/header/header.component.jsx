@@ -9,34 +9,48 @@ const links = [
     to: '/',
     exact: true,
     name: 'Site',
-    forIsAuthenticatedUser: true
+    forIsAuthenticatedUser: true,
+    forIsAdmin: null
   },
   {
     to: '/admin',
     exact: true,
     name: 'Admin Panel',
-    forIsAuthenticatedUser: true
+    forIsAuthenticatedUser: true,
+    forIsAdmin: null
   },
   {
     to: '/admin/channels',
     exact: true,
     name: 'Channels',
-    forIsAuthenticatedUser: true
+    forIsAuthenticatedUser: true,
+    forIsAdmin: true
   },
   {
     to: '/admin/own-channels',
     exact: true,
     name: 'Own Channels',
-    forIsAuthenticatedUser: true
+    forIsAuthenticatedUser: true,
+    forIsAdmin: null
   },
 ]
 
 const HeaderComponent = ({ currentUser, isLoading, logout }) => {
   const [isAuthenticatedUser, setIsAuthenticatedUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(null);
   const [openSidebar, setOpenSidebar] = useState(false);
 
   useEffect(() => {
-    if(isLoading === false) setIsAuthenticatedUser(currentUser ? true : false);
+    if(isLoading === false) {
+      if(currentUser) {
+        setIsAuthenticatedUser(true);
+
+        const isAdminUser = currentUser.role === 'admin' || currentUser.role === 'super-admin';
+        setIsAdmin(isAdminUser ? true : false);
+      } else {
+        setIsAuthenticatedUser(false);
+      }
+    }
   }, [currentUser, isLoading]);
 
   return (
@@ -51,8 +65,8 @@ const HeaderComponent = ({ currentUser, isLoading, logout }) => {
         </Hamburger>
         <HeaderItemsLeft>
           {links.map(link => {
-            if(link.forIsAuthenticatedUser === null) return <HeaderItem key={link.to} exact={link.exact} to={link.to}>{link.name}</HeaderItem>
-            if(link.forIsAuthenticatedUser !== null && isAuthenticatedUser === link.forIsAuthenticatedUser) return <HeaderItem key={link.to} exact={link.exact} to={link.to}>{link.name}</HeaderItem>
+            if(link.forIsAdmin === null) return <HeaderItem key={link.to} exact={link.exact} to={link.to}>{link.name}</HeaderItem>
+            if(link.forIsAdmin !== null && isAdmin === link.forIsAdmin) return <HeaderItem key={link.to} exact={link.exact} to={link.to}>{link.name}</HeaderItem>
             return <div key={link.to}></div>
           })}
         </HeaderItemsLeft>
@@ -82,8 +96,8 @@ const HeaderComponent = ({ currentUser, isLoading, logout }) => {
             <Close onClick={() => setOpenSidebar(false)}>&times;</Close>
             <SidebarItems>
               {links.map(link => {
-                if(link.forIsAuthenticatedUser === null) return <SidebarItem key={link.to}><SidebarText exact={link.exact} to={link.to}>{link.name}</SidebarText></SidebarItem>
-                if(link.forIsAuthenticatedUser !== null && isAuthenticatedUser === link.forIsAuthenticatedUser) return <SidebarItem key={link.to}><SidebarText exact={link.exact} to={link.to}>{link.name}</SidebarText></SidebarItem>
+                if(link.forIsAdmin === null) return <SidebarItem key={link.to}><SidebarText exact={link.exact} to={link.to}>{link.name}</SidebarText></SidebarItem>
+                if(link.forIsAdmin !== null && isAuthenticatedUser === link.forIsAdmin) return <SidebarItem key={link.to}><SidebarText exact={link.exact} to={link.to}>{link.name}</SidebarText></SidebarItem>
                 return <div key={link.to}></div>
               })}
             </SidebarItems> 

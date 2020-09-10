@@ -110,52 +110,43 @@ export const seedTopics = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const seedComment = catchAsync(async (req: Request, res: Response) => {
+export const seedComments = catchAsync(async (req: Request, res: Response) => {
+  const comments = JSON.parse(fs.readFileSync(path.join(path.join(__dirname, '/data/comments.json')), 'utf-8'));
+
+  const users_res = await client.query({
+    text: 'SELECT * FROM users'
+  });
   
+  const topics_res = await client.query({
+    text: 'SELECT * FROM topics'
+  });
+  
+  const users = users_res.rows;
+  const topics = topics_res.rows;
+
+  comments.map(async (comment: any) => {
+    console.log('--------------------');
+    const content = comment.content;
+    console.log(content);
+    const random_user_index = Math.floor(Math.random() * users.length);
+    const random_topic_index = Math.floor(Math.random() * topics.length);
+    const user_id = users[random_user_index].id;
+    const topic_id = topics[random_topic_index].id;
+
+    await client.query({
+      text: 'INSERT INTO comments (content, user_id, topic_id) VALUES ($1, $2, $3)',
+      values: [content, user_id, topic_id]
+    });
+
+  });
+
+
+  res.send({
+    topics: "created",
+    // length: users.length,
+    // users: users,
+    // length: topics.length,
+    // topics: topics,
+  });
 });
 
-
-// export const createChannel = catchAsync(async (req: Request, res: Response) => {
-//   const { name, description, image_url_channel = 'https://i.imgur.com/AdWqAoq.jpg' } = req.body;
-
-  
-//   const slug = slugify(name, { replacement: '-', remove: undefined, lower: true, strict: true, locale: 'ru' });
-  
-//   const user_id = req.user?.id;
-  // const newChannel = await client.query({
-  //   text: 'INSERT INTO channels (name, description, slug, image_url_channel, user_id) VALUES ($1, $2, $3, $4, $5) returning *',
-  //   values: [name, description, `${slug}-${Date.now()}`, image_url_channel, user_id]
-  // });
-
-//   res.status(201).json({
-//     channel: newChannel.rows[0]
-//   })
-// });
-
-// export const createUsers = catchAsync(async (req: Request, res: Response) => {
-//   const users = JSON.parse(fs.readFileSync('./data/users.json', 'utf-8'));
-
-//   console.log('users', users)
-//   // const { nickname, email, password, image_url } = req.body;
-
-//   // const imageUrl = image_url ? image_url : 'https://react.semantic-ui.com/images/avatar/small/elliot.jpg';
-
-//   // const countEmail = await client.query({
-//   //   text: 'SELECT COUNT(*) FROM users WHERE users.email = $1',
-//   //   values: [email]
-//   // });
-//   // const emailIsExists = +countEmail.rows[0].count === 0 ? false : true;
-//   // if(emailIsExists) throw new BadRequestError(`Email: '${email}' already been taken`, 400);
-
-//   // const hashedPassword = await bcrypt.hash(password, 12);
-//   // console.log('hashedPassword', hashedPassword);
-//   // const user = await client.query({
-//   // text: 'INSERT INTO users (nickname, email, password, image_url) VALUES ($1, $2, $3, $4) returning *',
-//   // values: [nickname, email, hashedPassword, imageUrl]
-//   // });
-  
-
-//   res.json({
-//     aaa: 'aaa'
-//   })
-// });

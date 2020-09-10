@@ -99,7 +99,7 @@ const logoutFailure = error => ({
 export const logoutAsync = () => async dispatch => {
   dispatch(logoutStart());
   try {
-    const user = await axios.get('/api/users/logout');
+    await axios.get('/api/users/logout');
     dispatch(logoutSuccess());
   } catch (error) {
     dispatch(logoutFailure());
