@@ -26,8 +26,7 @@ router.route('/topics/by_channel_slug/:channel_slug')
 
 router.route('/topics/:topic_slug').get(forumController.getTopicBySlug);
 
-// router.route('/channels/:channel_id')
-//   .get(forumController.getChannel)
+
 router.route('/drop-channels').delete(forumController.dropTableChannels);
 router.route('/drop-topics').delete(forumController.dropTableTopics); 
 

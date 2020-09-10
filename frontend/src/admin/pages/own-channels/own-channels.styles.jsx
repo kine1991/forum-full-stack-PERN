@@ -5,10 +5,22 @@ export const OwnChannelsContainer = styled.div`
   margin: 3rem auto;
 `;
 
+export const NoChannels = styled.div`
+  margin-top: 10rem;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 36px;
+  font-weight: 200;
+  line-height: 38px;
+  padding: 2rem;
+
+  @media only screen and (max-width: 768px){
+    font-size: 36px;
+  }
+`;
+
 export const Table = styled.table`
   border-collapse: collapse;
-  width: 100%;
-
   width: 100%;
   /* background: #fff; */
   /* margin: 1em 0; */

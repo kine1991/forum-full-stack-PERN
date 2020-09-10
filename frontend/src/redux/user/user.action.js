@@ -21,7 +21,6 @@ export const checkAuthAsync = () => async dispatch => {
 
   try {
     const user = await axios.get('/api/users/check-auth')
-    // console.log('checkAuth', user);
     dispatch(checkAuthSuccess(user.data.user));
   } catch (error) {
     console.log('error', error.response.data);
@@ -46,7 +45,6 @@ const registerFailure = error => ({
 
 export const registerAsync = ({ nickname, email, password, imageUrl }) => async dispatch => {
   dispatch(registerStart());
-// console.log('555', nickname, email, password, imageUrl)
   try {
     const user = await axios.post('/api/users/sign-up', { nickname, email, password, image_url: imageUrl });
     console.log('user', user.data.user);
@@ -77,7 +75,6 @@ export const loginAsync = ({ email, password }) => async dispatch => {
 
   try {
     const user = await axios.post('/api/users/sign-in', { email, password });
-    console.log('user', user.data.user);
     dispatch(loginSuccess(user.data.user));
   } catch (error) {
     console.log('error', error.response.data);
@@ -103,7 +100,6 @@ export const logoutAsync = () => async dispatch => {
   dispatch(logoutStart());
   try {
     const user = await axios.get('/api/users/logout');
-    console.log('user8888', user);
     dispatch(logoutSuccess());
   } catch (error) {
     dispatch(logoutFailure());

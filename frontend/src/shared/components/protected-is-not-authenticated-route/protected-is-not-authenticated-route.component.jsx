@@ -9,7 +9,6 @@ const ProtectedIsAuthenticatedRoute = ({ currentUser, component: Component, ...r
   return (
     <Route {...rest} render={
       (props) => {
-        console.log('currentUser', currentUser);
         if(currentUser === undefined) {
           return <LoaderContainer><Loader active inline='centered'/></LoaderContainer>
         } else if(currentUser === null) {

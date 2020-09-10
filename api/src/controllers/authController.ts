@@ -81,10 +81,6 @@ export const signUp = catchAsync(async (req: Request, res: Response) => {
   createSendToken(user.rows[0], 201, res);
 });
 
-export const checkAuth2 = catchAsync(async (req: Request, res: Response) => {
-
-});
-
 export const checkAuth = async (req: Request, res: Response) => {
   try {
     let user;

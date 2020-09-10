@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 import { fetchOwnChannelsAsync } from 'redux/channel/channel.action';
-import { Table, Thead, Tbody, Tr, Th, Td, TdImage, Image, TitleAndButtonContainer, Title, OwnChannelsContainer } from './own-channels.styles';
+import { Table, Thead, Tbody, Tr, Th, Td, TdImage, Image, TitleAndButtonContainer, Title, OwnChannelsContainer, NoChannels } from './own-channels.styles';
 import Button from 'shared/components/button/button.component';
 import { Loader } from 'semantic-ui-react';
 import PageNotFound from 'shared/components/page-not-found/page-not-found.component';
@@ -33,7 +33,15 @@ const OwnChannels = ({ channels, isLoading, error, fetchOwnChannels, trashChanne
     <Loader active inline='centered' />
   );
 
-  if(isLoading === false && channels && channels.length === 0) return <div>Ни одного канала не создано!</div>
+  if(isLoading === false && channels && channels.length === 0) return (
+    <React.Fragment>
+      <TitleAndButtonContainer>
+        <Title>Ваши каналы</Title>
+        <Button content='Create Channel' to='/admin/own-channels/create'/>
+      </TitleAndButtonContainer>
+      <NoChannels>Ни одного канала не создано!</NoChannels>
+    </React.Fragment>
+  )
 
 
   return (
@@ -59,8 +67,12 @@ const OwnChannels = ({ channels, isLoading, error, fetchOwnChannels, trashChanne
             <Tr key={channel.id}>
               <TdImage><Image src={channel.image_url_channel} /></TdImage>
               <Td>{channel.id}</Td>
-              <Td>{channel.name}</Td>
-              <Td>{channel.slug}</Td>
+              <Td>
+                <Link to={`/admin/channels/${channel.id}`}>{channel.name}</Link>
+              </Td>
+              <Td>
+                <Link to={`/channels/${channel.slug}`}>{channel.slug}</Link>
+              </Td>
               <Td>{moment(channel.created_at).format('DD.MM.YYY | HH:mm')}</Td>
               <Td onClick={() => handleDelete(channel.id)}>delete</Td>
               <Td>

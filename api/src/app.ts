@@ -6,6 +6,7 @@ import userRouter from './routes/userRoutes';
 import bookRouter from './routes/bookRoutes';
 import forumRouter from './routes/forumRoutes';
 import commentRouter from './routes/commentRoutes';
+import seedRouter from './utils/seed/seedRoutes';
 import client from './utils/client';
 
 const app = express();
@@ -75,6 +76,7 @@ app.use('/api/users', userRouter);
 app.use('/api/books', bookRouter);
 app.use('/api/forums', forumRouter);
 app.use('/api/comments', commentRouter);
+app.use('/api/seed', seedRouter);
 
 // ERROR HANDLER
 app.use(globalErrorHandler);
