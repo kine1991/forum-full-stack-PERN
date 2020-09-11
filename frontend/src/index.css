@@ -29,7 +29,7 @@ font-family: 'Roboto', sans-serif;
 }
 
 
-body::-webkit-scrollbar {
+/* body::-webkit-scrollbar {
   width: 1em;
 }
 
@@ -40,4 +40,4 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
 background-color: darkgrey;
 outline: 1px solid slategrey;
-}
+} */

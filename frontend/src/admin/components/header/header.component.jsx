@@ -44,8 +44,7 @@ const HeaderComponent = ({ currentUser, isLoading, logout }) => {
     if(isLoading === false) {
       if(currentUser) {
         setIsAuthenticatedUser(true);
-
-        const isAdminUser = currentUser.role === 'admin' || currentUser.role === 'super-admin';
+        const isAdminUser = currentUser.role === 'admin' || currentUser.role === 'superadmin';
         setIsAdmin(isAdminUser ? true : false);
       } else {
         setIsAuthenticatedUser(false);
