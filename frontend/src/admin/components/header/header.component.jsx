@@ -96,7 +96,7 @@ const HeaderComponent = ({ currentUser, isLoading, logout }) => {
             <SidebarItems>
               {links.map(link => {
                 if(link.forIsAdmin === null) return <SidebarItem key={link.to}><SidebarText exact={link.exact} to={link.to}>{link.name}</SidebarText></SidebarItem>
-                if(link.forIsAdmin !== null && isAuthenticatedUser === link.forIsAdmin) return <SidebarItem key={link.to}><SidebarText exact={link.exact} to={link.to}>{link.name}</SidebarText></SidebarItem>
+                if(link.forIsAdmin !== null && isAdmin === link.forIsAdmin) return <SidebarItem key={link.to}><SidebarText exact={link.exact} to={link.to}>{link.name}</SidebarText></SidebarItem>
                 return <div key={link.to}></div>
               })}
             </SidebarItems> 
