@@ -6,13 +6,13 @@ import Footer from 'site/components/footer/footer.component';
 import Layout from 'shared/components/layout/layout.component';
 import Register from 'site/pages/register/register.component';
 import Login from 'site/pages/login/login.component';
-import Home from 'site/pages/home/home.component';
+import Main from 'site/pages/main/main.component';
 import Channels from 'site/pages/channels/channels.component';
 import Channel from 'site/pages/channel/channel.component';
 import CreateTopic from 'site/pages/create-topic/create-topic.componen';
 import Topic from 'site/pages/topic/topic.component';
 import PageNotFound from 'shared/components/page-not-found/page-not-found.component';
-import ProtectedIsAuthenticatedRoute from 'shared/utils/protected-route/protected-is-not-authenticated-route/protected-is-not-authenticated-route.component';
+import ProtectedIsAuthenticatedRoute from 'shared/utils/protected-route/protected-is-authenticated-route/protected-is-authenticated-route.components';
 import ProtectedIsNotAuthenticatedRoute from 'shared/utils/protected-route/protected-is-not-authenticated-route/protected-is-not-authenticated-route.component';
 import About from 'site/pages/about/about.component';
 
@@ -22,8 +22,8 @@ const SiteContainer = () => {
       <Header />
       <Layout>
         <Switch>
-          <Route exact path='/' component={Home} />
-          <Route exact path='/log' component={Home} />
+          <Route exact path='/' component={Main} />
+          <Route exact path='/log' component={Main} />
           <Route exact path='/about' component={About} />
           <Route exact path='/channels' component={Channels} />
           <Route exact path='/channels/:slug' component={Channel} />
@@ -40,37 +40,3 @@ const SiteContainer = () => {
 }
 
 export default SiteContainer;
-
-
-
-// import React from 'react';
-// import {
-//   BrowserRouter as Router,
-//   Switch,
-//   Route,
-//   Link,
-//   // useParams,
-//   useRouteMatch
-// } from "react-router-dom";
-
-// import Header from '../../components/header/header.component';
-// import About from '../../pages/about/about.component';
-// import Home from '../../pages/home/home.component';
-
-// const SiteContainer = () => {
-//   let { path, url } = useRouteMatch();
-//   // console.log('path', `${path}About`)
-//   return (
-//     <div>
-//         {/* <Header /> */}
-//         <Link to='/'>Home</Link>
-//         <Link to='/about'>About</Link>
-//         <Switch>
-//           <Route exact path='/' componen={Home}/>
-//           <Route path='/about' componen={About}/>
-//         </Switch>
-//     </div>
-//   )
-// }
-
-// export default SiteContainer;

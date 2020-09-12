@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useLocation, Link } from 'react-router-dom';
 import { Table, Loader } from 'semantic-ui-react';
-import moment from 'moment';
+import moment from 'utils/moment';
 // import PaginationComponent from 'shared/components/pagination/pagination.component';
 import { fetchChannelsAsync, deleteChannelByIdAsync } from 'redux/channel/channel.action';
 import PageNotFound from 'shared/components/page-not-found/page-not-found.component';

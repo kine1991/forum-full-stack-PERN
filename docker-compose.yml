@@ -60,13 +60,13 @@ services:
     container_name: forum-nginx
     ports:
       - 81:80
-      - 443:443
+      # - 443:443
     depends_on:
       - frontend
       - api
     volumes:
       - ./nginx/nginx.conf.prod:/etc/nginx/conf.d/nginx.conf
-      - /my-data/ssl-sertificate:/etc/nginx/ssl-sertificate
+      # - /my-data/ssl-sertificate:/etc/nginx/ssl-sertificate # включить при продакшене
     networks:
       - forum-network
 

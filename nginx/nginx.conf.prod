@@ -1,10 +1,7 @@
 server {
-  listen 443 ssl;
+  listen 80;
 
-  server_name *.kronworld.xyz kronworld.xyz;
-
-  ssl_certificate /etc/nginx/ssl-sertificate/kronworld.xyz.crt;
-  ssl_certificate_key /etc/nginx/ssl-sertificate/kronworld.xyz.key;
+  server_name posts.com;
 
   location / {
     proxy_pass http://frontend:3000;
@@ -12,19 +9,5 @@ server {
 
   location /api {
     proxy_pass http://api:3001;
-  }
-}
-
-server {
-  listen 80;
-
-  server_name *.kronworld.xyz kronworld.xyz;
-
-  location / {
-    return 301 https://kronworld.xyz$request_uri;
-  }
-
-  location /api {
-    return 301 https://kronworld.xyz$request_uri;
   }
 }

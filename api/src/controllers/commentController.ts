@@ -97,3 +97,37 @@ export const deleteComment = catchAsync(async (req: Request, res: Response) => {
 
   res.status(204).json({});
 });
+
+export const getLastComments = catchAsync(async (req: Request, res: Response) => {
+  const last_comments_res = await client.query({
+    text: `
+      SELECT 
+        comments.id, 
+        comments.content, 
+        comments.created_at,
+        users.id AS user_id,
+        users.nickname AS user_nickname,
+        users.email AS user_email,
+        users.role AS user_role,
+        users.image_url AS user_image_url,
+        topics.id AS topic_id,
+        topics.slug AS topic_slug,
+        topics.name AS topic_name,
+        channels.id AS channel_id,
+        channels.slug AS channel_slug,
+        channels.name AS channel_name
+      FROM comments 
+      INNER JOIN users ON comments.user_id = users.id
+      INNER JOIN topics ON comments.topic_id = topics.id
+      INNER JOIN channels ON topics.channel_id = channels.id
+      ORDER BY created_at desc LIMIT 20;
+    `
+  });
+
+  const last_comments = last_comments_res.rows;
+
+  res.status(200).json({
+    length: last_comments.lenght,
+    comments: last_comments
+  });
+});

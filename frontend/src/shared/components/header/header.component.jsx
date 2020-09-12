@@ -8,20 +8,14 @@ const links = [
   {
     to: '/',
     exact: true,
-    name: 'Home',
+    name: 'Главная',
     forIsAuthenticatedUser: null
   },
   {
     to: '/channels',
     exact: false,
-    name: 'Channels',
+    name: 'Каналы',
     forIsAuthenticatedUser: null
-  },
-  {
-    to: '/admin',
-    exact: true,
-    name: 'Admin Panel',
-    forIsAuthenticatedUser: true
   },
   {
     to: '/log',
@@ -32,7 +26,7 @@ const links = [
   {
     to: '/about',
     exact: false,
-    name: 'About',
+    name: 'О проекте',
     forIsAuthenticatedUser: null
   }
 ]
@@ -71,6 +65,7 @@ const HeaderComponent = ({ currentUser, isLoading, logout }) => {
           )}
           {currentUser && isLoading === false && (
             <React.Fragment>
+              <HeaderItem exact to='/admin'>Настройки</HeaderItem>
               <UserContainer>
                 <UserName>{currentUser.nickname}</UserName>
                 <UserPhotoContainer>

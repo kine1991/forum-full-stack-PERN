@@ -6,37 +6,30 @@ import { HeaderContainer, Header, Hamburger, HamburgerButton, HamburgerButtonBar
 
 const links = [
   {
-    to: '/',
-    exact: true,
-    name: 'Site',
-    forIsAuthenticatedUser: true,
-    forIsAdmin: null
-  },
-  {
     to: '/admin',
     exact: true,
-    name: 'Admin Panel',
+    name: 'Главная',
     forIsAuthenticatedUser: true,
     forIsAdmin: null
   },
   {
     to: '/admin/channels',
     exact: true,
-    name: 'Channels',
+    name: 'Каналы',
     forIsAuthenticatedUser: true,
     forIsAdmin: true
   },
   {
     to: '/admin/own-channels',
     exact: true,
-    name: 'Own Channels',
+    name: 'Мои Каналы',
     forIsAuthenticatedUser: true,
     forIsAdmin: null
   },
 ]
 
 const HeaderComponent = ({ currentUser, isLoading, logout }) => {
-  const [isAuthenticatedUser, setIsAuthenticatedUser] = useState(null);
+  const [/*isAuthenticatedUser*/, setIsAuthenticatedUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(null);
   const [openSidebar, setOpenSidebar] = useState(false);
 
@@ -78,6 +71,7 @@ const HeaderComponent = ({ currentUser, isLoading, logout }) => {
           )}
           {currentUser && isLoading === false && (
             <React.Fragment>
+              <HeaderItem exact to='/'>На Сайт</HeaderItem>
               <UserContainer>
                 <UserName>{currentUser.nickname}</UserName>
                 <UserPhotoContainer>
