@@ -2,13 +2,11 @@ import React from 'react';
 
 import { Button, ButtonLink } from './button.styles';
 
-const ButtonComponent = ({ content, to, fullWidth, props }) => {
+const ButtonComponent = ({ content, to, fullWidth, ...props }) => {
   // console.log('fullWidth', fullWidth)
-  // console.log('to', to)
-  // console.log('button')
   if(to === undefined) {
     return (
-      <Button {...props} fullWidth>{content}</Button>
+      <Button {...props} fullWidth={fullWidth}>{content}</Button>
     )
   } else {
     return (

@@ -3,9 +3,9 @@ import React from 'react';
 import moment from 'utils/moment';
 import { CommentMiniCardContainer, UserContainer ,UserPhotoContainer, UserPhoto, UserNameCommentDateContainer, UserName, CommentDate, CommentConteiner, TopicAndChannelContainer, ChannelName, TopicName } from './comment-mini-card.styles'
 
-const CommentMiniCard = ({ content, created_at, user_id, user_nickname, user_image_url, channel_name, topic_name, channel_slug, topic_slug }) => {
+const CommentMiniCard = ({ content, created_at, user_id, user_nickname, user_image_url, channel_name, topic_name, channel_slug, topic_slug, isEven }) => {
   return (
-    <CommentMiniCardContainer>
+    <CommentMiniCardContainer isEven={isEven} /*isEven={isEven}*/>
       <UserContainer>
         <UserPhotoContainer>
           <UserPhoto src={user_image_url} alt="img"/>

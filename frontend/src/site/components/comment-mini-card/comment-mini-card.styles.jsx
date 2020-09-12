@@ -7,6 +7,8 @@ export const CommentMiniCardContainer = styled.div`
 
   display: flex;
   flex-direction: column;
+
+  background: ${props => (props.isEven ? 'white' : 'whitesmoke')}
 `;
 
 export const UserContainer = styled.div`

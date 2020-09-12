@@ -6,8 +6,8 @@ import client from '../utils/client';
 import validator from 'validator';
 
 export const getChannels = catchAsync(async (req: Request, res: Response) => {
-  const amountChannelsRes = await client.query('SELECT COUNT(id) FROM channels');
-  const ammount_channels = +amountChannelsRes.rows[0].count;
+  const amount_channels_res = await client.query('SELECT COUNT(id) FROM channels');
+  const ammount_channels = +amount_channels_res.rows[0].count;
   
   const limit = req.query.limit ? +req.query.limit : 20;
   const all_pages = +ammount_channels !== 0 ? Math.ceil(ammount_channels/limit) : 1;

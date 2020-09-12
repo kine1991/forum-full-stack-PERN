@@ -36,3 +36,8 @@ export const CommentsSection = styled.div`
     display: none;
   }
 `;
+
+export const ButtonContainer = styled.div`
+  padding: 1rem;
+  text-align: center;
+`;

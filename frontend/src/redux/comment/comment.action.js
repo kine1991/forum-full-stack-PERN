@@ -32,6 +32,17 @@ export const fetchCommentsAsync = ({ slug, page, limit }) => async dispatch => {
   }
 };
 
+// FETCH_LAST_COMMENTS
+export const fetchLastComments = ({ page = 1, limit = 20 }) => {
+  return axios.get('/api/comments/last-comments', {
+    params: {
+      page,
+      limit
+    }
+  });
+}
+
+
 // CREATE_COMMENT
 const createCommentStart = () => ({
   type: commentTypes.CREATE_COMMENT_START

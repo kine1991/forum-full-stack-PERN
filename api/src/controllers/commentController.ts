@@ -99,6 +99,19 @@ export const deleteComment = catchAsync(async (req: Request, res: Response) => {
 });
 
 export const getLastComments = catchAsync(async (req: Request, res: Response) => {
+  const ammount_comments_res = await client.query('SELECT COUNT(id) FROM comments');
+  const ammount_comments = ammount_comments_res.rows[0].count;
+  const limit = req.query.limit ? +req.query.limit : 20;
+  const all_pages = ammount_comments === null ? 0 : Math.ceil(ammount_comments/limit);
+  const page: any = req.query.page ? +req.query.page : 1;
+
+  if(all_pages < page) throw new BadRequestError(`comments do not exists`, 404); // !!!!!!Разобраться
+
+  const pageIsNumber = /^\d+$/.test(<any>page);
+  if(!pageIsNumber) throw new BadRequestError(`This page (${page}) is incorrect`, 404);
+  
+  const offset = limit * (page - 1);
+
   const last_comments_res = await client.query({
     text: `
       SELECT 
@@ -120,8 +133,9 @@ export const getLastComments = catchAsync(async (req: Request, res: Response) =>
       INNER JOIN users ON comments.user_id = users.id
       INNER JOIN topics ON comments.topic_id = topics.id
       INNER JOIN channels ON topics.channel_id = channels.id
-      ORDER BY created_at desc LIMIT 20;
-    `
+      ORDER BY created_at desc LIMIT $1 OFFSET $2;
+    `,
+    values: [limit, offset]
   });
 
   const last_comments = last_comments_res.rows;
