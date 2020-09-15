@@ -1,3 +1,5 @@
+// ------------
+// Для production
 server {
   listen 443 ssl;
 
@@ -14,7 +16,10 @@ server {
     proxy_pass http://api:3001;
   }
 }
+// ------------
 
+// ------------
+// Для development
 server {
   listen 80;
 
@@ -26,5 +31,20 @@ server {
 
   location /api {
     return 301 https://kronworld.xyz$request_uri;
+  }
+}
+// ------------
+
+server {
+  listen 80;
+
+  server_name posts.com;
+
+  location / {
+    proxy_pass http://frontend:3000;
+  }
+
+  location /api {
+    proxy_pass http://api:3001;
   }
 }

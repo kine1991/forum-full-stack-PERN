@@ -60,7 +60,7 @@ services:
     container_name: forum-nginx
     ports:
       - 81:80
-      # - 443:443
+      # - 443:443 # включить при продакшене
     depends_on:
       - frontend
       - api
