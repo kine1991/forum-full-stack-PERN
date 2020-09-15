@@ -70,6 +70,10 @@ export const fetchChannelsAsync = ({ page, limit }) => async dispatch => {
   }
 }
 
+export const fetchSixLastChannels = () => {
+  return axios.get('/api/forums/channels?limit=6&order_by=desc');
+}
+
 export const fetchOwnChannelsAsync = (/*{ page, limit }*/) => async dispatch => {
   dispatch(fetchChannelsStart());
   try {

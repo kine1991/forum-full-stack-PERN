@@ -1,35 +1,34 @@
-import React, { useState } from 'react'
-import { useEffect } from 'react'
+import React/*, { useState, useEffect }*/ from 'react'
 
-function useLogger(value) {
-  useEffect(() => {
-    console.log('V', value)
-  }, [value])
-}
+// function useLogger(value) {
+//   useEffect(() => {
+//     console.log('V', value)
+//   }, [value])
+// }
 
-function useInput(initialValue) {
-  const [value, setValue] = useState(initialValue)
-  useEffect(() => {
-    console.log('V', value)
-  }, [value])
+// function useInput(initialValue) {
+//   const [value, setValue] = useState(initialValue)
+//   useEffect(() => {
+//     console.log('V', value)
+//   }, [value])
 
-  return {
+//   return {
 
-  }
-}
+//   }
+// }
 
 const Test = () => {
-  const input = useInput('')
-  const [name, setName] = useState('')
+  // const input = useInput('')
+  // const [name, setName] = useState('')
 
-  const handleChange = e => {
-    setName(e.target.value)
-  }
+  // const handleChange = e => {
+  //   setName(e.target.value)
+  // }
 
   // useLogger(name)
   return (
-    <div>
-      <input type="text" value={name} onChange={handleChange}/>
+    <div>ss
+      {/* <input type="text" value={name} onChange={handleChange}/> */}
     </div>
   )
 }

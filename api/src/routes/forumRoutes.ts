@@ -11,6 +11,8 @@ router.route('/channels')
 router.route('/channels/:channel_slug/by-slug')
   .get(forumController.getChannelBySlug)
 
+router.route('/channel-search').post(forumController.channelSearch)
+
 router.route('/own-channels')
   .get(authController.protect, forumController.getOwnChannels);
 

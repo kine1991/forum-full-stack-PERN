@@ -67,21 +67,6 @@ const Channels = ({ channels, isLoading, error, fetchChannels, allChannels, chan
           ))}
         </React.Fragment>
       )}
-      {/* {channels && isLoading === false && ()} */}
-        {/* <Item.Group divided>
-          {channels.map(channel => (
-            <Item key={channel.id}>
-              <Item.Image size='medium' src={channel.image_url_channel} />
-
-              <Item.Content>
-                <Item.Header as={Link} to={`/channels/${channel.slug}`}>{channel.name}</Item.Header>
-                <Item.Description>
-                  <p>{channel.description}</p>
-                </Item.Description>
-              </Item.Content>
-            </Item>
-          ))}
-        </Item.Group> */}
       
       {allChannels === null || +allChannels === 0 ? null : <Pagination allItems={allChannels} limit={limit} /> }
     </ChannelsContainer>
