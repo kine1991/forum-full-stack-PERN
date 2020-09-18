@@ -71,9 +71,26 @@ export const getOwnChannels = catchAsync(async (req: Request, res: Response) => 
 
 export const channelSearch = catchAsync(async (req: Request, res: Response) => {
   const { term } = req.body;
+  const search_by = req.query.search_by;
+  let query;
+
+  if(search_by === 'name') {
+    query = `SELECT * FROM channels WHERE name iLIKE '%${term}%'`
+  } else if(search_by === 'description') {
+    query = `SELECT * FROM channels WHERE description iLIKE '%${term}%'`
+  } else {
+    query = `SELECT * FROM channels WHERE name iLIKE '%${term}%' OR description iLIKE '%${term}%'`
+  }
+
+  const channels_res = await client.query({
+    text: query
+  })
+
+  console.log('term', term)
+  console.log('query', query)
   // const channels;
   res.status(200).json({
-    channels: 'channels.rows'
+    channels: channels_res.rows
   });
 });
 
