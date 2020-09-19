@@ -82,14 +82,14 @@ export const channelSearch = catchAsync(async (req: Request, res: Response) => {
     query = `SELECT * FROM channels WHERE name iLIKE '%${term}%' OR description iLIKE '%${term}%'`
   }
 
+  console.log('query@', query)
+
   const channels_res = await client.query({
     text: query
-  })
+  });
 
-  console.log('term', term)
-  console.log('query', query)
-  // const channels;
   res.status(200).json({
+    length: channels_res.rows.length,
     channels: channels_res.rows
   });
 });

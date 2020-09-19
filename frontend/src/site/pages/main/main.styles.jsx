@@ -6,6 +6,10 @@ export const MainContainer = styled.div`
   justify-content: space-between;
   margin: 0;
   padding: 0;
+
+  @media only screen and (max-width: 600px){
+    flex-direction: column;
+  }
 `;
 
 export const MainSection = styled.div`
@@ -22,6 +26,10 @@ export const MainSection = styled.div`
   max-width: 860px;
   margin: 0rem auto;
   padding: 3rem;
+
+  @media only screen and (max-width: 1100px){
+
+  }
 `;
 
 export const CommentsSection = styled.div`
@@ -35,6 +43,23 @@ export const CommentsSection = styled.div`
   scrollbar-width: none;  /* Firefox */
   &::-webkit-scrollbar {
     display: none;
+  }
+
+  @media only screen and (max-width: 1200px){
+    flex-basis: 260px;
+  }
+
+  @media only screen and (max-width: 700px){
+    flex-basis: 230px;
+  }
+
+  @media only screen and (max-width: 650px){
+    flex-basis: 200px;
+  }
+
+  @media only screen and (max-width: 600px){
+    flex-basis: unset;
+    height: 100%;
   }
 `;
 
@@ -54,12 +79,12 @@ export const GridContainer = styled.div`
   grid-gap: 3rem;
   margin-bottom: 2rem;
 
-  @media only screen and (max-width: 860px){
+  @media only screen and (max-width: 1160px){
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 2rem;
   }
 
-  @media only screen and (max-width: 576px){
+  @media only screen and (max-width: 900px){
     grid-template-columns: repeat(1, 1fr);
     grid-gap: 2rem;
   }
@@ -117,8 +142,21 @@ export const SearchContainer = styled.div`
 
 export const Search = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 export const SearchSpace = styled.div`
   width: 2rem;
+`;
+
+export const CommentTitle = styled.div`
+  background-color: #333;
+  color: whitesmoke;
+  font-size: 18px;
+  font-family: 'Roboto', sans-serif;
+  height: 60px;
+  margin: auto;
+  text-align: center;
+  padding-top: 20px;
+  /* vertical-align: center; */
 `;

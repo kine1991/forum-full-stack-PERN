@@ -74,6 +74,14 @@ export const fetchSixLastChannels = () => {
   return axios.get('/api/forums/channels?limit=6&order_by=desc');
 }
 
+export const fetchChannelsByTerm = (term, searchBy) => {
+  return axios.post('/api/forums/channel-search', { term }, {
+    params: {
+      search_by: (searchBy === 'name' || searchBy === 'description') ? searchBy : undefined
+    }
+  });
+}
+
 export const fetchOwnChannelsAsync = (/*{ page, limit }*/) => async dispatch => {
   dispatch(fetchChannelsStart());
   try {

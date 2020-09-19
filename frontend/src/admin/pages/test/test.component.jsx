@@ -17,13 +17,17 @@ import React/*, { useState, useEffect }*/ from 'react'
 //   }
 // }
 
-const Test = () => {
+const Test = ({term}) => {
   // const input = useInput('')
   // const [name, setName] = useState('')
 
   // const handleChange = e => {
   //   setName(e.target.value)
   // }
+
+  React.useEffect(() => {
+    console.log('term', term)
+  }, [term])
 
   // useLogger(name)
   return (
