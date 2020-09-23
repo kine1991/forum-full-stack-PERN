@@ -71,26 +71,31 @@ export const getOwnChannels = catchAsync(async (req: Request, res: Response) => 
 
 export const channelSearch = catchAsync(async (req: Request, res: Response) => {
   const { term } = req.body;
+
+  // query params
+  const limit = req.query.limit ? +req.query.limit : 10;
   const search_by = req.query.search_by;
-  let query;
+  let queryWhereSearchBy;
 
   if(search_by === 'name') {
-    query = `SELECT * FROM channels WHERE name iLIKE '%${term}%'`
+    queryWhereSearchBy = `name iLIKE '%${term}%'`
   } else if(search_by === 'description') {
-    query = `SELECT * FROM channels WHERE description iLIKE '%${term}%'`
+    queryWhereSearchBy = `description iLIKE '%${term}%'`
   } else {
-    query = `SELECT * FROM channels WHERE name iLIKE '%${term}%' OR description iLIKE '%${term}%'`
+    queryWhereSearchBy = `name iLIKE '%${term}%' OR description iLIKE '%${term}%'`
   }
 
-  console.log('query@', query)
+  const amount_channels_res = await client.query(`SELECT COUNT(id) FROM channels WHERE ${queryWhereSearchBy}`);
+  const ammount_channels = +amount_channels_res.rows[0].count;
 
   const channels_res = await client.query({
-    text: query
+    text: `SELECT * FROM channels WHERE ${queryWhereSearchBy} LIMIT ${limit}`
   });
 
   res.status(200).json({
-    length: channels_res.rows.length,
-    channels: channels_res.rows
+    channels: channels_res.rows,
+    channels_on_page: channels_res.rows.length,
+    all_channels: ammount_channels
   });
 });
 

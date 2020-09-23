@@ -137,7 +137,8 @@ export const CardDescription = styled.div`
 `;
 
 export const SearchContainer = styled.div`
-  margin-bottom: 10rem;
+  margin-bottom: 2rem;
+  position: relative;
 `;
 
 export const Search = styled.div`

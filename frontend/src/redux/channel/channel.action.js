@@ -74,10 +74,14 @@ export const fetchSixLastChannels = () => {
   return axios.get('/api/forums/channels?limit=6&order_by=desc');
 }
 
-export const fetchChannelsByTerm = (term, searchBy) => {
+export const fetchChannelsByTerm = (term, params) => {
+  const searchBy = params && params.searchBy ? params : undefined;
+  const limit = params && params.limit ? params : undefined;
+  // console.log(term, searchBy, limit)
   return axios.post('/api/forums/channel-search', { term }, {
     params: {
-      search_by: (searchBy === 'name' || searchBy === 'description') ? searchBy : undefined
+      search_by: (searchBy === 'name' || searchBy === 'description') ? searchBy : undefined,
+      limit
     }
   });
 }
