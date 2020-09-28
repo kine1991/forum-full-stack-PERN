@@ -1,25 +1,48 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { Loader, Button, Icon } from 'semantic-ui-react';
-import { ChannelsContainer, Card, CardImage, CardImageContainer, CardName, CardContent, CardDescription, ChannelsDoNotExists, GridContainer, Card2, TriggerView, Card2Image, Card2Content } from './channels.styles';
+
+import { ChannelsContainer, Card, CardImage, CardImageContainer, CardName, CardContent, CardDescription, ChannelsDoNotExists, GridContainer, Card2, TriggerView, Card2Image, Card2Content, Title, Search, SearchSpace } from './channels.styles';
 import { fetchChannelsAsync } from 'redux/channel/channel.action';
 import Pagination from 'shared/components/pagination/pagination.component';
 import PageNotFound from 'shared/components/page-not-found/page-not-found.component';
+import { Input } from 'shared/components/input/input.styles';
+import ButtonComponent from 'shared/components/button/button.component';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 }
 
 const Channels = ({ channels, isLoading, error, fetchChannels, allChannels, channelsOnPage }) => { 
+  const history = useHistory();
   const [isGridView, setIsGridView] = useState(false);
+  const [term, setTerm] = useState('');
   let query = useQuery();
   let page = query.get('page') ? query.get('page') : 1;
   let limit = query.get('limit') ? query.get('limit') : 12;
+  const queryTerm = query.get('term');
 
   useEffect(() => {
-    fetchChannels({ page, limit });
-  }, [fetchChannels, page, limit]); 
+    fetchChannels({ page, limit, term: queryTerm });
+  }, [fetchChannels, page, limit, queryTerm]); 
+
+  useEffect(() => {
+    const term = queryTerm;
+    if(!term) return;
+    setTerm(queryTerm);
+  }, [queryTerm]);
+
+  const searchChannel = () => {
+    if(!term) {
+      history.push('/channels');
+    } else {
+      history.push({
+        pathname: '/channels',
+        search: `?term=${term}`
+      });
+    }
+  }
 
   if(error && error.status === 404) return <PageNotFound message={error.data.errors[0].message} />
 
@@ -27,12 +50,18 @@ const Channels = ({ channels, isLoading, error, fetchChannels, allChannels, chan
     <Loader active inline='centered' />
   );
 
-  if(isLoading === false && channels && channels.length === 0) return <ChannelsDoNotExists>Ни одного канала не создано!</ChannelsDoNotExists>
+  if(isLoading === false && channels && channels.length === 0 && query.get('term') === '') return <ChannelsDoNotExists>Ни одного канала не создано!</ChannelsDoNotExists>
   // console.log('channels', channels);
+  
   return (
     <ChannelsContainer>
-      <h1>Каналы: {allChannels}</h1>
+      <Search>
+        <Input fullWidth value={term} onChange={(e => setTerm(e.target.value))}/>
+        <SearchSpace />
+        <ButtonComponent content='Искать' onClick={searchChannel} rounded padding='0.9rem 1.5rem' />
+      </Search>
       <TriggerView>
+        <Title>Каналы: {allChannels}</Title>
         <Button.Group basic icon>
           <Button active={isGridView} onClick={() => setIsGridView(true)}><Icon name='grid layout' /></Button>
           <Button active={!isGridView} onClick={() => setIsGridView(false)}><Icon name='list ul' /></Button>

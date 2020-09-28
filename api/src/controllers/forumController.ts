@@ -6,10 +6,20 @@ import client from '../utils/client';
 import validator from 'validator';
 
 export const getChannels = catchAsync(async (req: Request, res: Response) => {
-  const amount_channels_res = await client.query('SELECT COUNT(id) FROM channels');
+  let channels_query_search;
+  let channel_query_order_by;
+
+  const term: any = req.query.term ? req.query.term : '';
+
+  if(term) {
+    channels_query_search = ` WHERE name iLIKE '%${term}%' OR description iLIKE '%${term}%'`
+  } else {
+    channels_query_search = '';
+  }
+
+  const amount_channels_res = await client.query(`SELECT COUNT(id) FROM channels ${channels_query_search}`);
   const ammount_channels = +amount_channels_res.rows[0].count;
   
-  // query params
   const limit = req.query.limit ? +req.query.limit : 20;
   const all_pages = +ammount_channels !== 0 ? Math.ceil(ammount_channels/limit) : 1;
   const page: any = req.query.page ? +req.query.page : 1;
@@ -17,27 +27,35 @@ export const getChannels = catchAsync(async (req: Request, res: Response) => {
 
   const pageIsNumber = /^\d+$/.test(<any>page);
   if(!pageIsNumber) throw new BadRequestError(`This page (${page}) is incorrect`, 404);
-  
   const offset = limit * (page - 1);
-
   if(all_pages < page) throw new BadRequestError(`This page (${page}) do not exists`, 404);
 
-  let channels;
-
   if(order_by) {
-    console.log('@@@', order_by)
-    const is_correct = order_by.toLowerCase() === 'asc' || order_by.toLowerCase() === 'desc'
+    const is_correct = order_by.toLowerCase() === 'asc' || order_by.toLowerCase() === 'desc';
     if(!is_correct) throw new BadRequestError(`query params order_by: ${order_by} is incorrect`, 404);
-    channels = await client.query({
-      text: `SELECT * FROM channels ORDER BY created_at ${order_by} LIMIT $1 OFFSET $2`,
-      values: [limit, offset]
-    });
+    channel_query_order_by = `ORDER BY created_at ${order_by}`;
   } else {
-      channels = await client.query({
-        text: 'SELECT * FROM channels LIMIT $1 OFFSET $2',
-        values: [limit, offset]
-      });
+    channel_query_order_by = '';
   }
+
+  const channels = await client.query({
+    text: `SELECT * FROM channels ${channels_query_search} ${channel_query_order_by} LIMIT $1 OFFSET $2`,
+    values: [limit, offset]
+  });
+
+  // if(order_by) {
+  //   const is_correct = order_by.toLowerCase() === 'asc' || order_by.toLowerCase() === 'desc';
+  //   if(!is_correct) throw new BadRequestError(`query params order_by: ${order_by} is incorrect`, 404);
+  //   channels = await client.query({
+  //     text: `SELECT * FROM channels ORDER BY created_at ${order_by} LIMIT $1 OFFSET $2`,
+  //     values: [limit, offset]
+  //   });
+  // } else {
+  //     channels = await client.query({
+  //       text: 'SELECT * FROM channels LIMIT $1 OFFSET $2',
+  //       values: [limit, offset]
+  //     });
+  // }
 
   res.status(200).json({
     all_channels: ammount_channels,

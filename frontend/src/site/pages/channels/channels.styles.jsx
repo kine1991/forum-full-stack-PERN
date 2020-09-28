@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 
 export const ChannelsContainer = styled.div`
   max-width: 860px;
-  margin: auto;
+  /* margin: auto; */
+  margin: 3rem auto;
+  font-family: 'Roboto', sans-serif;
 `;
 
 export const ChannelsDoNotExists = styled.div`
@@ -112,6 +114,8 @@ export const Card2 = styled.div`
   display: flex;
   flex-direction: column;
   box-shadow: rgba(0, 0, 0, 0.15) 4px 6px 10px 4px;
+  border-radius: 8px;
+  overflow: hidden;
 `;
 
 export const Card2Image = styled.div`
@@ -125,6 +129,24 @@ export const Card2Content = styled.div`
 
 export const TriggerView = styled.div`
   display: flex;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
+  justify-content: space-between;
+  align-items: center;
   margin: 1rem 0;
+`;
+
+export const Title = styled.div`
+  color: gray;
+  font-size: 20px;
+  font-weight: 200;
+  /* font-family: inherit; */
+`;
+
+export const Search = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const SearchSpace = styled.div`
+  width: 2rem;
 `;

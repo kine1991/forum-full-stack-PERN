@@ -55,13 +55,14 @@ const fetchChannelsFailure = error => ({
   payload: error
 });
 
-export const fetchChannelsAsync = ({ page, limit }) => async dispatch => {
+export const fetchChannelsAsync = ({ page, limit, term }) => async dispatch => {
   dispatch(fetchChannelsStart());
   try {
     const channels = await axios.get('/api/forums/channels', {
       params: {
         page,
-        limit
+        limit,
+        term
       }
     });
     dispatch(fetchChannelsSuccess(channels.data));

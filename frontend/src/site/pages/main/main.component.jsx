@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-import { fetchChannelsAsync, fetchSixLastChannels, fetchChannelsByTerm } from 'redux/channel/channel.action';
+import { fetchChannelsAsync, fetchSixLastChannels } from 'redux/channel/channel.action';
 import { MainContainer, MainSection, CommentsSection, ButtonContainer, Card2Image, Card2, Card2Content, GridContainer, CardImage, CardName, CardDescription, Search, SearchContainer, SearchSpace, CommentTitle } from './main.styles';
 import CommentMiniCard from 'site/components/comment-mini-card/comment-mini-card.component';
 import Button from 'shared/components/button/button.component';
@@ -12,18 +13,18 @@ import useVisibilityComponent from 'hooks/useVisibilityComponent';
 
 
 const Main = () => {
+  const history = useHistory();
   const { ref, isVisibleComponent, setIsVisibleComponent } = useVisibilityComponent(false);
   const [comments, setComments] = useState(null);
   const [channels, setChannels] = useState(null);
   const [page, setPage] = useState(1);
   const [term, setTerm] = useState('');
-  const [searchBy/*, setSearchBy*/] = useState(undefined);
   
   useEffect(() => {
     fetchSixLastChannels().then(response => {
       setChannels(response.data.channels);
     }).catch(error => {console.log('error@@main#fetchSixLastChannels', error);});
-  }, [/*fetchSixLastChannels,*/ setChannels]); 
+  }, [setChannels]); 
 
   useEffect(() => {
     fetchLastComments({ page, limit: 20 }).then(response => {
@@ -50,10 +51,18 @@ const Main = () => {
   }
 
   const searchChannel = () => {
-    // console.log('!', term, searchBy)
-    fetchChannelsByTerm(term, {searchBy}).then(response => {
-      console.log('response@', response)
+    history.push({
+      pathname: '/channels',
+      search: `?term=${term}`
     });
+    // history.push({
+    //   pathname: '/channels',
+    //   search: `?term=${term}`
+    // })
+    // console.log('!', term, searchBy)
+    // fetchChannelsByTerm(term, {searchBy}).then(response => {
+    //   console.log('response@', response)
+    // });
   }
 
   return (
