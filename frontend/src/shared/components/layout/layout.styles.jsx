@@ -6,15 +6,15 @@ export const Container = styled.div`
   /* margin: 3rem auto; */
   box-shadow: #696969;
   min-height: 400px;
-  min-height: calc(100vh - 260px - 64px);
-  max-height: calc(100vh - 64px);
   /* min-height: calc(100vh - 260px - 64px); */
-  overflow: scroll;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  /* max-height: calc(100vh - 64px); */
+  /* min-height: calc(100vh - 260px - 64px); */
+  /* overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;  
   &::-webkit-scrollbar {
     display: none;
-  }
+  } */
 
 `;
 

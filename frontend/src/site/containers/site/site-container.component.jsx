@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom';
 
 import Header from 'shared/components/header/header.component';
-// import Footer from 'site/components/footer/footer.component';
+import Footer from 'site/components/footer/footer.component';
 import Layout from 'shared/components/layout/layout.component';
 import Register from 'site/pages/register/register.component';
 import Login from 'site/pages/login/login.component';
@@ -34,7 +34,7 @@ const SiteContainer = () => {
           <Route component={PageNotFound} />
         </Switch>
       </Layout>
-      {/* <Footer /> */}
+      <Footer />
     </React.Fragment>
   )
 }

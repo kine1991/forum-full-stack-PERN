@@ -7,6 +7,40 @@ export const MainContainer = styled.div`
   margin: 0;
   padding: 0;
 
+  height: 1000px;
+  /* max-height: 1001px; */
+  /* max-height: 1600px; */
+  /* height: auto; */
+
+  @media only screen and (max-width: 1200px){
+    height: 1100px;
+  }
+
+  @media only screen and (max-width: 1160px){
+    height: 1600px;
+  }
+
+  @media only screen and (max-width: 900px){
+    height: 3200px;
+  }
+
+  @media only screen and (max-width: 850px){
+    height: 3100px;
+  }
+
+  @media only screen and (max-width: 800px){
+    height: 2900px;
+  }
+
+  @media only screen and (max-width: 750px){
+    height: 2800px;
+  }
+
+  @media only screen and (max-width: 700px){
+    height: 2600px;
+  }
+
+
   @media only screen and (max-width: 600px){
     flex-direction: column;
   }
@@ -14,14 +48,8 @@ export const MainContainer = styled.div`
 
 export const MainSection = styled.div`
   flex: 1;
-  height: 100vh;
-  overflow: scroll;
-  /* Hide scrolbar */
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-  &::-webkit-scrollbar {
-    display: none;
-  }
+
+  /* height: 500px; */
 
   max-width: 860px;
   margin: 0rem auto;
@@ -32,10 +60,13 @@ export const MainSection = styled.div`
   }
 `;
 
+
 export const CommentsSection = styled.div`
+overflow: scroll;
   flex-basis: 300px;
   background-color: white;
-  height: 100vh;
+
+  /* height: unset; */
   overflow: scroll;
 
   /* Hide scrolbar */
