@@ -142,6 +142,7 @@ export const getLastComments = catchAsync(async (req: Request, res: Response) =>
 
   res.status(200).json({
     length: last_comments.lenght,
-    comments: last_comments
+    comments: last_comments,
+    ammount_comments
   });
 });

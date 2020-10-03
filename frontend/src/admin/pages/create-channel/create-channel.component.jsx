@@ -30,6 +30,7 @@ const CreateChannel = ({ createChannel }) => {
   }
 
   const { values, errors, handleChange, handleSubmit } = useForm(initialState, validate, submit);
+  
   return (
     <CreateChannelContainer onSubmit={handleSubmit}>
       <h1>Создать канал</h1>

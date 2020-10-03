@@ -3,6 +3,18 @@ import styled from 'styled-components';
 export const TopicContainer = styled.div`
   max-width: 860px;
   margin: auto;
+
+  padding: 3rem;
+
+  @media only screen and (max-width: 768px){
+    padding: 2rem;
+    padding-top: 3rem;
+  }
+
+  @media only screen and (max-width: 578px){
+    padding: 1rem;
+    padding-top: 2rem;
+  }
 `;
 
 export const ChannelName = styled.div`

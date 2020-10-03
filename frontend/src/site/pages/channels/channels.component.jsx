@@ -51,17 +51,16 @@ const Channels = ({ channels, isLoading, error, fetchChannels, allChannels, chan
   );
 
   if(isLoading === false && channels && channels.length === 0 && query.get('term') === '') return <ChannelsDoNotExists>Ни одного канала не создано!</ChannelsDoNotExists>
-  // console.log('channels', channels);
   
   return (
     <ChannelsContainer>
+      <Title>Каналы: {allChannels}</Title>
       <Search>
         <Input fullWidth value={term} onChange={(e => setTerm(e.target.value))}/>
         <SearchSpace />
         <ButtonComponent content='Искать' onClick={searchChannel} rounded padding='0.9rem 1.5rem' />
       </Search>
       <TriggerView>
-        <Title>Каналы: {allChannels}</Title>
         <Button.Group basic icon>
           <Button active={isGridView} onClick={() => setIsGridView(true)}><Icon name='grid layout' /></Button>
           <Button active={!isGridView} onClick={() => setIsGridView(false)}><Icon name='list ul' /></Button>

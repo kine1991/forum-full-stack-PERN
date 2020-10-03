@@ -3,9 +3,18 @@ import { Link } from 'react-router-dom';
 
 export const ChannelsContainer = styled.div`
   max-width: 860px;
-  /* margin: auto; */
   margin: 3rem auto;
   font-family: 'Roboto', sans-serif;
+
+  padding: 3rem;
+
+  @media only screen and (max-width: 768px){
+    padding: 2rem;
+  }
+
+  @media only screen and (max-width: 578px){
+    padding: 1rem;
+  }
 `;
 
 export const ChannelsDoNotExists = styled.div`
@@ -63,7 +72,6 @@ export const CardContent = styled.div`
 
 export const CardImage = styled.img`
   width: 100%;
-  /* height: 100%; */
 `;
 
 export const CardName = styled(Link)`
@@ -118,33 +126,36 @@ export const Card2 = styled.div`
   overflow: hidden;
 `;
 
-export const Card2Image = styled.div`
-
-`;
+export const Card2Image = styled.div``;
 
 export const Card2Content = styled.div`
   padding: 1rem;
 `;
 
-
 export const TriggerView = styled.div`
   display: flex;
-  /* justify-content: flex-end; */
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  margin: 1rem 0;
+  margin-bottom: 2rem;
+
+  @media only screen and (max-width: 578px){
+    display: none;
+  }
 `;
 
 export const Title = styled.div`
   color: gray;
-  font-size: 20px;
-  font-weight: 200;
-  /* font-family: inherit; */
+  font-size: 36px;
+  font-weight: 400;
+  padding: 2rem;
+  text-align: center;
+  font-family: inherit;
 `;
 
 export const Search = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 2rem;
 `;
 
 export const SearchSpace = styled.div`

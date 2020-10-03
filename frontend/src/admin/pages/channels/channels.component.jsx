@@ -26,12 +26,13 @@ const Channels = ({ channels, isLoading, error, fetchChannels, deleteChannelById
   }
 
   if(error && error.status === 404) return <PageNotFound message={error.data.errors[0].message} />
-
-  if((isLoading !== false) && (channels === null)) return (
-    <Loader active inline='centered' />
-  );
-
+  if((isLoading !== false)/* && (channels === null)*/) return (<Loader active inline='centered' />);
+  if(isLoading === false && channels === null) return <div>Ни одного канала не создано!@@</div>
   if(isLoading === false && channels && channels.length === 0) return <div>Ни одного канала не создано!</div>
+  if(channels === null) {
+    console.log('debug channels', channels);
+    return (<div>channels === null</div>)
+  }
 
   return (
     <React.Fragment>

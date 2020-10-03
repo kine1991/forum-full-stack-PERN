@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { Image, Header, Divider, Loader, Button, Icon } from 'semantic-ui-react';
-
 import { ChannelContainer, Description } from './channel.styles';
 import { fetchChannelBySlugAsync } from 'redux/channel/channel.action';
 import { clearAsync } from 'redux/topic/topic.action';

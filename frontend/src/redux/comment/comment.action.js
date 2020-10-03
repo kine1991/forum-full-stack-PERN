@@ -42,7 +42,6 @@ export const fetchLastComments = ({ page = 1, limit = 20 }) => {
   });
 }
 
-
 // CREATE_COMMENT
 const createCommentStart = () => ({
   type: commentTypes.CREATE_COMMENT_START
